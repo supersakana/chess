@@ -2,7 +2,8 @@
 
 # contains queen functionality
 class Queen
-  def initialize
-    # code to run
+  def initialize(color)
+    @icon = "\u265B"
+    @color = color
   end
 end

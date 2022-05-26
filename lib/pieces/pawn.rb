@@ -2,7 +2,8 @@
 
 # contains pawn functionality
 class Pawn
-  def initialize
-    # code to run
+  def initialize(color)
+    @icon = "\u265F"
+    @color = color
   end
 end

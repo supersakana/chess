@@ -2,7 +2,8 @@
 
 # contains bishop functionality
 class Bishop
-  def initialize
-    # code to run
+  def initialize(color)
+    @icon = "\u265D"
+    @color = color
   end
 end

@@ -33,7 +33,7 @@ class Board
     i = 7
     until i.negative?
       row = []
-      @cells.select { |k, v| row << v.format if k[0] == i }
+      @cells.select { |k, v| row << v.formatted if k[0] == i }
       puts "#{i + 1} #{row.join('')}"
       i -= 1
     end
@@ -43,7 +43,7 @@ end
 board = Board.new
 board.print_board
 
-# kb = "\u265A"
+# kb = "\u265D"
 # puts " #{kb} ".colorize(color: :black, background: :white)
 # puts " #{kb} ".colorize(color: :black, background: :light_black)
 # puts " #{kb} ".colorize(color: :light_white, background: :white)

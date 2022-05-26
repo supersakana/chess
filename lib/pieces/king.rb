@@ -2,7 +2,8 @@
 
 # contains king functionality
 class King
-  def initialize
-    # code to run
+  def initialize(color)
+    @icon = "\u265A"
+    @color = color
   end
 end

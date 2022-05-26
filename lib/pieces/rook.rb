@@ -2,7 +2,8 @@
 
 # contains rook functionality
 class Rook
-  def initialize
-    # code to run
+  def initialize(color)
+    @icon = "\u265C"
+    @color = color
   end
 end

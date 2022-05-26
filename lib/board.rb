@@ -22,9 +22,21 @@ class Board
     end
     cells
   end
+
+  # prints the board in a basic format
+  def print_board
+    i = 7
+    until i.negative?
+      row = []
+      @cells.select { |k, v| row << v.value if k[0] == i }
+      puts "#{i + 1} #{row}"
+      i -= 1
+    end
+  end
 end
 
 board = Board.new
-board.cells.each do |k, v|
-  p "#{k} => #{v.value}"
-end
+board.create_grid
+# board.cells.each do |k, v|
+#   p "#{k} => #{v.value}"
+# end

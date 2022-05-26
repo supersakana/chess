@@ -10,17 +10,22 @@ class Board
     @cells = create_board
   end
 
-  # creates 64 coordinates (8 x 8 grid)
+  # returns a hash of 64 coordinates (8 x 8 grid)
   def create_board
     coordinates = (0..7).to_a
-    cells = {}
+    hash = {}
     coordinates.each do |x|
       coordinates.each do |y|
         cell = Cell.new([x, y])
-        cells[cell.value] = cell
+        add_cells(cell, hash)
       end
     end
-    cells
+    hash
+  end
+
+  # adds cell with data
+  def add_cells(cell, hash)
+    hash[cell.value] = cell
   end
 
   # prints the board in a basic format
@@ -28,15 +33,18 @@ class Board
     i = 7
     until i.negative?
       row = []
-      @cells.select { |k, v| row << v.value if k[0] == i }
-      puts "#{i + 1} #{row}"
+      @cells.select { |k, v| row << v.format if k[0] == i }
+      puts "#{i + 1} #{row.join('')}"
       i -= 1
     end
   end
 end
 
 board = Board.new
-board.create_grid
-# board.cells.each do |k, v|
-#   p "#{k} => #{v.value}"
-# end
+board.print_board
+
+# kb = "\u265A"
+# puts " #{kb} ".colorize(color: :black, background: :white)
+# puts " #{kb} ".colorize(color: :black, background: :light_black)
+# puts " #{kb} ".colorize(color: :light_white, background: :white)
+# puts " #{kb} ".colorize(color: :light_white, background: :light_black)

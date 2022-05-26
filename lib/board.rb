@@ -1,24 +1,30 @@
 # frozen_string_literal: true
 
+require 'colorize'
 require_relative 'cell'
 # contains game board functionality
 class Board
+  attr_accessor :cells
+
   def initialize
-    @cells = {}
+    @cells = create_board
   end
 
   # creates 64 coordinates (8 x 8 grid)
   def create_board
     coordinates = (0..7).to_a
+    cells = {}
     coordinates.each do |x|
       coordinates.each do |y|
         cell = Cell.new([x, y])
-        add_cell(cell)
+        cells[cell.value] = cell
       end
     end
+    cells
   end
+end
 
-  def add_cell(cell)
-    @board[cell.value] = cell
-  end
+board = Board.new
+board.cells.each do |k, v|
+  p "#{k} => #{v.value}"
 end

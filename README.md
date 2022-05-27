@@ -6,4 +6,4 @@ A test driven project built with Ruby. (WIP)
 
 Description - https://www.theodinproject.com/lessons/ruby-ruby-final-project
 
-https://github.com/fazibear/colorize
+Colorize Gem - https://github.com/fazibear/colorize

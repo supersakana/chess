@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+require 'pry-byebug'
 require 'colorize'
+
 require_relative 'cell'
 # contains game board functionality
 class Board
@@ -37,14 +39,9 @@ class Board
       puts "#{i + 1} #{row.join('')}"
       i -= 1
     end
+    puts "   #{('A'..'H').to_a.join('  ')}"
   end
 end
 
 board = Board.new
 board.print_board
-
-# kb = "\u265D"
-# puts " #{kb} ".colorize(color: :black, background: :white)
-# puts " #{kb} ".colorize(color: :black, background: :light_black)
-# puts " #{kb} ".colorize(color: :light_white, background: :white)
-# puts " #{kb} ".colorize(color: :light_white, background: :light_black)

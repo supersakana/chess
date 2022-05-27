@@ -2,6 +2,9 @@
 
 # contains queen functionality
 class Queen
+  attr_accessor :icon
+  attr_reader :color
+
   def initialize(color)
     @icon = "\u265B"
     @color = color

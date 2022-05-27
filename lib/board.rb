@@ -33,10 +33,11 @@ class Board
   # prints the board in a basic format
   def print_board
     i = 7
+    puts "   #{('A'..'H').to_a.join('  ')}"
     until i.negative?
       row = []
       @cells.select { |k, v| row << v.formatted if k[0] == i }
-      puts "#{i + 1} #{row.join('')}"
+      puts "#{i + 1} #{row.join('')} #{i + 1}"
       i -= 1
     end
     puts "   #{('A'..'H').to_a.join('  ')}"

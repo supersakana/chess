@@ -17,9 +17,10 @@ class Cell
   def initialize(value)
     @value = value
     @piece = create_piece(value)
-    @bg_color = create_bg
+    @bg_color = set_bg
   end
 
+  # initial positions for each piece
   def start_positions
     {
       rook: [[0, 0], [0, 7], [7, 0], [7, 7]],
@@ -33,7 +34,7 @@ class Cell
   # creates the correct piece for the correct position
   # temporary solution
   def create_piece(value)
-    color = value[0] < 2 ? :light_white : :black
+    color = set_color
     @piece = if start_positions[:rook].include?(value)
                Rook.new(color)
              elsif start_positions[:bishop].include?(value)
@@ -50,8 +51,13 @@ class Cell
   end
 
   # returns a cell background color
-  def create_bg
+  def set_bg
     (@value[0] + @value[1]).even? ? :white : :light_black
+  end
+
+  # returns a piece color
+  def set_color
+    @value[0] < 2 ? :light_white : :black
   end
 
   # returns the formatted cell
@@ -63,18 +69,3 @@ class Cell
     end
   end
 end
-
-# @piece = case value
-# when start_positions[:rook].include?(value)
-#   Rook.new(color)
-# when start_positions[:bishop].include?(value)
-#   Bishop.new(color)
-# when start_positions[:knight].include?(value)
-#   Knight.new(color)
-# when start_positions[:king].include?(value)
-#   King.new(color)
-# when start_positions[:queen].include?(value)
-#   Queen.new(color)
-# when [1, 6].include?(value[0])
-#   Pawn.new(color)
-# end

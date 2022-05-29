@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
+require_relative 'piece_factory'
+
 # contains queen functionality
-class Queen
+class Queen < Piece
   attr_accessor :icon
   attr_reader :color
 
   def initialize(color)
+    super
     @icon = "\u265B"
     @color = color
   end

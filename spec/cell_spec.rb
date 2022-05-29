@@ -3,7 +3,10 @@
 # rspec spec/cell_spec.rb
 # rspec --format documentation spec/cell_spec.rb
 
+# rubocop:disable Metrics/BlockLength
+
 require_relative '../lib/cell'
+require 'pry-byebug'
 
 describe Cell do
   subject(:cell) { described_class.new([0, 0]) }
@@ -56,3 +59,4 @@ describe Cell do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

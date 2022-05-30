@@ -2,9 +2,12 @@
 
 # general files
 require_relative 'player'
-require_relative 'board'
-require_relative 'cell'
 require_relative 'display'
+require_relative 'game'
+
+# board files
+require_relative 'board/board'
+require_relative 'board/cell'
 
 # piece files
 require_relative 'pieces/piece_factory'
@@ -15,5 +18,5 @@ require_relative 'pieces/king'
 require_relative 'pieces/queen'
 require_relative 'pieces/pawn'
 
-# gem
+# gems
 require 'colorize'

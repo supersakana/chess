@@ -39,6 +39,3 @@ class Board
     puts "   #{('A'..'H').to_a.join('  ')}"
   end
 end
-
-board = Board.new
-board.print_board

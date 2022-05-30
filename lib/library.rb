@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # general files
-require_relative 'player'
 require_relative 'display'
 require_relative 'game'
 

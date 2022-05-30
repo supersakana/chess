@@ -1,32 +1,32 @@
 # frozen_string_literal: true
 
-require 'pry-byebug'
 # superclass for all pieces
 class Piece
   # creates a piece based on initial position
-  def call(position)
-    color = set_color
-    case position
-    when starts[:rook].include?(position)
+  def self.call(value)
+    color = create_color(value)
+    if starts[:rook].include?(value)
       Rook.new(color)
-    when starts[:bishop].include?(position)
+    elsif starts[:bishop].include?(value)
       Bishop.new(color)
-    when starts[:knight].include?(position)
+    elsif starts[:knight].include?(value)
       Knight.new(color)
-    when starts[:king].include?(position)
+    elsif starts[:king].include?(value)
       King.new(color)
-    when starts[:queen].include?(position)
+    elsif starts[:queen].include?(value)
       Queen.new(color)
+    elsif [1, 6].include?(value[0])
+      Pawn.new(color)
     end
   end
 
   # returns a piece color
-  def set_color
-    @value[0] < 2 ? :light_white : :black
+  def self.create_color(value)
+    value[0] < 2 ? :light_white : :black
   end
 
   # starting positions for each piece
-  def starts
+  def self.starts
     {
       rook: [[0, 0], [0, 7], [7, 0], [7, 7]],
       bishop: [[0, 2], [0, 5], [7, 2], [7, 5]],

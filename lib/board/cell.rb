@@ -8,13 +8,13 @@ class Cell
   def initialize(value)
     @value = value
     @piece = create_piece(value)
-    @bg_color = set_bg
+    @bg_color = create_bg(value)
   end
 
   # creates the correct piece for the correct position
   # temporary solution
   def create_piece(value)
-    color = value[0] < 2 ? :light_white : :black
+    color = create_color
     @piece = if starts[:rook].include?(value)
                Rook.new(color)
              elsif starts[:bishop].include?(value)
@@ -31,16 +31,19 @@ class Cell
   end
 
   # returns a cell background color
-  def set_bg
-    (@value[0] + @value[1]).even? ? :white : :light_black
+  def create_bg(value)
+    if (value[0] + value[1]).odd?
+      :white
+    else
+      :light_black
+    end
   end
 
-  # returns the formatted cell
-  def formatted
-    if piece.nil?
-      '   '.colorize(background: @bg_color)
+  def create_color
+    if value[0] < 2
+      :light_white
     else
-      " #{@piece.icon} ".colorize(color: @piece.color, background: @bg_color)
+      :black
     end
   end
 
@@ -52,5 +55,14 @@ class Cell
       king: [[0, 4], [7, 4]],
       queen: [[0, 3], [7, 3]]
     }
+  end
+
+  # returns the formatted cell
+  def form
+    if piece.nil?
+      '   '.colorize(background: @bg_color)
+    else
+      " #{@piece.icon} ".colorize(color: @piece.color, background: @bg_color)
+    end
   end
 end

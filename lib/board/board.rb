@@ -10,13 +10,11 @@ class Board
 
   # returns a hash of 64 coordinates (8 x 8 grid)
   def create_board
-    coordinates = (0..7).to_a
+    coordinates = [0, 1, 2, 3, 4, 5, 6, 7].repeated_permutation(2).to_a
     hash = {}
-    coordinates.each do |x|
-      coordinates.each do |y|
-        cell = Cell.new([x, y])
-        add_cells(cell, hash)
-      end
+    coordinates.each do |value|
+      cell = Cell.new(value)
+      add_cells(cell, hash)
     end
     hash
   end
@@ -32,7 +30,7 @@ class Board
     puts "   #{('A'..'H').to_a.join('  ')}"
     until i.negative?
       row = []
-      @cells.select { |k, v| row << v.formatted if k[0] == i }
+      @cells.select { |k, v| row << v.form if k[0] == i }
       puts "#{i + 1} #{row.join('')} #{i + 1}"
       i -= 1
     end

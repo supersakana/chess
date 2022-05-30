@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'piece_factory'
-
 # contains pawn functionality
 class Pawn < Piece
   attr_accessor :icon

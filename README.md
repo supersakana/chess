@@ -1,14 +1,8 @@
 # Chess
 
-A test driven project built with Ruby. (WIP)
+Work in progress
 
 ## About
 
 Description
 https://www.theodinproject.com/lessons/ruby-ruby-final-project
-
-## Notes
-
-Factory Method
-
-- Allows you to isolate conditional instanciations in one method.

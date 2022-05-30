@@ -1,20 +1,11 @@
 # frozen_string_literal: true
 
 require 'pry-byebug'
-
-require_relative 'rook'
-require_relative 'bishop'
-require_relative 'knight'
-require_relative 'king'
-require_relative 'queen'
-require_relative 'pawn'
-
 # superclass for all pieces
 class Piece
   # creates a piece based on initial position
   def call(position)
     color = set_color
-    binding.pry
     case position
     when starts[:rook].include?(position)
       Rook.new(color)

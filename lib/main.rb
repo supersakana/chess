@@ -2,6 +2,8 @@
 
 # ruby lib/main.rb
 
+require_relative 'library'
+
 puts <<~HEREDOC
   Welcome Chess!
 

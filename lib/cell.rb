@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'pieces/piece_factory'
-
 # contains information for each cell on the gameboard
 class Cell
   attr_accessor :piece
@@ -13,12 +11,9 @@ class Cell
     @bg_color = set_bg
   end
 
-  # initial positions for each piece
-
   # creates the correct piece for the correct position
-  # temporary solution
   def create_piece(value)
-    PieceFactory.call(value)
+    Piece.call(value)
   end
 
   # returns a cell background color

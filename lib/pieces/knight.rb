@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'piece_factory'
-
 # contains knight functionality
 class Knight < Piece
   attr_accessor :icon

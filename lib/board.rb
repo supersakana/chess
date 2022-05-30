@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry-byebug'
-require 'colorize'
-
-require_relative 'cell'
 # contains game board functionality
 class Board
   attr_accessor :cells

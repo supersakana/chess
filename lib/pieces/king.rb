@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # contains king functionality
-class King
+class King < Piece
   attr_accessor :icon
   attr_reader :color
 

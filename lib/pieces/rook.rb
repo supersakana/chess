@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # contains rook functionality
-class Rook
+class Rook < Piece
   attr_accessor :icon
   attr_reader :color
 

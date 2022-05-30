@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # contains pawn functionality
-class Pawn
+class Pawn < Piece
   attr_accessor :icon
   attr_reader :color
 

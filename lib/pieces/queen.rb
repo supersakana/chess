@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # contains queen functionality
-class Queen
+class Queen < Piece
   attr_accessor :icon
   attr_reader :color
 

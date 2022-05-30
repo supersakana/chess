@@ -3,7 +3,7 @@
 # superclass for all pieces
 class Piece
   # creates a piece based on initial position
-  def self.call(value)
+  def call(value)
     color = create_color(value)
     if starts[:rook].include?(value)
       Rook.new(color)
@@ -21,12 +21,12 @@ class Piece
   end
 
   # returns a piece color
-  def self.create_color(value)
+  def create_color(value)
     value[0] < 2 ? :light_white : :black
   end
 
   # starting positions for each piece
-  def self.starts
+  def starts
     {
       rook: [[0, 0], [0, 7], [7, 0], [7, 7]],
       bishop: [[0, 2], [0, 5], [7, 2], [7, 5]],

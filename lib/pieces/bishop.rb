@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # contains bishop functionality
-class Bishop
+class Bishop < Piece
   attr_accessor :icon
   attr_reader :color
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # contains knight functionality
-class Knight
+class Knight < Piece
   attr_accessor :icon
   attr_reader :color
 

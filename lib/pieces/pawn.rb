@@ -6,7 +6,7 @@ class Pawn < Piece
   attr_reader :color
 
   def initialize(color)
+    super(color)
     @icon = "\u265F"
-    @color = color
   end
 end

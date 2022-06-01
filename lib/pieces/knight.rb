@@ -6,7 +6,7 @@ class Knight < Piece
   attr_reader :color
 
   def initialize(color)
+    super(color)
     @icon = "\u265E"
-    @color = color
   end
 end

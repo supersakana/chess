@@ -3,8 +3,7 @@
 # rspec spec/board_spec/cell_spec.rb
 # rspec --format documentation spec/cell_spec.rb
 
-require_relative '../lib/board/cell'
-require_relative 'piece_library'
+require_relative '../lib/library'
 
 # rubocop:disable Metrics/BlockLength
 

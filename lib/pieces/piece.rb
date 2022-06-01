@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
-# superclass for all pieces
+# superclass and factory for all pieces
 class Piece
+  def initialize(color)
+    @color = color
+  end
+
   # creates a piece based on initial position
-  def call(value)
+  def self.call(value)
     color = create_color(value)
     if starts[:rook].include?(value)
       Rook.new(color)
@@ -21,12 +25,12 @@ class Piece
   end
 
   # returns a piece color
-  def create_color(value)
+  def self.create_color(value)
     value[0] < 2 ? :light_white : :black
   end
 
   # starting positions for each piece
-  def starts
+  def self.starts
     {
       rook: [[0, 0], [0, 7], [7, 0], [7, 7]],
       bishop: [[0, 2], [0, 5], [7, 2], [7, 5]],

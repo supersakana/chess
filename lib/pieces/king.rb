@@ -6,7 +6,7 @@ class King < Piece
   attr_reader :color
 
   def initialize(color)
+    super(color)
     @icon = "\u265A"
-    @color = color
   end
 end

@@ -13,7 +13,7 @@ class Cell
 
   # creates the correct piece for the correct position
   # temporary solution
-  def create_piece(_value)
+  def create_piece(value)
     @piece = Piece.call(value)
   end
 

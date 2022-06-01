@@ -9,7 +9,7 @@ require_relative 'board/board'
 require_relative 'board/cell'
 
 # piece files
-require_relative 'pieces/piece_factory'
+require_relative 'pieces/piece'
 require_relative 'pieces/rook'
 require_relative 'pieces/bishop'
 require_relative 'pieces/knight'

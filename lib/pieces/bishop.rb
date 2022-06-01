@@ -6,7 +6,7 @@ class Bishop < Piece
   attr_reader :color
 
   def initialize(color)
+    super(color)
     @icon = "\u265D"
-    @color = color
   end
 end

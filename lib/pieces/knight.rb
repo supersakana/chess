@@ -2,11 +2,11 @@
 
 # contains knight functionality
 class Knight < Piece
-  attr_accessor :icon
-  attr_reader :color
+  attr_reader :icon
 
-  def initialize(color)
-    super(color)
+  def initialize(position)
+    super(position)
+    @color = create_color(position)
     @icon = "\u265E"
   end
 end

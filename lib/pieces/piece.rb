@@ -2,31 +2,34 @@
 
 # superclass and factory for all pieces
 class Piece
-  def initialize(color)
-    @color = color
-  end
+  attr_accessor :position
+  attr_reader :color
 
-  # creates a piece based on initial position
-  def self.call(value)
-    color = create_color(value)
-    if starts[:rook].include?(value)
-      Rook.new(color)
-    elsif starts[:bishop].include?(value)
-      Bishop.new(color)
-    elsif starts[:knight].include?(value)
-      Knight.new(color)
-    elsif starts[:king].include?(value)
-      King.new(color)
-    elsif starts[:queen].include?(value)
-      Queen.new(color)
-    elsif [1, 6].include?(value[0])
-      Pawn.new(color)
-    end
+  def initialize(position)
+    @position = position
+    @color = create_color(position)
   end
 
   # returns a piece color
-  def self.create_color(value)
-    value[0] < 2 ? :light_white : :black
+  def create_color(position)
+    position[0] < 2 ? :light_white : :black
+  end
+
+  # creates a piece based on initial position
+  def self.call(position)
+    if starts[:rook].include?(position)
+      Rook.new(position)
+    elsif starts[:bishop].include?(position)
+      Bishop.new(position)
+    elsif starts[:knight].include?(position)
+      Knight.new(position)
+    elsif starts[:king].include?(position)
+      King.new(position)
+    elsif starts[:queen].include?(position)
+      Queen.new(position)
+    elsif [1, 6].include?(position[0])
+      Pawn.new(position)
+    end
   end
 
   # starting positions for each piece

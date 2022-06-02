@@ -3,10 +3,10 @@
 # contains pawn functionality
 class Pawn < Piece
   attr_accessor :icon
-  attr_reader :color
 
-  def initialize(color)
-    super(color)
+  def initialize(position)
+    super(position)
+    @color = create_color(position)
     @icon = "\u265F"
   end
 end

@@ -2,11 +2,10 @@
 
 # contains bishop functionality
 class Bishop < Piece
-  attr_accessor :icon
-  attr_reader :color
+  attr_reader :icon
 
-  def initialize(color)
-    super(color)
+  def initialize(position)
+    super(position)
     @icon = "\u265D"
   end
 end

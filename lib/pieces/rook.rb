@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
-# require_relative 'piece'
-
 # contains rook functionality
 class Rook < Piece
-  attr_accessor :icon
-  attr_reader :color
+  attr_reader :icon
 
-  def initialize(color)
-    super(color)
+  def initialize(position)
+    super(position)
+    @color = create_color(position)
     @icon = "\u265C"
   end
 end

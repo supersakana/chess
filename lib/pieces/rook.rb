@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require 'pry-byebug'
 # contains rook functionality
 class Rook < Piece
   attr_reader :icon
+  attr_accessor :position
 
   def initialize(position)
     super(position)
@@ -12,7 +14,8 @@ class Rook < Piece
 
   # generates a list of coordinates
   def possible_moves
-    [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7],
-     [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0]]
+    # moves = [@position]
+    # transitions = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+    # code to run
   end
 end

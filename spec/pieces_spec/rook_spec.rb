@@ -19,7 +19,7 @@ describe Rook do
         expect(rook).to receive(:possible_moves).and_return(result)
         rook.possible_moves
       end
-      it 'returns possible moves rook between 0-7 (bottom right)' do
+      xit 'returns possible moves rook between 0-7 (bottom right)' do
         rook.instance_variable_set(:@position, [7, 0])
         result = [
           [7, 0], [7, 1], [7, 2], [7, 3], [7, 4], [7, 5], [7, 6], [7, 7],
@@ -28,7 +28,7 @@ describe Rook do
         expect(rook).to receive(:possible_moves).and_return(result)
         rook.possible_moves
       end
-      it 'returns possible moves rook between 0-7 (top left)' do
+      xit 'returns possible moves rook between 0-7 (top left)' do
         rook.instance_variable_set(:@position, [0, 7])
         result = [
           [0, 7], [1, 7], [2, 7], [3, 7], [4, 7], [5, 7], [6, 7], [7, 7],
@@ -37,7 +37,7 @@ describe Rook do
         expect(rook).to receive(:possible_moves).and_return(result)
         rook.possible_moves
       end
-      it 'returns possible moves rook between 0-7 (top right)' do
+      xit 'returns possible moves rook between 0-7 (top right)' do
         rook.instance_variable_set(:@position, [7, 7])
         result = [
           [7, 7], [7, 6], [7, 5], [7, 4], [7, 3], [7, 2], [7, 1], [7, 0],

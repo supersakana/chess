@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-# rspec spec/board_spec.rb
 # rspec --format documentation spec/board_spec.rb
 
-require_relative '../lib/board/board'
-require_relative '../lib/board/cell'
-require_relative 'piece_library'
+require_relative '../lib/library'
 
 describe Board do
   subject(:board) { described_class.new }

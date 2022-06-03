@@ -6,6 +6,12 @@ class Bishop < Piece
 
   def initialize(position)
     super(position)
+    @color = create_color(position)
     @icon = "\u265D"
+  end
+
+  # generates a list of coordinates
+  def possible_moves
+    # code to run
   end
 end

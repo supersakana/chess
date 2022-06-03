@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rspec spec/board_spec/cell_spec.rb
 # rspec --format documentation spec/cell_spec.rb
 
 require_relative '../lib/library'

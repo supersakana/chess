@@ -8,11 +8,17 @@ class Piece
   def initialize(position)
     @position = position
     @color = create_color(position)
+    @vaccant_moves = []
   end
 
   # returns a piece color
   def create_color(position)
     position[0] < 2 ? :light_white : :black
+  end
+
+  # generates a list of coordinates
+  def possible_moves
+    raise NotImpelementedError
   end
 
   # creates a piece based on initial position
@@ -35,7 +41,7 @@ class Piece
   # starting positions for each piece
   def self.starts
     {
-      rook: [[0, 0], [0, 7], [7, 0], [7, 7]],
+      rook: [[0, 0], [7, 0], [0, 7], [7, 7]],
       bishop: [[0, 2], [0, 5], [7, 2], [7, 5]],
       knight: [[0, 1], [0, 6], [7, 1], [7, 6]],
       king: [[0, 4], [7, 4]],

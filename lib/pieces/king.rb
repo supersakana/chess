@@ -9,4 +9,9 @@ class King < Piece
     @color = create_color(position)
     @icon = "\u265A"
   end
+
+  # generates a list of coordinates
+  def possible_moves
+    # code to run
+  end
 end

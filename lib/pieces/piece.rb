@@ -21,6 +21,11 @@ class Piece
     raise NotImpelementedError
   end
 
+  # list of increments needed to find possible moves
+  def transitions
+    raise NotImpelementedError
+  end
+
   # creates a piece based on initial position
   def self.call(position)
     if starts[:rook].include?(position)

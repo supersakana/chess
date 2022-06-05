@@ -12,7 +12,6 @@ class Cell
   end
 
   # creates the correct piece for the correct position
-  # temporary solution
   def create_piece(value)
     @piece = Piece.call(value)
   end

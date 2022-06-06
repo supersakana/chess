@@ -11,21 +11,6 @@ class Piece
     @vaccant_moves = []
   end
 
-  # returns a piece color
-  def create_color(position)
-    position[0] < 2 ? :light_white : :black
-  end
-
-  # generates a list of coordinates
-  def possible_moves
-    raise NotImpelementedError
-  end
-
-  # list of increments needed to find possible moves
-  def transitions
-    raise NotImpelementedError
-  end
-
   # creates a piece based on initial position
   def self.call(position)
     if starts[:rook].include?(position)
@@ -52,5 +37,20 @@ class Piece
       king: [[0, 4], [7, 4]],
       queen: [[0, 3], [7, 3]]
     }
+  end
+
+  # returns a piece color
+  def create_color(position)
+    position[0] < 2 ? :light_white : :black
+  end
+
+  # generates a list of coordinates
+  def possible_moves
+    raise NotImpelementedError
+  end
+
+  # list of increments needed to find possible moves
+  def transitions
+    raise NotImpelementedError
   end
 end

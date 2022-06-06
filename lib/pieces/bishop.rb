@@ -10,8 +10,15 @@ class Bishop < Piece
     @icon = "\u265D"
   end
 
-  # generates a list of coordinates
+  # generates a list of possible bishop coordinates
   def possible_moves
+    # code to run
+  end
+
+  private
+
+  # list of increments needed to find possible rook moves
+  def transitions
     # code to run
   end
 end

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry-byebug'
 # contains rook functionality
 class Rook < Piece
   attr_reader :icon
@@ -25,6 +24,8 @@ class Rook < Piece
     end
     moves
   end
+
+  private
 
   # list of increments needed to find possible rook moves
   def transitions

@@ -61,6 +61,42 @@ describe Rook do
         expect(result).to eq(moves)
         rook.possible_moves
       end
+      it 'returns possible rook moves (3, 4)' do
+        rook.instance_variable_set(:@position, [3, 4])
+        moves = [
+          [3, 5], [3, 6], [3, 7],
+          [4, 4], [5, 4], [6, 4], [7, 4],
+          [3, 3], [3, 2], [3, 1], [3, 0],
+          [2, 4], [1, 4], [0, 4]
+        ]
+        result = rook.possible_moves
+        expect(result).to eq(moves)
+        rook.possible_moves
+      end
+      it 'returns possible rook moves (4, 4)' do
+        rook.instance_variable_set(:@position, [4, 4])
+        moves = [
+          [4, 5], [4, 6], [4, 7],
+          [5, 4], [6, 4], [7, 4],
+          [4, 3], [4, 2], [4, 1], [4, 0],
+          [3, 4], [2, 4], [1, 4], [0, 4]
+        ]
+        result = rook.possible_moves
+        expect(result).to eq(moves)
+        rook.possible_moves
+      end
+      it 'returns possible rook moves (4, 3)' do
+        rook.instance_variable_set(:@position, [4, 3])
+        moves = [
+          [4, 4], [4, 5], [4, 6], [4, 7],
+          [5, 3], [6, 3], [7, 3],
+          [4, 2], [4, 1], [4, 0],
+          [3, 3], [2, 3], [1, 3], [0, 3]
+        ]
+        result = rook.possible_moves
+        expect(result).to eq(moves)
+        rook.possible_moves
+      end
     end
   end
 end

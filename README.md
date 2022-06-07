@@ -15,3 +15,4 @@ rspec --format documentation spec/cell_spec.rb
 rspec --format documentation spec/pieces_spec/piece_spec.rb
 rspec --format documentation spec/pieces_spec/rook_spec.rb
 rspec --format documentation spec/pieces_spec/bishop_spec.rb
+rspec --format documentation spec/pieces_spec/queen_spec.rb

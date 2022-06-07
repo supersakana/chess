@@ -23,7 +23,7 @@ describe Bishop do
         bishop.instance_variable_set(:@position, [5, 0])
         moves = [
           [6, 1], [7, 2],
-          [4, 1], [5, 2], [6, 3], [7, 4]
+          [4, 1], [3, 2], [2, 3], [1, 4], [0, 5]
         ]
         result = bishop.possible_moves
         expect(result).to eq(moves)

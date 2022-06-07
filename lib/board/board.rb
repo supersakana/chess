@@ -24,7 +24,7 @@ class Board
     hash[cell.value] = cell
   end
 
-  # prints the board in a basic format
+  # prints the formatted board
   def print_board
     i = 7
     puts "   #{('A'..'H').to_a.join('  ')}"

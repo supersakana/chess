@@ -10,7 +10,7 @@ class Queen < Piece
     @icon = "\u265B"
   end
 
-  # generates a list of coordinates
+  # generates a list of possible queen coordinates
   def possible_moves(moves = [])
     transitions.each do |i|
       move = @position
@@ -26,6 +26,7 @@ class Queen < Piece
 
   private
 
+  # list of increments needed to find possible queen moves
   def transitions
     [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]
   end

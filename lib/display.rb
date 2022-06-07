@@ -19,4 +19,11 @@ module Display
   def display_invalid
     puts 'Invalid Input'.colorize(color: :red)
   end
+
+  # name prompt for when a player is created
+  def display_name(number, team)
+    puts "Player #{number}, your team is #{team}."
+    puts 'What is your name?'
+    gets.chomp
+  end
 end

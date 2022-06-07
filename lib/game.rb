@@ -2,7 +2,7 @@
 
 require 'pry-byebug'
 
-# contains player functionality
+# contains main game functionality
 class Game
   include Display
 
@@ -10,6 +10,7 @@ class Game
     @board = Board.new
     @player_one = nil
     @player_two = nil
+    @cpu = nil
     @round = 0
   end
 
@@ -34,16 +35,25 @@ class Game
   end
   # rubocop:enable Style/CaseLikeIf
 
-  def one_player
-    @player_one = create_player
-    @player_two = nil # Cpu.new
+  # creates a new player object
+  def create_player(number, team)
+    name = display_name(number, team)
+    Player.new(name, team)
   end
+end
 
-  # sets up game for 2 humans
-  def two_players
-    @player_one = create_player
-    @player_two = create_player
-  end
+private
 
-  def create_player; end
+# sets up Human vs CPU
+def one_player
+  puts 'Human vs CPU is not set up yet, work in progress...'
+  exit
+  # @player_one = create_player(1, 'White')
+  # @cpu = nil # Cpu.new
+end
+
+# sets up Human vs Human
+def two_players
+  @player_one = create_player(1, 'White')
+  @player_two = create_player(2, 'Black')
 end

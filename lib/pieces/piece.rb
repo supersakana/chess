@@ -41,7 +41,11 @@ class Piece
 
   # returns a piece color
   def create_color(position)
-    position[0] < 2 ? :light_white : :black
+    if position[0] < 2
+      :light_white
+    else
+      :black
+    end
   end
 
   # generates a list of coordinates

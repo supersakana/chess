@@ -3,6 +3,7 @@
 # general files
 require_relative 'display'
 require_relative 'game'
+require_relative 'player'
 
 # board files
 require_relative 'board/board'

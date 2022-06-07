@@ -14,9 +14,5 @@ puts <<~HEREDOC
 HEREDOC
 gets
 
-def create_player
-  
-end
-
 game = Game.new
 game.start

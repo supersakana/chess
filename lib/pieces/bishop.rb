@@ -3,7 +3,6 @@
 # contains bishop functionality
 class Bishop < Piece
   attr_reader :icon
-  attr_accessor :position
 
   def initialize(position)
     super(position)

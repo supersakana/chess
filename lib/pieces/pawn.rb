@@ -3,7 +3,6 @@
 # contains pawn functionality
 class Pawn < Piece
   attr_accessor :icon
-  attr_reader :color
 
   def initialize(position)
     super(position)

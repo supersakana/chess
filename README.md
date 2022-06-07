@@ -16,3 +16,4 @@ https://www.theodinproject.com/lessons/ruby-ruby-final-project
 - rspec --format documentation spec/pieces_spec/bishop_spec.rb
 - rspec --format documentation spec/pieces_spec/queen_spec.rb
 - rspec --format documentation spec/pieces_spec/knight_spec.rb
+- rspec --format documentation spec/pieces_spec/king_spec.rb

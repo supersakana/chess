@@ -8,6 +8,8 @@ require_relative '../lib/library'
 
 describe Game do
   subject(:game) { described_class.new }
+  let(:player_one) { double('first_player', name: 'Zac', move: 'X') }
+  let(:player_two) { double('second_player', name: 'Zoe', move: 'O') }
   describe '#game_choice' do
     context 'when a valid input is passed' do
       it 'creates a single player game when 1 is passed' do
@@ -46,6 +48,26 @@ describe Game do
       it 'has a team' do
         player = game.create_player(1, 'White')
         expect(player.team).to eq('White')
+      end
+    end
+  end
+  describe '#turn_player' do
+    before do
+      game.instance_variable_set(:@player_one, player_one)
+      game.instance_variable_set(:@player_two, player_two)
+    end
+    context 'when the round number is odd' do
+      it 'returns player one' do
+        game.instance_variable_set(:@round, 1)
+        result = game.turn_player
+        expect(result).to eq(player_one)
+      end
+    end
+    context 'when the round number is even' do
+      it 'returns player two' do
+        game.instance_variable_set(:@round, 2)
+        result = game.turn_player
+        expect(result).to eq(player_two)
       end
     end
   end

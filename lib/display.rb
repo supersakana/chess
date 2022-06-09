@@ -13,6 +13,7 @@ module Display
   # prompt for player to make a move
   def display_choice(player)
     puts "#{player}... make your move (i.e. a2a3)"
+    gets.chomp.downcase
   end
 
   # anytime an invalid input is passed

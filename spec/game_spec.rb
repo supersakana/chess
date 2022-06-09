@@ -8,8 +8,8 @@ require_relative '../lib/library'
 
 describe Game do
   subject(:game) { described_class.new }
-  let(:player_one) { double('first_player', name: 'Zac', move: 'X') }
-  let(:player_two) { double('second_player', name: 'Zoe', move: 'O') }
+  let(:player_one) { double('first_player', name: 'Alpha') }
+  let(:player_two) { double('second_player', name: 'Omega') }
   describe '#game_choice' do
     context 'when a valid input is passed' do
       it 'creates a single player game when 1 is passed' do

@@ -19,7 +19,6 @@ class Game
   # general functionality between start to end of game
   def start
     game_choice
-    @board.print_board
     game_loop
   end
 
@@ -46,11 +45,11 @@ class Game
 
   # general gameplay until winner is declared
   def game_loop
-    until @board.check_mate?
-      @board.print_board
-      player = turn_player
-      player.make_choice
-    end
+    # until @board.check_mate?
+    @board.print_board
+    player = turn_player
+    player.make_move
+    # end
   end
 
   # switches current player

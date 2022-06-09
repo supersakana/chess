@@ -25,11 +25,11 @@ class Board
   end
 
   # prints the formatted board
-  def print_board(row = [])
-    system 'clear'
+  def print_board
     i = 7
     puts "   #{('A'..'H').to_a.join('  ')}"
     until i.negative?
+      row = []
       @cells.select { |k, v| row << v.form if k[0] == i }
       puts "#{i + 1} #{row.join('')} #{i + 1}"
       i -= 1

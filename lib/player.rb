@@ -4,11 +4,14 @@
 class Player
   include Display
 
+  attr_accessor :pieces
   attr_reader :name, :team
+
 
   def initialize(name, team)
     @name = name
     @team = team
+    @pieces = []
   end
 
   # prompts player to input start/landing position of chess piece

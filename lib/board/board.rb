@@ -28,8 +28,8 @@ class Board
 
   # checks if starting position possible moves include the landing position
   def legal?(start, landing)
-    p "#{start} #{@cells[start].piece.icon} #{@cells[start].piece.possible_moves}"
-    p landing
+    legal_moves = @cells[start].piece.possible_moves
+    legal_moves.include?(landing)
   end
 
   # prints the formatted board

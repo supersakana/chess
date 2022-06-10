@@ -67,8 +67,9 @@ class Game
   end
 
   # checks is the translated input is a legal move else prompts user again
+  # how to deal with nil values?
   def verify(move)
-    @board.legal?(move[0], move[1])
+    p move if @board.legal?(move[0], move[1])
   end
 
   private
@@ -84,6 +85,13 @@ class Game
   # sets up Human vs Human
   def two_players
     @player_one = create_player(1, 'White')
+    @player_one.pieces = assign_pieces(:light_white)
     @player_two = create_player(2, 'Black')
+    @player_two.piece = assign_pieces(:black)
+  end
+
+  # assigns player's pieces depending on color
+  def assign_pieces(color)
+    @board.cells.select { |_k, v| v.piece.color == color unless v.piece.nil? }
   end
 end

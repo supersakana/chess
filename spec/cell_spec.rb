@@ -36,87 +36,87 @@ describe Cell do
     end
     context 'when given a Bishop starting positions' do
       it 'creates Bishop bottom left' do
-        value = cell.instance_variable_set(:@value, [0, 2])
+        value = cell.instance_variable_set(:@value, [2, 0])
         cell.create_piece(value)
         expect(cell.piece).to be_a(Bishop)
       end
       it 'creates Bishop bottom right' do
-        value = cell.instance_variable_set(:@value, [0, 5])
+        value = cell.instance_variable_set(:@value, [5, 0])
         cell.create_piece(value)
         expect(cell.piece).to be_a(Bishop)
       end
       it 'creates Bishop top left' do
-        value = cell.instance_variable_set(:@value, [7, 2])
+        value = cell.instance_variable_set(:@value, [2, 7])
         cell.create_piece(value)
         expect(cell.piece).to be_a(Bishop)
       end
       it 'creates Bishop top right' do
-        value = cell.instance_variable_set(:@value, [7, 5])
+        value = cell.instance_variable_set(:@value, [5, 7])
         cell.create_piece(value)
         expect(cell.piece).to be_a(Bishop)
       end
     end
     context 'when given a Knight starting positions' do
       it 'creates Knight bottom left' do
-        value = cell.instance_variable_set(:@value, [0, 1])
+        value = cell.instance_variable_set(:@value, [1, 0])
         cell.create_piece(value)
         expect(cell.piece).to be_a(Knight)
       end
       it 'creates Knight bottom right' do
-        value = cell.instance_variable_set(:@value, [0, 6])
+        value = cell.instance_variable_set(:@value, [6, 0])
         cell.create_piece(value)
         expect(cell.piece).to be_a(Knight)
       end
       it 'creates Knight top left' do
-        value = cell.instance_variable_set(:@value, [7, 1])
+        value = cell.instance_variable_set(:@value, [1, 7])
         cell.create_piece(value)
         expect(cell.piece).to be_a(Knight)
       end
       it 'creates Knight top right' do
-        value = cell.instance_variable_set(:@value, [7, 6])
+        value = cell.instance_variable_set(:@value, [6, 7])
         cell.create_piece(value)
         expect(cell.piece).to be_a(Knight)
       end
     end
     context 'when given a King starting positions' do
       it 'creates King bottom' do
-        value = cell.instance_variable_set(:@value, [0, 4])
+        value = cell.instance_variable_set(:@value, [4, 0])
         cell.create_piece(value)
         expect(cell.piece).to be_a(King)
       end
       it 'creates King top' do
-        value = cell.instance_variable_set(:@value, [7, 4])
+        value = cell.instance_variable_set(:@value, [4, 7])
         cell.create_piece(value)
         expect(cell.piece).to be_a(King)
       end
     end
     context 'when given a Queen starting positions' do
       it 'creates Queen bottom' do
-        value = cell.instance_variable_set(:@value, [0, 3])
+        value = cell.instance_variable_set(:@value, [3, 0])
         cell.create_piece(value)
         expect(cell.piece).to be_a(Queen)
       end
       it 'creates Queen top ' do
-        value = cell.instance_variable_set(:@value, [7, 3])
+        value = cell.instance_variable_set(:@value, [3, 7])
         cell.create_piece(value)
         expect(cell.piece).to be_a(Queen)
       end
     end
     context 'when given a Pawn starting positions' do
       it 'creates Pawn bottom row ' do
-        value = cell.instance_variable_set(:@value, [1, 3])
+        value = cell.instance_variable_set(:@value, [3, 1])
         cell.create_piece(value)
         expect(cell.piece).to be_a(Pawn)
       end
       it 'creates Pawn top row ' do
-        value = cell.instance_variable_set(:@value, [6, 3])
+        value = cell.instance_variable_set(:@value, [3, 6])
         cell.create_piece(value)
         expect(cell.piece).to be_a(Pawn)
       end
     end
     context 'when given an empty position' do
       it 'returns nil ' do
-        value = cell.instance_variable_set(:@value, [5, 1])
+        value = cell.instance_variable_set(:@value, [1, 5])
         cell.create_piece(value)
         expect(cell.piece).to be_nil
       end

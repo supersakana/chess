@@ -23,7 +23,7 @@ class Piece
       King.new(position)
     elsif starts[:queen].include?(position)
       Queen.new(position)
-    elsif [1, 6].include?(position[0])
+    elsif [1, 6].include?(position[1])
       Pawn.new(position)
     end
   end
@@ -32,16 +32,16 @@ class Piece
   def self.starts
     {
       rook: [[0, 0], [7, 0], [0, 7], [7, 7]],
-      bishop: [[0, 2], [0, 5], [7, 2], [7, 5]],
-      knight: [[0, 1], [0, 6], [7, 1], [7, 6]],
-      king: [[0, 4], [7, 4]],
-      queen: [[0, 3], [7, 3]]
+      bishop: [[2, 0], [5, 0], [2, 7], [5, 7]],
+      knight: [[1, 0], [6, 0], [1, 7], [6, 7]],
+      king: [[4, 0], [4, 7]],
+      queen: [[3, 0], [3, 7]]
     }
   end
 
   # returns a piece color
   def create_color(position)
-    if position[0] < 2
+    if position[1] < 2
       :light_white
     else
       :black

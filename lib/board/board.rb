@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'pry-byebug'
+
 # contains game board functionality
 class Board
   attr_accessor :cells
@@ -24,13 +26,19 @@ class Board
     hash[cell.value] = cell
   end
 
+  # checks if starting position possible moves include the landing position
+  def legal?(start, landing)
+    p "#{start} #{@cells[start].piece.icon} #{@cells[start].piece.possible_moves}"
+    p landing
+  end
+
   # prints the formatted board
   def print_board
     i = 7
     puts "   #{('A'..'H').to_a.join('  ')}"
     until i.negative?
       row = []
-      @cells.select { |k, v| row << v.form if k[0] == i }
+      @cells.select { |k, v| row << v.form if k[1] == i }
       puts "#{i + 1} #{row.join('')} #{i + 1}"
       i -= 1
     end

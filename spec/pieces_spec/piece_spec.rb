@@ -16,7 +16,7 @@ describe Piece do
     end
     context 'when row (value[0]) is more than 2' do
       it 'returns black' do
-        value = [7, 0]
+        value = [0, 7]
         result = piece.create_color(value)
         expect(result).to eq(:black)
       end

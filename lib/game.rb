@@ -68,7 +68,7 @@ class Game
 
   # checks is the translated input is a legal move else prompts user again
   def verify(move)
-    p move
+    @board.legal?(move[0], move[1])
   end
 
   private

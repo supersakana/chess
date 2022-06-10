@@ -23,7 +23,7 @@ class Game
   end
 
   # rubocop:disable Style/CaseLikeIf
-  # prompts user
+  # prompts user to choose game type
   def game_choice
     choice = display_games
     if choice == '1'
@@ -47,9 +47,14 @@ class Game
   def game_loop
     # until @board.check_mate?
     @board.print_board
+    make_move
+  end
+
+  # player inputs move then move gets validated
+  def make_move
     player = turn_player
-    player.make_move
-    # end
+    move = player.input
+    verify(move)
   end
 
   # switches current player
@@ -59,6 +64,11 @@ class Game
     else
       @player_two
     end
+  end
+
+  # checks is the translated input is a legal move else prompts user again
+  def verify(move)
+    p move
   end
 
   private

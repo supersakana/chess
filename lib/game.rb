@@ -72,7 +72,7 @@ class Game
 
   # switches current player
   def turn_player
-    if @round.odd?
+    if round.odd?
       @player_one
     else
       @player_two

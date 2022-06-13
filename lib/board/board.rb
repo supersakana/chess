@@ -34,9 +34,13 @@ class Board
     pieces
   end
 
-  # update the board given a start and landing position
+  # (REFACTOR) update the board given a start and landing position
   def update_board(start, land)
-    # code tor run
+    selected = @cells[start].piece
+    @cells[start].piece = nil
+    selected.position = land
+    @cells[land].piece = selected
+    print_board
   end
 
   # prints the formatted board

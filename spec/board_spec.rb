@@ -13,4 +13,8 @@ describe Board do
       end
     end
   end
+  describe "#update_board" do
+    context 'when given a valid input' do
+    # test to run
+  end
 end

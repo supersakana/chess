@@ -10,6 +10,14 @@ class Board
     @cells = create_board
   end
 
+  # list of all the piece objects in each occupied cell
+  def all_pieces(pieces = [])
+    @cells.each do |_k, v|
+      pieces << v.piece unless v.piece.nil?
+    end
+    pieces
+  end
+
   # returns a hash of 64 coordinates (8 x 8 grid)
   def create_board
     coordinates = [0, 1, 2, 3, 4, 5, 6, 7].repeated_permutation(2).to_a
@@ -24,23 +32,6 @@ class Board
   # adds cell with data
   def add_cells(cell, hash)
     hash[cell.value] = cell
-  end
-
-  # list of all the piece objects in each occupied cell
-  def all_pieces(pieces = [])
-    @cells.each do |_k, v|
-      pieces << v.piece unless v.piece.nil?
-    end
-    pieces
-  end
-
-  # (REFACTOR) update the board given a start and landing position
-  def update_board(start, land)
-    selected = @cells[start].piece
-    @cells[start].piece = nil
-    selected.position = land
-    @cells[land].piece = selected
-    print_board
   end
 
   # prints the formatted board

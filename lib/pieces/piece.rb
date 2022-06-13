@@ -48,11 +48,6 @@ class Piece
     end
   end
 
-  # generates a list of coordinates
-  def possible_moves
-    raise NotImpelementedError
-  end
-
   # list of increments needed to find possible moves
   def transitions
     raise NotImpelementedError

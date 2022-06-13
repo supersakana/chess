@@ -13,18 +13,6 @@ class Player
     @pieces = pieces
   end
 
-  # returns true if the translated input is valid
-  def valid_input?(input)
-    return false unless input.length == 4
-
-    translated = translate(input)
-
-    @pieces.any? do |piece|
-      piece.position == translated[0] && piece.possible_moves.include?(translated[1])
-    end
-  end
-
-  # converts input for program to access chess board (a2a3 => [[0, 1], [0, 2]])
   def translate(input)
     alpha = ('a'..'h').to_a
     start = [alpha.index(input[0]), input[1].to_i - 1]

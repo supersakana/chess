@@ -4,7 +4,6 @@
 
 require_relative '../lib/library'
 require 'pry-byebug'
-# rubocop:disable Metrics/BlockLength
 
 describe Player do
   let(:piece_one) { double('pawn', position: [0, 1], possible_moves: [[0, 2]]) }
@@ -30,46 +29,4 @@ describe Player do
       end
     end
   end
-  describe '#valid_input?' do
-    context 'when given a valid input' do
-      it 'returns true (a2a3)' do
-        input = 'a2a3'
-        result = player.valid_input?(input)
-        expect(result).to be_truthy
-      end
-      it 'returns true (g8f6)' do
-        input = 'g8f6'
-        result = player.valid_input?(input)
-        expect(result).to be_truthy
-      end
-      it 'returns true (d1g5)' do
-        input = 'd1g5'
-        result = player.valid_input?(input)
-        expect(result).to be_truthy
-      end
-    end
-    context 'it returns false when' do
-      it 'input length is more than 4' do
-        input = 'a1a2a3'
-        result = player.valid_input?(input)
-        expect(result).to be_falsey
-      end
-      it 'input length is less than 4' do
-        input = 'a1'
-        result = player.valid_input?(input)
-        expect(result).to be_falsey
-      end
-      it 'input inlcudes special chars' do
-        input = 'a#!&'
-        result = player.valid_input?(input)
-        expect(result).to be_falsey
-      end
-      it 'input includes out of bound chars' do
-        input = 'z9p0'
-        result = player.valid_input?(input)
-        expect(result).to be_falsey
-      end
-    end
-  end
 end
-# rubocop:enable Metrics/BlockLength

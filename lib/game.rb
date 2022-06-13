@@ -12,7 +12,7 @@ class Game
     @board = Board.new
     @player_one = nil
     @player_two = nil
-    @cpu = nil
+    # @cpu = nil
     @round = 1
   end
 
@@ -51,16 +51,28 @@ class Game
     make_move
   end
 
-  # player inputs move then move gets validated
+  # (REFACTOR) player inputs move then move gets validated
   def make_move
     player = turn_player
-    move = player.input
-    p move
+    move = display_choice(player.name)
+    update(move, player)
+  end
+
+  # (REFACTOR) updates the gameboard and round number
+  def update(move, player)
+    if player.valid_input?(move)
+      translated = player.translate(move)
+      @board.update_board(translated[0], translated[1])
+      @round += 1
+    else
+      display_invalid
+      make_move
+    end
   end
 
   # switches current player
   def turn_player
-    if round.odd?
+    if @round.odd?
       @player_one
     else
       @player_two

@@ -7,31 +7,10 @@ require 'pry-byebug'
 # rubocop:disable Metrics/BlockLength
 
 describe Player do
-  subject(:player) { described_class.new('Zac', 'White') }
-  describe '#input' do
-    context 'when the player is called to make a move' do
-      before do
-        allow(player).to receive(:display_choice).and_return('a2a3')
-      end
-      it 'recives a prompt for the player to make move' do
-        expect(player).to receive(:display_choice)
-        player.input
-      end
-      it 'translates the player input' do
-        expect(player).to receive(:translate)
-        player.input
-      end
-      it 'returns the translated input when given a valid input' do
-        result = player.input
-        expect(result).to eql([[0, 1], [0, 2]])
-      end
-      it 'returns nil if input is invalid' do
-        allow(player).to receive(:display_choice).and_return('a1a2a3')
-        result = player.input
-        expect(result).to be_nil
-      end
-    end
-  end
+  let(:piece_one) { double('pawn', position: [0, 1], possible_moves: [[0, 2]]) }
+  let(:piece_two) { double('knight', position: [6, 7], possible_moves: [[5, 5]]) }
+  let(:piece_three) { instance_double('queen', position: [3, 0], possible_moves: [[6, 4]]) }
+  subject(:player) { described_class.new('Zac', :light_white, [piece_one, piece_two, piece_three]) }
   describe '#translate' do
     context 'when given a valid input' do
       it 'returns the correct output (a2a3 => [[0, 1], [0, 2]])' do
@@ -45,9 +24,9 @@ describe Player do
         expect(result).to eql([[6, 7], [5, 5]])
       end
       it 'returns the correct output (d1g5 => [[3, 0], [6, 4]])' do
-        input = 'd1g5'
+        input = 'd1g4'
         result = player.translate(input)
-        expect(result).to eql([[3, 0], [6, 4]])
+        expect(result).to eql([[3, 0], [6, 3]])
       end
     end
   end

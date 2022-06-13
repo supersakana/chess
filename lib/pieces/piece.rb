@@ -2,7 +2,7 @@
 
 # superclass and factory for all pieces
 class Piece
-  attr_accessor :position
+  attr_accessor :position, :vaccant_moves
   attr_reader :color
 
   def initialize(position)

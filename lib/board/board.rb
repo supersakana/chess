@@ -34,6 +34,11 @@ class Board
     pieces
   end
 
+  # update the board given a start and landing position
+  def update_board(start, land)
+    # code tor run
+  end
+
   # prints the formatted board
   def print_board
     i = 7

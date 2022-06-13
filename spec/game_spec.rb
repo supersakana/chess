@@ -45,9 +45,12 @@ describe Game do
         player = game.create_player(1, 'White')
         expect(player.name).to eq('Stranger')
       end
-      it 'has a team' do
+      it 'has a color' do
         player = game.create_player(1, 'White')
         expect(player.team).to eq('White')
+      end
+      xit 'has a list of pieces' do
+        # test to run
       end
     end
   end

@@ -38,9 +38,10 @@ class Game
   # rubocop:enable Style/CaseLikeIf
 
   # creates a new player object
-  def create_player(number, team)
-    name = display_name(number, team)
-    Player.new(name, team)
+  def create_player(number, color)
+    name = display_name(number, color)
+    pieces = @board.all_pieces.select { |piece| piece.color == color }
+    Player.new(name, color, pieces)
   end
 
   # general gameplay until winner is declared
@@ -54,7 +55,7 @@ class Game
   def make_move
     player = turn_player
     move = player.input
-    verify(move)
+    p move
   end
 
   # switches current player
@@ -64,12 +65,6 @@ class Game
     else
       @player_two
     end
-  end
-
-  # checks is the translated input is a legal move else prompts user again
-  # how to deal with nil values?
-  def verify(move)
-    p move if @board.legal?(move[0], move[1])
   end
 
   private
@@ -84,14 +79,7 @@ class Game
 
   # sets up Human vs Human
   def two_players
-    @player_one = create_player(1, 'White')
-    @player_one.pieces = assign_pieces(:light_white)
-    @player_two = create_player(2, 'Black')
-    @player_two.piece = assign_pieces(:black)
-  end
-
-  # assigns player's pieces depending on color
-  def assign_pieces(color)
-    @board.cells.select { |_k, v| v.piece.color == color unless v.piece.nil? }
+    @player_one = create_player(1, :light_white)
+    @player_two = create_player(2, :black)
   end
 end

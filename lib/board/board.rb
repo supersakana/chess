@@ -26,10 +26,12 @@ class Board
     hash[cell.value] = cell
   end
 
-  # checks if starting position possible moves include the landing position
-  def legal?(start, landing)
-    legal_moves = @cells[start].piece.possible_moves
-    legal_moves.include?(landing)
+  # list of all the piece objects in each occupied cell
+  def all_pieces(pieces = [])
+    @cells.each do |_k, v|
+      pieces << v.piece unless v.piece.nil?
+    end
+    pieces
   end
 
   # prints the formatted board

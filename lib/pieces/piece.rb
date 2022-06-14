@@ -8,7 +8,6 @@ class Piece
   def initialize(position)
     @position = position
     @color = create_color(position)
-    @vaccant_moves = []
   end
 
   # creates a piece based on initial position

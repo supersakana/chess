@@ -10,7 +10,7 @@ class Board
     @cells = create_board
   end
 
-  # list of all the piece objects in each occupied cell
+  # list of all the piece objects in each occupied cell (all pieces except pawns)
   def all_pieces(pieces = [])
     @cells.each do |_k, v|
       pieces << v.piece unless v.piece.nil?
@@ -18,19 +18,28 @@ class Board
     pieces
   end
 
-  # returns avalible moves for a given piece
-  def vaccant_moves(piece, moves = [])
-    i = assign_i(piece)
-    @cells[piece].piece.transitions.each do |value|
-      until i.zero?
-        x = move[0] + value[0]
-        y = move[1] + value[1]
-        move = [x, y]
-        break if @cells[move].piece.color == @cells[piece].piece.color
-
-        moves << move if x.between?(0, 7) && y.between?(0, 7)
+  # returns legal move list given piece position
+  # NEEDS REFACTORING
+  def legals(position, moves = [])
+    i = assign_i(position)
+    @cells[position].piece.transitions.each do |transition|
+      move = position
+      i.times do
+        x = move[0] + transition[0]
+        y = move[1] + transition[1]
+        move = [x, y] if x.between?(0, 7) && y.between?(0, 7)
+        # binding.pry
+        if @cells[move].piece.nil?
+          moves << move
+        elsif @cells[move].piece.color != @cells[position].piece.color
+          moves << move
+          break
+        else
+          break
+        end
       end
     end
+    moves.uniq
   end
 
   # assigns number of iterations based on given piece)

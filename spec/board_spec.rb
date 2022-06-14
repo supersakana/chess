@@ -36,13 +36,52 @@ describe Board do
       end
     end
   end
-  describe '#vaccant_moves' do
+  describe '#legals' do
     before do
       board.instance_variable_get(:@cells)
     end
-    context 'when given a valid rook move' do
-      it 'returns no moves if surrounded by team pieces' do
-        # test to run
+    context 'when a selected piece is in starting position' do
+      it 'returns empty list (Rook)' do
+        move = [0, 0]
+        result = board.legals(move)
+        expect(result).to eq([])
+      end
+      it 'returns empty list (Bishop)' do
+        move = [2, 0]
+        result = board.legals(move)
+        expect(result).to eq([])
+      end
+      it 'returns empty list (Queen)' do
+        move = [3, 0]
+        result = board.legals(move)
+        expect(result).to eq([])
+      end
+      it 'returns empty list (King)' do
+        move = [4, 0]
+        result = board.legals(move)
+        expect(result).to eq([])
+      end
+      it 'returns vaccant moves (Knight)' do
+        move = [6, 0]
+        result = board.legals(move)
+        expect(result).to eq([[7, 2], [5, 2]])
+      end
+    end
+    context 'when position is located in a random cell' do
+      before do
+        board.instance_variable_get(:@cells)
+      end
+      it 'returns correct locations (Rook [3, 3])' do
+        rook = board.cells[[0, 0]].piece
+        board.cells[[3, 3]].piece = rook
+        move = [3, 3]
+        result = board.legals(move)
+        expect(result).to eq([
+                               [3, 4], [3, 5], [3, 6],
+                               [4, 3], [5, 3], [6, 3], [7, 3],
+                               [3, 2],
+                               [2, 3], [1, 3], [0, 3]
+                             ])
       end
     end
   end
@@ -52,7 +91,7 @@ describe Board do
     end
     context 'when given a rook, bishop, or queen coordinate' do
       it 'returns 7 (White Rook)' do
-        move = [0, 0]
+        move = [7, 7]
         result = board.assign_i(move)
         expect(result).to eql(7)
       end

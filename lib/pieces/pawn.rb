@@ -9,7 +9,7 @@ class Pawn < Piece
     @color = create_color(position)
     @icon = "\u265F"
   end
-  
+
   # list of increments needed to find possible pawn moves
   def transitions
     if @color == :light_white

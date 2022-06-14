@@ -9,7 +9,7 @@ class Bishop < Piece
     @color = create_color(position)
     @icon = "\u265D"
   end
-  
+
   # list of increments needed to find possible bishop moves
   def transitions
     [[1, 1], [1, -1], [-1, -1], [-1, 1]]

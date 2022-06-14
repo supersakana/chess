@@ -2,11 +2,9 @@
 
 # superclass and factory for all pieces
 class Piece
-  attr_accessor :position, :vaccant_moves
   attr_reader :color
 
   def initialize(position)
-    @position = position
     @color = create_color(position)
   end
 
@@ -38,7 +36,7 @@ class Piece
     }
   end
 
-  # returns a piece color
+  # returns a piece color based on initial row position
   def create_color(position)
     if position[1] < 2
       :light_white

@@ -76,6 +76,7 @@ class Board
 
   private
 
+  # creates a 8x8 grid with coordinates (Hash of 64 values)
   def create_board
     coordinates = [0, 1, 2, 3, 4, 5, 6, 7].repeated_permutation(2).to_a
     hash = {}

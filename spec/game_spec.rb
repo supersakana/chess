@@ -10,47 +10,22 @@ describe Game do
   subject(:game) { described_class.new }
   let(:player_one) { double('first_player', name: 'Alpha') }
   let(:player_two) { double('second_player', name: 'Omega') }
-  describe '#game_choice' do
-    context 'when a valid input is passed' do
-      it 'creates a single player game when 1 is passed' do
-        allow(game).to receive(:display_games).and_return('1')
-        expect(game).to receive(:one_player)
-        game.game_choice
-      end
-      it 'create a two player game when 2 is passed' do
-        allow(game).to receive(:display_games).and_return('2')
-        expect(game).to receive(:two_players)
-        game.game_choice
-      end
-    end
-    context 'when an invalid input is passed' do
-      it 'returns an invalid input message' do
-        allow(game).to receive(:display_games).and_return('invalid input', '1')
-        allow(game).to receive(:one_player)
-        expect(game).to receive(:display_invalid).once
-        game.game_choice
-      end
-    end
-  end
   describe '#create_player' do
     context 'when a new player is created' do
       before do
         allow(game).to receive(:display_name).and_return('Stranger')
       end
       it 'creates an object of the player class' do
-        player = game.create_player(1, 'White')
+        player = game.create_player(1, :light_white)
         expect(player).to be_a(Player)
       end
       it 'has a name' do
-        player = game.create_player(1, 'White')
+        player = game.create_player(1, :light_white)
         expect(player.name).to eq('Stranger')
       end
       it 'has a color' do
-        player = game.create_player(1, 'White')
-        expect(player.team).to eq('White')
-      end
-      xit 'has a list of pieces' do
-        # test to run
+        player = game.create_player(1, :light_white)
+        expect(player.color).to eq(:light_white)
       end
     end
   end

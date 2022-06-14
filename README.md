@@ -16,5 +16,4 @@ https://www.theodinproject.com/lessons/ruby-ruby-final-project
 - rspec --format documentation spec/game_spec.rb
 - rspec --format documentation spec/board_spec.rb
 - rspec --format documentation spec/cell_spec.rb
-- rspec --format documentation spec/player_spec.rb
 - rspec --format documentation spec/pieces_spec/piece_spec.rb

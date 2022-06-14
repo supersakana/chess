@@ -5,7 +5,7 @@ class Player
   include Display
 
   attr_accessor :pieces
-  attr_reader :name, :team
+  attr_reader :name, :color
 
   def initialize(name, color, pieces)
     @name = name

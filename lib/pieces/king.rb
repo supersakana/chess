@@ -9,7 +9,7 @@ class King < Piece
     @color = create_color(position)
     @icon = "\u265A"
   end
-  
+
   # list of increments needed to find possible knight moves
   def transitions
     [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]

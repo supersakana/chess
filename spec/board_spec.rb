@@ -83,6 +83,52 @@ describe Board do
                                [2, 3], [1, 3], [0, 3]
                              ])
       end
+      it 'returns correct locations (Bishop [5, 4])' do
+        bishop = board.cells[[2, 7]].piece
+        board.cells[[5, 4]].piece = bishop
+        move = [5, 4]
+        result = board.legals(move)
+        expect(result).to eq([
+                               [6, 5],
+                               [6, 3], [7, 2],
+                               [4, 3], [3, 2], [2, 1],
+                               [4, 5]
+                             ])
+      end
+      it 'returns correct locations (Queen [3, 4])' do
+        queen = board.cells[[3, 0]].piece
+        board.cells[[3, 4]].piece = queen
+        move = [3, 4]
+        result = board.legals(move)
+        expect(result).to eq([
+                               [3, 5], [3, 6],
+                               [4, 5], [5, 6],
+                               [4, 4], [5, 4], [6, 4], [7, 4],
+                               [4, 3], [5, 2],
+                               [3, 3], [3, 2],
+                               [2, 3], [1, 2],
+                               [2, 4], [1, 4], [0, 4],
+                               [2, 5], [1, 6]
+                             ])
+      end
+      it 'returns correct locations (King [6, 2])' do
+        king = board.cells[[4, 7]].piece
+        board.cells[[6, 2]].piece = king
+        move = [6, 2]
+        result = board.legals(move)
+        expect(result).to eq([
+                               [6, 3], [7, 3], [7, 2], [7, 1], [6, 1], [5, 1], [5, 2], [5, 3]
+                             ])
+      end
+      it 'returns correct locations (Knight [5, 5])' do
+        knight = board.cells[[1, 0]].piece
+        board.cells[[5, 5]].piece = knight
+        move = [5, 5]
+        result = board.legals(move)
+        expect(result).to eq([
+                               [6, 7], [7, 6], [7, 4], [6, 3], [4, 3], [3, 4], [3, 6], [4, 7]
+                             ])
+      end
     end
   end
   describe '#assign_i' do

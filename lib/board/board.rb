@@ -18,7 +18,7 @@ class Board
     pieces
   end
 
-  # returns legal move list given piece position
+  # returns legal move list given piece position (excludes pawns)
   # NEEDS REFACTORING
   def legals(position, moves = [])
     i = assign_i(position)

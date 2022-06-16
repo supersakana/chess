@@ -17,14 +17,6 @@ describe Board do
       end
     end
   end
-  describe '#valid' do
-    before do
-      let(:player) { instance_double(Player)}
-    end
-    context 'when given a valid input' do
-      it 'returns true'
-    end
-  end
   describe '#translate' do
     context 'when given a valid inputs' do
       it 'returns the correct output (a2a3 => [[0, 1], [0, 2]])' do

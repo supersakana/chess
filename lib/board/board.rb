@@ -19,40 +19,42 @@ class Board
   end
 
   # checks if a given move is valid
-  def valid?(move, _color)
-    return false unless move.length == 4
+  # def valid?(move, _color)
+  #   return false unless move.length == 4
+  # end
 
-    translated = translate(move)
-  end
-
-  # takes an input and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
-  def translate(input)
+  # takes move and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
+  def translate(move)
     alpha = ('a'..'h').to_a
-    start = [alpha.index(input[0]), input[1].to_i - 1]
-    land = [alpha.index(input[2]), input[3].to_i - 1]
+    start = [alpha.index(move[0]), move[1].to_i - 1]
+    land = [alpha.index(move[2]), move[3].to_i - 1]
     [start, land]
   end
 
   # returns legal moves given piece position (excludes pawns)
-  # rubocop:disable Metrics/MethodLength
   def legals(position, moves = [])
     @cells[position].piece_transitions.each do |transition|
-      i = iterators(position)
-      move = position
-      i.times do
-        move = create_move(move, transition)
+      moves << iterated_position(transition, position)
+    end
+    moves.flatten(1).uniq
+  end
 
-        if @cells[move].empty?
-          moves << move
-        elsif @cells[move].piece_color != @cells[position].piece_color
-          moves << move
-          break
-        else
-          break
-        end
+  # returns line of legal moves given a piece's transition (excludes pawns)
+  # rubocop:disable Metrics/MethodLength
+  def iterated_position(transition, position, move = position, line = [])
+    i = iterators(position)
+    i.times do
+      move = create_move(move, transition)
+      if @cells[move].empty?
+        line << move
+      elsif @cells[move].piece_color != @cells[position].piece_color
+        line << move
+        break
+      else
+        break
       end
     end
-    moves.uniq
+    line
   end
   # rubocop:enable Metrics/MethodLength
 
@@ -69,14 +71,9 @@ class Board
   def create_move(move, transition)
     x = move[0] + transition[0]
     y = move[1] + transition[1]
-    return move unless inbound?(x, y)
+    return move unless x.between?(0, 7) && y.between?(0, 7)
 
     [x, y]
-  end
-
-  # returns true if move position is within bounds of chess board
-  def inbound?(x, y)
-    x.between?(0, 7) && y.between?(0, 7)
   end
 
   # prints the formatted board

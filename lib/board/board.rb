@@ -24,9 +24,7 @@ class Board
       i = iterators(position)
       move = position
       i.times do
-        x = move[0] + transition[0]
-        y = move[1] + transition[1]
-        move = [x, y] if inbound?(x, y)
+        move = create_move(move, transition)
 
         if @cells[move].empty?
           moves << move
@@ -48,6 +46,15 @@ class Board
     else
       1
     end
+  end
+
+  # returns a possible move given a transition
+  def create_move(move, transition)
+    x = move[0] + transition[0]
+    y = move[1] + transition[1]
+    return move unless inbound?(x, y)
+
+    [x, y]
   end
 
   # returns true if move position is within bounds of chess board

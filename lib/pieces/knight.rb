@@ -14,4 +14,9 @@ class Knight < Piece
   def transitions
     [[1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]]
   end
+
+  # returns true if possible moves are liniar (false if single coordinates)
+  def line_moves?
+    false
+  end
 end

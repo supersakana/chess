@@ -30,8 +30,7 @@ class Game
   # creates a new player object
   def create_player(number, color)
     name = display_name(number, color)
-    pieces = @board.all_pieces.select { |piece| piece.color == color }
-    Player.new(name, color, pieces)
+    Player.new(name, color)
   end
 
   # general gameplay until winner is declared

@@ -18,4 +18,9 @@ class Pawn < Piece
       [[0, -1], [0, -2], [1, -1], [-1, -1]]
     end
   end
+
+  # returns true if possible moves are liniar (false if single coordinates)
+  def line_moves?
+    false
+  end
 end

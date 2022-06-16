@@ -25,6 +25,20 @@ class Cell
     end
   end
 
+  def empty?
+    @piece.nil?
+  end
+
+  # returns the color of piece
+  def piece_color
+    @piece.color
+  end
+
+  # returns piece transitions
+  def piece_transitions
+    @piece.transitions
+  end
+
   # returns the formatted cell
   def form
     if piece.nil?

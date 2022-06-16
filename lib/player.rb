@@ -7,9 +7,8 @@ class Player
   attr_accessor :pieces
   attr_reader :name, :color
 
-  def initialize(name, color, pieces)
+  def initialize(name, color)
     @name = name
     @color = color
-    @pieces = pieces
   end
 end

@@ -131,71 +131,71 @@ describe Board do
       end
     end
   end
-  describe '#assign_i' do
+  describe 'iterators' do
     before do
       board.instance_variable_get(:@cells)
     end
     context 'when given a rook, bishop, or queen coordinate' do
       it 'returns 7 (White Rook)' do
         move = [7, 7]
-        result = board.assign_i(move)
+        result = board.iterators(move)
         expect(result).to eql(7)
       end
       it 'returns 7 (White Bishop)' do
         move = [2, 0]
-        result = board.assign_i(move)
+        result = board.iterators(move)
         expect(result).to eql(7)
       end
       it 'returns 7 (White Queen)' do
         move = [3, 0]
-        result = board.assign_i(move)
+        result = board.iterators(move)
         expect(result).to eql(7)
       end
       it 'returns 7 (Black Rook)' do
         move = [7, 7]
-        result = board.assign_i(move)
+        result = board.iterators(move)
         expect(result).to eql(7)
       end
       it 'returns 7 (Black Bishop)' do
         move = [5, 7]
-        result = board.assign_i(move)
+        result = board.iterators(move)
         expect(result).to eql(7)
       end
       it 'returns 7 (Black Queen)' do
         move = [3, 7]
-        result = board.assign_i(move)
+        result = board.iterators(move)
         expect(result).to eql(7)
       end
     end
     context 'when given a king, knight, or pawn' do
       it 'returns 1 (White King)' do
         move = [4, 0]
-        result = board.assign_i(move)
+        result = board.iterators(move)
         expect(result).to eql(1)
       end
       it 'returns 1 (White Knight)' do
         move = [1, 0]
-        result = board.assign_i(move)
+        result = board.iterators(move)
         expect(result).to eql(1)
       end
       it 'returns 1 (White Pawn)' do
         move = [1, 1]
-        result = board.assign_i(move)
+        result = board.iterators(move)
         expect(result).to eql(1)
       end
       it 'returns 1 (Black King)' do
         move = [4, 7]
-        result = board.assign_i(move)
+        result = board.iterators(move)
         expect(result).to eql(1)
       end
       it 'returns 1 (Black Knight)' do
         move = [6, 7]
-        result = board.assign_i(move)
+        result = board.iterators(move)
         expect(result).to eql(1)
       end
       it 'returns 1 (Black Pawn)' do
         move = [6, 6]
-        result = board.assign_i(move)
+        result = board.iterators(move)
         expect(result).to eql(1)
       end
     end

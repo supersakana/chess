@@ -18,20 +18,19 @@ class Board
     pieces
   end
 
-  # returns legal move list given piece position (excludes pawns)
-  # NEEDS REFACTORING
+  # returns legal moves given piece position (excludes pawns)
   def legals(position, moves = [])
-    i = assign_i(position)
-    @cells[position].piece.transitions.each do |transition|
+    @cells[position].piece_transitions.each do |transition|
+      i = iterators(position)
       move = position
       i.times do
         x = move[0] + transition[0]
         y = move[1] + transition[1]
-        move = [x, y] if x.between?(0, 7) && y.between?(0, 7)
-        # binding.pry
-        if @cells[move].piece.nil?
+        move = [x, y] if inbound?(x, y)
+
+        if @cells[move].empty?
           moves << move
-        elsif @cells[move].piece.color != @cells[position].piece.color
+        elsif @cells[move].piece_color != @cells[position].piece_color
           moves << move
           break
         else
@@ -43,14 +42,17 @@ class Board
   end
 
   # assigns number of iterations based on given piece)
-  def assign_i(move)
-    if @cells[move].piece.instance_of?(Rook) ||
-       @cells[move].piece.instance_of?(Bishop) ||
-       @cells[move].piece.instance_of?(Queen)
+  def iterators(move)
+    if @cells[move].piece.line_moves?
       7
     else
       1
     end
+  end
+
+  # returns true if move position is within bounds of chess board
+  def inbound?(x, y)
+    x.between?(0, 7) && y.between?(0, 7)
   end
 
   # takes an input and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])

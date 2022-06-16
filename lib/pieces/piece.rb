@@ -49,4 +49,9 @@ class Piece
   def transitions
     raise NotImpelementedError
   end
+
+  # returns true if possible moves are liniar (false if single coordinates)
+  def line_moves?
+    raise NotImpelementedError
+  end
 end

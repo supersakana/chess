@@ -10,15 +10,31 @@ class Board
     @cells = create_board
   end
 
-  # list of all the piece objects in each occupied cell (all pieces except pawns)
-  def all_pieces(pieces = [])
+  # returns a list of a player's pieces given the player color
+  def player_pieces(color, pieces = [])
     @cells.each do |_k, v|
-      pieces << v.piece unless v.piece.nil?
+      pieces << v.piece unless v.empty?
     end
-    pieces
+    pieces.select { |piece| piece.color == color }
+  end
+
+  # checks if a given move is valid
+  def valid?(move, _color)
+    return false unless move.length == 4
+
+    translated = translate(move)
+  end
+
+  # takes an input and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
+  def translate(input)
+    alpha = ('a'..'h').to_a
+    start = [alpha.index(input[0]), input[1].to_i - 1]
+    land = [alpha.index(input[2]), input[3].to_i - 1]
+    [start, land]
   end
 
   # returns legal moves given piece position (excludes pawns)
+  # rubocop:disable Metrics/MethodLength
   def legals(position, moves = [])
     @cells[position].piece_transitions.each do |transition|
       i = iterators(position)
@@ -38,6 +54,7 @@ class Board
     end
     moves.uniq
   end
+  # rubocop:enable Metrics/MethodLength
 
   # assigns number of iterations based on given piece)
   def iterators(move)
@@ -62,16 +79,8 @@ class Board
     x.between?(0, 7) && y.between?(0, 7)
   end
 
-  # takes an input and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
-  def translate(input)
-    alpha = ('a'..'h').to_a
-    start = [alpha.index(input[0]), input[1].to_i - 1]
-    land = [alpha.index(input[2]), input[3].to_i - 1]
-    [start, land]
-  end
-
   # prints the formatted board
-  def print_board
+  def print
     i = 7
     puts "   #{('A'..'H').to_a.join('  ')}"
     until i.negative?

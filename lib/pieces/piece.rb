@@ -9,6 +9,7 @@ class Piece
   end
 
   # creates a piece based on initial position
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def self.call(position)
     if starts[:rook].include?(position)
       Rook.new(position)
@@ -24,6 +25,7 @@ class Piece
       Pawn.new(position)
     end
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   # starting positions for each piece
   def self.starts

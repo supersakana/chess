@@ -130,6 +130,41 @@ describe Board do
                              ])
       end
     end
+    context 'when given a pawn position' do
+      it 'runs #iterate_pawn instead of #iterate_position' do
+        move = [1, 1]
+        expect(board).to receive(:iterate_pawn).exactly(4).times
+        board.legals(move)
+      end
+    end
+  end
+  describe 'iterate_position' do
+    context 'when input a valid move' do
+      it 'returns line of legal moves given the transition' do
+        # test to run
+      end
+      it 'it continues iterating if the next cell is empty' do
+        # test to run
+      end
+      it 'pushes a foe position then breaks iteration' do
+        # test to run
+      end
+      it 'breaks iteration if encounters same colored piece' do
+        # test to run
+      end
+    end
+  end
+  describe 'create_move' do
+    context 'when a valid move is input' do
+      it 'returns the iteratied move' do
+        # test to run
+      end
+    end
+    context 'when a out of bound move is input' do
+      it 'returns the un-iterated moved' do
+        # test to run
+      end
+    end
   end
   describe 'iterators' do
     before do

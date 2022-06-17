@@ -10,6 +10,11 @@ class Board
     @cells = create_board
   end
 
+  # checks if a given move is valid
+  # def valid?(move, _color)
+  #   return false unless move.length == 4
+  # end
+
   # returns a list of a player's pieces given the player color
   def player_pieces(color, pieces = [])
     @cells.each do |_k, v|
@@ -17,11 +22,6 @@ class Board
     end
     pieces.select { |piece| piece.color == color }
   end
-
-  # checks if a given move is valid
-  # def valid?(move, _color)
-  #   return false unless move.length == 4
-  # end
 
   # takes move and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
   def translate(move)
@@ -34,14 +34,23 @@ class Board
   # returns legal moves given piece position (excludes pawns)
   def legals(position, moves = [])
     @cells[position].piece_transitions.each do |transition|
-      moves << iterated_position(transition, position)
+      moves << if @cells[position].piece.is_a?(Pawn)
+                 iterate_pawn(transition, position)
+               else
+                 iterate_position(transition, position)
+               end
     end
     moves.flatten(1).uniq
   end
 
-  # returns line of legal moves given a piece's transition (excludes pawns)
+  # returns line of legal moves given pawn transitions
+  def iterate_pawn(transition, position, move = position, line = [])
+    # code to run
+  end
+
+  # (TEST THIS) returns line of legal moves given a piece's transition (excludes pawns)
   # rubocop:disable Metrics/MethodLength
-  def iterated_position(transition, position, move = position, line = [])
+  def iterate_position(transition, position, move = position, line = [])
     i = iterators(position)
     i.times do
       move = create_move(move, transition)
@@ -58,7 +67,7 @@ class Board
   end
   # rubocop:enable Metrics/MethodLength
 
-  # assigns number of iterations based on given piece)
+  # assigns number of iterations based on given piece
   def iterators(move)
     if @cells[move].piece.line_moves?
       7
@@ -67,7 +76,7 @@ class Board
     end
   end
 
-  # returns a possible move given a transition
+  # (TEST THIS) returns a possible move given a transition
   def create_move(move, transition)
     x = move[0] + transition[0]
     y = move[1] + transition[1]

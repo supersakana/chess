@@ -12,7 +12,7 @@ class Game
     @board = Board.new
     @player_one = nil
     @player_two = nil
-    @current = @player_one
+    @current = nil
   end
 
   # general functionality between start to end of game
@@ -43,19 +43,18 @@ class Game
   def make_move
     player = turn_player
     move = display_choice(player.name)
-    p move
-    # validate(move, player.color)
+    validate(move, player.color)
   end
 
   # checks if move is valid
-  # def validate(move, color)
-  #   if @board.valid?(move, color)
-  #     # move_piece(move)
-  #     p 'im valid'
-  #   else
-  #     make_move
-  #   end
-  # end
+  def validate(move, color)
+    if @board.valid?(move, color)
+      # move_piece(move)
+      p 'im valid'
+    else
+      make_move
+    end
+  end
 
   # switches current player
   def turn_player

@@ -11,23 +11,26 @@ class Board
   end
 
   # checks if a given move is valid
-  # def valid?(move, _color)
-  #   return false unless move.length == 4
-  # end
+  def valid?(input, color)
+    return false unless input.length == 4
 
-  # returns a list of a player's pieces given the player color
-  def player_pieces(color, pieces = [])
-    @cells.each do |_k, v|
-      pieces << v.piece unless v.empty?
+    translated = translate(input)
+
+    player_pieces(color).any? do |k, _v|
+      k == translated[0] && legals(k).include?(translated[1])
     end
-    pieces.select { |piece| piece.color == color }
+  end
+
+  # returns a list of a player's cells/pieces given the player color
+  def player_pieces(color)
+    @cells.select { |_k, v| v.piece_color == color }
   end
 
   # takes move and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
-  def translate(move)
+  def translate(input)
     alpha = ('a'..'h').to_a
-    start = [alpha.index(move[0]), move[1].to_i - 1]
-    land = [alpha.index(move[2]), move[3].to_i - 1]
+    start = [alpha.index(input[0]), input[1].to_i - 1]
+    land = [alpha.index(input[2]), input[3].to_i - 1]
     [start, land]
   end
 

@@ -31,12 +31,22 @@ class Cell
 
   # returns the color of piece
   def piece_color
-    @piece.color
+    return @piece.color unless empty?
+  end
+
+  def foe_color
+    return if empty?
+
+    if piece_color == :light_white
+      :black
+    else
+      :light_white
+    end
   end
 
   # returns piece transitions
   def piece_transitions
-    @piece.transitions
+    @piece.transitions unless empty?
   end
 
   # returns the formatted cell

@@ -2,12 +2,13 @@
 
 # contains pawn functionality
 class Pawn < Piece
-  attr_accessor :icon
+  attr_reader :icon
 
   def initialize(position)
     super(position)
     @color = create_color(position)
     @icon = "\u265F"
+    @pawn_jump = false
   end
 
   # list of increments needed to find possible pawn moves

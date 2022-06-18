@@ -66,7 +66,7 @@ class Board
     [[1, 1], [-1, 1], [1, -1], [-1, -1]].include?(shift)
   end
 
-  # (TEST THIS) returns line of legal moves given a piece's transition (excludes pawns)
+  # returns line of legal moves given a piece's transition (excludes pawns)
   # rubocop:disable Metrics/MethodLength
   def iterate_position(shift, start, move = start, line = [])
     i = iterators(start)

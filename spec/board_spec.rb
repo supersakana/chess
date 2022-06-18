@@ -10,23 +10,11 @@ require 'pry-byebug'
 
 describe Board do
   subject(:board) { described_class.new }
+
   before do
     board.instance_variable_get(:@cells)
   end
 
-  # let(:w_rook) { instance_double(Rook, color: :light_white) }
-  # let(:w_bishop) { instance_double(Bishop, color: :light_white) }
-  # let(:w_queen) { instance_double(Queen, color: :light_white) }
-  # let(:w_king) { instance_double(King, color: :light_white) }
-  # let(:w_knight) { instance_double(Knight, color: :light_white) }
-  # let(:w_pawn) { instance_double(Pawn, color: :light_white) }
-
-  # let(:b_rook) { instance_double(Rook, color: :black) }
-  # let(:b_bishop) { instance_double(Bishop, color: :black) }
-  # let(:b_queen) { instance_double(Queen, color: :black) }
-  # let(:b_king) { instance_double(King, color: :black) }
-  # let(:b_knight) { instance_double(Knight, color: :black) }
-  # let(:b_pawn) { instance_double(Pawn, color: :black) }
   describe '#valid?' do
     context 'when given an input that is not a length of 4' do
       it 'returns false (length = 3)' do
@@ -48,8 +36,100 @@ describe Board do
         result = board.valid?(input, :light_white)
         expect(result).to be_falsey
       end
+      it 'returns false (Black Bishop c5g1)' do
+        b_bishop = board.cells[[5, 7]]
+        board.cells[[2, 4]] = b_bishop
+        input = 'c5g1'
+        result = board.valid?(input, :black)
+        expect(result).to be_falsey
+      end
+      it 'returns false (White Queen g6e8)' do
+        w_queen = board.cells[[0, 3]]
+        board.cells[[6, 5]] = w_queen
+        input = 'g6e8'
+        result = board.valid?(input, :light_white)
+        expect(result).to be_falsey
+      end
+      it 'returns false (Black King f3e1)' do
+        b_king = board.cells[[4, 7]]
+        board.cells[[5, 2]] = b_king
+        input = 'f3e1'
+        result = board.valid?(input, :black)
+        expect(result).to be_falsey
+      end
+      it 'returns false (White Knight g3e2)' do
+        w_knight = board.cells[[1, 0]]
+        board.cells[[6, 2]] = w_knight
+        input = 'g3e2'
+        result = board.valid?(input, :light_white)
+        expect(result).to be_falsey
+      end
+      it 'returns false (Black Pawn d3d2)' do
+        b_pawn = board.cells[[6, 6]]
+        board.cells[[3, 2]] = b_pawn
+        input = 'd3d2'
+        result = board.valid?(input, :black)
+        expect(result).to be_falsey
+      end
+    end
+    context 'when a user attempts to play opponent pieces' do
+      it 'returns false (white picks black piece)' do
+        input = 'd7d6'
+        result = board.valid?(input, :light_white)
+        expect(result).to be_falsey
+      end
+      it 'returns false (black picks white piece)' do
+        input = 'e2e3'
+        result = board.valid?(input, :black)
+        expect(result).to be_falsey
+      end
+    end
+    context 'when a user inputs a valid move' do
+      it 'returns true (Black Rook h6h2)' do
+        b_rook = board.cells[[7, 7]]
+        board.cells[[7, 5]] = b_rook
+        input = 'h6h2'
+        result = board.valid?(input, :black)
+        expect(result).to be_truthy
+      end
+      it 'returns true (White Bishop f4c7)' do
+        w_bishop = board.cells[[2, 0]]
+        board.cells[[5, 3]] = w_bishop
+        input = 'f4c7'
+        result = board.valid?(input, :light_white)
+        expect(result).to be_truthy
+      end
+      it 'returns true (Black Queen d5d2)' do
+        b_queen = board.cells[[3, 7]]
+        board.cells[[3, 4]] = b_queen
+        input = 'd5d2'
+        result = board.valid?(input, :black)
+        expect(result).to be_truthy
+      end
+      it 'returns true (White King e3f3)' do
+        w_king = board.cells[[4, 0]]
+        board.cells[[4, 2]] = w_king
+        input = 'e3f3'
+        result = board.valid?(input, :light_white)
+        expect(result).to be_truthy
+      end
+      it 'returns true (Black Knight e3d1)' do
+        b_knight = board.cells[[1, 7]]
+        board.cells[[4, 2]] = b_knight
+        input = 'e3d1'
+        result = board.valid?(input, :black)
+        expect(result).to be_truthy
+      end
+      it 'returns true (White Pawn h6g7)' do
+        w_pawn = board.cells[[1, 1]]
+        board.cells[[7, 5]] = w_pawn
+        input = 'h6g7'
+        result = board.valid?(input, :light_white)
+        expect(result).to be_truthy
+      end
     end
   end
+
   describe '#translate' do
     context 'when given a valid inputs' do
       it 'returns the correct output (a2a3 => [[0, 1], [0, 2]])' do

@@ -31,22 +31,22 @@ class Board
     [start, land]
   end
 
-  # returns legal moves given piece position (excludes pawns)
-  def legals(position, moves = [])
-    @cells[position].piece_transitions.each do |transition|
-      moves << if @cells[position].piece.is_a?(Pawn)
-                 iterate_pawn(transition, position)
+  # returns legal moves given piece start position
+  def legals(start, moves = [])
+    @cells[start].piece_transitions.each do |shift|
+      moves << if @cells[start].piece.is_a?(Pawn)
+                 iterate_pawn(shift, start)
                else
-                 iterate_position(transition, position)
+                 iterate_position(shift, start)
                end
     end
     moves.flatten(1).uniq
   end
 
   # returns line of legal moves given pawn transitions
-  def iterate_pawn(transition, position)
-    move = create_move(position, transition)
-    if pawn_vertical?(move, transition) || (pawn_diagonal?(transition) && opposing_team?(move, position))
+  def iterate_pawn(shift, start)
+    move = create_move(shift, start)
+    if pawn_vertical?(shift, move) || (pawn_diagonal?(shift) && opposing_team?(move, start))
       [move]
     else
       []
@@ -54,24 +54,24 @@ class Board
   end
 
   # returns true if pawn move has a verticle opening
-  def pawn_vertical?(move, transition)
-    @cells[move].empty? && transition.include?(0)
+  def pawn_vertical?(shift, move)
+    @cells[move].empty? && shift.include?(0)
   end
 
   # returns true if pawn transition is diagonal
-  def pawn_diagonal?(transition)
-    [[1, 1], [-1, 1], [1, -1], [-1, -1]].include?(transition)
+  def pawn_diagonal?(shift)
+    [[1, 1], [-1, 1], [1, -1], [-1, -1]].include?(shift)
   end
 
   # (TEST THIS) returns line of legal moves given a piece's transition (excludes pawns)
   # rubocop:disable Metrics/MethodLength
-  def iterate_position(transition, position, move = position, line = [])
-    i = iterators(position)
+  def iterate_position(shift, start, move = start, line = [])
+    i = iterators(start)
     i.times do
-      move = create_move(move, transition)
+      move = create_move(shift, move)
       if @cells[move].empty?
         line << move
-      elsif opposing_team?(move, position)
+      elsif opposing_team?(move, start)
         line << move
         break
       else
@@ -83,17 +83,17 @@ class Board
   # rubocop:enable Metrics/MethodLength
 
   # (TEST THIS) returns a possible move given a transition
-  def create_move(move, transition)
-    x = move[0] + transition[0]
-    y = move[1] + transition[1]
-    return move unless x.between?(0, 7) && y.between?(0, 7)
+  def create_move(shift, start)
+    x = start[0] + shift[0]
+    y = start[1] + shift[1]
+    return start unless x.between?(0, 7) && y.between?(0, 7)
 
     [x, y]
   end
 
   # assigns number of iterations based on given piece
-  def iterators(move)
-    if @cells[move].piece.line_moves?
+  def iterators(start)
+    if @cells[start].piece.line_moves?
       7
     else
       1
@@ -101,8 +101,8 @@ class Board
   end
 
   # returns true if capture color is different from initial piece color
-  def opposing_team?(move, position)
-    @cells[move].piece_color == @cells[position].foe_color
+  def opposing_team?(move, start)
+    @cells[move].piece_color == @cells[start].foe_color
   end
 
   # prints the formatted board

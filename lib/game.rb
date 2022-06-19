@@ -49,8 +49,7 @@ class Game
   # checks if move is valid
   def validate(move, color)
     if @board.valid?(move, color)
-      # move_piece(move)
-      p 'im valid'
+      @board.move_piece(move)
     else
       make_move
     end

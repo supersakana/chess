@@ -34,13 +34,21 @@ class Board
     [start, land]
   end
 
+  # moves a piece from start to land position
+  def move_piece(input)
+    transfer = translate(input)
+    start = transfer[0]
+    land = transfer[1]
+    p "#{start} => #{land}"
+  end
+
   # returns legal moves given piece start position
   def legals(start, moves = [])
     @cells[start].piece_transitions.each do |shift|
       moves << if @cells[start].piece.is_a?(Pawn)
                  iterate_pawn(shift, start)
                else
-                 iterate_position(shift, start)
+                 iterate_piece(shift, start)
                end
     end
     moves.flatten(1).uniq
@@ -68,7 +76,7 @@ class Board
 
   # returns line of legal moves given a piece's transition (excludes pawns)
   # rubocop:disable Metrics/MethodLength
-  def iterate_position(shift, start, move = start, line = [])
+  def iterate_piece(shift, start, move = start, line = [])
     i = iterators(start)
     i.times do
       move = create_move(shift, move)
@@ -85,7 +93,7 @@ class Board
   end
   # rubocop:enable Metrics/MethodLength
 
-  # (TEST THIS) returns a possible move given a transition
+  # returns a possible move given a transition
   def create_move(shift, start)
     x = start[0] + shift[0]
     y = start[1] + shift[1]

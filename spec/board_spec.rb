@@ -130,6 +130,14 @@ describe Board do
     end
   end
 
+  describe '#move_piece' do
+    context 'when given a valid input' do
+      it 'moves the piece from starting position to landing position (Pawn)' do
+        # test to run
+      end
+    end
+  end
+
   describe '#translate' do
     context 'when given a valid inputs' do
       it 'returns the correct output (a2a3 => [[0, 1], [0, 2]])' do
@@ -297,7 +305,7 @@ describe Board do
     end
   end
 
-  describe 'iterate_pawn' do
+  describe '#iterate_pawn' do
     context 'when given a shift with a legal shift' do
       it 'returns move if foe is in diagonal position' do
         # test to run
@@ -313,7 +321,7 @@ describe Board do
     end
   end
 
-  describe 'iterate_position' do
+  describe 'iterate_piece' do
     context 'when input a valid move' do
       it 'returns line of legal moves given the transition' do
         # test to run

@@ -44,7 +44,7 @@ class Pawn < Piece
   # returns line of legal moves given pawn transitions
   def iterate(shift, start, board)
     move = create_move(shift, start)
-    if pawn_vertical?(shift, move, board) || (pawn_diagonal?(shift) && opposing_team?(move, start, board))
+    if pawn_vertical?(shift, move, board) || (pawn_diagonal?(shift) && opposing_piece?(move, start, board))
       [move]
     else
       []

@@ -6,7 +6,8 @@ require 'pry-byebug'
 class Board
   include Display
 
-  attr_accessor :cells, :grave
+  attr_reader :cells
+  attr_accessor :grave
 
   def initialize
     @cells = create_board
@@ -27,11 +28,6 @@ class Board
     end
   end
 
-  # returns a list of a player's cells/pieces given the player color
-  def player_pieces(color)
-    @cells.select { |_k, v| v.piece_color == color }
-  end
-
   # takes move and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
   def translate(input)
     alpha = ('a'..'h').to_a
@@ -40,14 +36,27 @@ class Board
     [start, land]
   end
 
-  # selects the start and landing piece position and intitiates transfer
+  # returns a list of a player's cells/pieces given the player color
+  def player_pieces(color)
+    @cells.select { |_k, v| v.piece_color == color }
+  end
+
+  # returns legal moves given piece start position
+  def legals(start, moves = [])
+    @cells[start].piece_transitions.each do |shift|
+      moves << @cells[start].piece.iterate(shift, start, self)
+    end
+    moves.flatten(1).uniq
+  end
+
+  # selects the start and landing piece position then transfers (removes pawn jump if piece is a pawn)
   def move_piece(input)
     translated = translate(input)
     start = @cells[translated[0]]
     land = @cells[translated[1]]
 
     transfer(start, land)
-    land.piece.pawn_check
+    land.piece.check_pawn
   end
 
   # moves a piece from start to landing position, captures if land contains foe
@@ -66,20 +75,20 @@ class Board
     end
   end
 
-  # returns legal moves given piece start position
-  def legals(start, moves = [])
-    @cells[start].piece_transitions.each do |shift|
-      moves << @cells[start].piece.iterate(shift, start, self)
-    end
-    moves.flatten(1).uniq
-  end
-
   # prints the formatted board
   def print
     system 'clear'
     display_board(self)
     display_grave(@grave) unless @grave.all? { |_k, v| v.empty? }
   end
+
+  # returns true if a king is in check position
+  # def check?
+  #   pieces = @cells.reject { |cell| cell.piece.nil? }
+  #   pieces.any? do |k, _v|
+  #     legals[k].any? { |move| @cells[move].piece.is_a?(King) }
+  #   end
+  # end
 
   private
 

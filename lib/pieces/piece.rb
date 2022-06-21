@@ -55,7 +55,7 @@ class Piece
       move = create_move(shift, move)
       if board.cells[move].empty?
         line << move
-      elsif opposing_team?(move, start, board)
+      elsif opposing_piece?(move, start, board)
         line << move
         break
       else
@@ -85,12 +85,12 @@ class Piece
   end
 
   # returns true if capture color is different from initial piece color
-  def opposing_team?(move, start, board)
+  def opposing_piece?(move, start, board)
     board.cells[move].piece_color == board.cells[start].foe_color
   end
 
   # removes the pawn jump if pawn is moved from initial position
-  def pawn_check
+  def check_pawn
     return unless is_a?(Pawn)
 
     @pawn_jump = false if @pawn_jump == true

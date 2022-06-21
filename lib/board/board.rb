@@ -2,12 +2,16 @@
 
 require 'pry-byebug'
 
-# contains game board functionality
+# contains game board functionality(Will be disabled once Detector methods migrate)
 class Board
   attr_accessor :cells
 
   def initialize
     @cells = create_board
+    @grave = {
+      player_one: [],
+      player_two: []
+    }
   end
 
   # checks if a given move is valid
@@ -34,86 +38,34 @@ class Board
     [start, land]
   end
 
-  # moves a piece from start to land position
+  # ( NEEDS REFACTORING ) moves a piece from start to land position
   def move_piece(input)
     transfer = translate(input)
-    start = transfer[0]
-    land = transfer[1]
-    p "#{start} => #{land}"
+    selected = @cells[transfer[0]].piece
+    @cells[transfer[0]].piece = nil
+
+    capture(@cells[transfer[1]]) unless @cells[transfer[1]].empty?
+
+    @cells[transfer[1]].piece = selected
+    pawn_check
+  end
+
+  # returns a captured piece given a landing position
+  def capture(land)
+    # code to run
+  end
+
+  # removes the pawn jump if pawn is moved from initial position
+  def pawn_check
+    # code to run
   end
 
   # returns legal moves given piece start position
   def legals(start, moves = [])
     @cells[start].piece_transitions.each do |shift|
-      moves << if @cells[start].piece.is_a?(Pawn)
-                 iterate_pawn(shift, start)
-               else
-                 iterate_piece(shift, start)
-               end
+      moves << @cells[start].piece.iterate(shift, start, self)
     end
     moves.flatten(1).uniq
-  end
-
-  # returns line of legal moves given pawn transitions
-  def iterate_pawn(shift, start)
-    move = create_move(shift, start)
-    if pawn_vertical?(shift, move) || (pawn_diagonal?(shift) && opposing_team?(move, start))
-      [move]
-    else
-      []
-    end
-  end
-
-  # returns true if pawn move has a verticle opening
-  def pawn_vertical?(shift, move)
-    @cells[move].empty? && shift.include?(0)
-  end
-
-  # returns true if pawn transition is diagonal
-  def pawn_diagonal?(shift)
-    [[1, 1], [-1, 1], [1, -1], [-1, -1]].include?(shift)
-  end
-
-  # returns line of legal moves given a piece's transition (excludes pawns)
-  # rubocop:disable Metrics/MethodLength
-  def iterate_piece(shift, start, move = start, line = [])
-    i = iterators(start)
-    i.times do
-      move = create_move(shift, move)
-      if @cells[move].empty?
-        line << move
-      elsif opposing_team?(move, start)
-        line << move
-        break
-      else
-        break
-      end
-    end
-    line
-  end
-  # rubocop:enable Metrics/MethodLength
-
-  # returns a possible move given a transition
-  def create_move(shift, start)
-    x = start[0] + shift[0]
-    y = start[1] + shift[1]
-    return start unless x.between?(0, 7) && y.between?(0, 7)
-
-    [x, y]
-  end
-
-  # assigns number of iterations based on given piece
-  def iterators(start)
-    if @cells[start].piece.line_moves?
-      7
-    else
-      1
-    end
-  end
-
-  # returns true if capture color is different from initial piece color
-  def opposing_team?(move, start)
-    @cells[move].piece_color == @cells[start].foe_color
   end
 
   # prints the formatted board

@@ -132,8 +132,22 @@ describe Board do
 
   describe '#move_piece' do
     context 'when given a valid input' do
-      it 'moves the piece from starting position to landing position (Pawn)' do
-        # test to run
+      it 'makes the start posiiton empty' do
+        input = 'a2a3'
+        start = [0, 1]
+        board.move_piece(input)
+        expect(board.cells[start].empty?).to be_truthy
+      end
+      it 'occupies the landing cell with the selected piece' do
+        input = 'a2a3'
+        selected = board.cells[[0, 1]].piece
+        landing = board.cells[[0, 2]]
+        board.move_piece(input)
+        expect(landing.piece).to eq(selected)
+      end
+      it 'captures piece if landing contains opponent piece' do
+        # b_pawn = [6, 6]
+        # board.cells[[0, 2]]
       end
     end
   end
@@ -244,13 +258,6 @@ describe Board do
         expect(result).to eq([
                                [6, 7], [7, 6], [7, 4], [6, 3], [4, 3], [3, 4], [3, 6], [4, 7]
                              ])
-      end
-    end
-    context 'when given a pawn position' do
-      it 'runs #iterate_pawn instead of #iterate_position' do
-        start = [1, 1]
-        expect(board).to receive(:iterate_pawn).exactly(4).times
-        board.legals(start)
       end
     end
     context 'when given a pawns starting position' do

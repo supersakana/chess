@@ -34,18 +34,18 @@ describe Game do
       game.instance_variable_set(:@player_one, player_one)
       game.instance_variable_set(:@player_two, player_two)
     end
-    context 'current player is player one' do
+    context 'when round is odd' do
       it 'returns player two' do
-        game.instance_variable_set(:@current, player_one)
-        result = game.turn_player
-        expect(result).to eq(player_two)
-      end
-    end
-    context 'current player is player two' do
-      it 'returns player two' do
-        game.instance_variable_set(:@current, player_two)
+        game.instance_variable_set(:@round, 1)
         result = game.turn_player
         expect(result).to eq(player_one)
+      end
+    end
+    context 'when round is even' do
+      it 'returns player two' do
+        game.instance_variable_set(:@round, 2)
+        result = game.turn_player
+        expect(result).to eq(player_two)
       end
     end
   end

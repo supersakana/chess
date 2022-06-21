@@ -40,4 +40,24 @@ class Pawn < Piece
   def line_moves?
     false
   end
+
+  # returns line of legal moves given pawn transitions
+  def iterate(shift, start, board)
+    move = create_move(shift, start)
+    if pawn_vertical?(shift, move, board) || (pawn_diagonal?(shift) && opposing_team?(move, start, board))
+      [move]
+    else
+      []
+    end
+  end
+
+  # returns true if pawn move has a verticle opening
+  def pawn_vertical?(shift, move, board)
+    board.cells[move].empty? && shift.include?(0)
+  end
+
+  # returns true if pawn transition is diagonal
+  def pawn_diagonal?(shift)
+    [[1, 1], [-1, 1], [1, -1], [-1, -1]].include?(shift)
+  end
 end

@@ -42,7 +42,8 @@ module Display
 
   # prints the formatted grave for each player
   def display_grave(grave)
-    puts "Player 1 #{grave[:player_one].join('')} "
-    puts "Player 2 #{grave[:player_two].join('')} "
+    puts "P1 #{grave[:player_one].join('')} "
+    puts "P2 #{grave[:player_two].join('')} "
+    puts ' '
   end
 end

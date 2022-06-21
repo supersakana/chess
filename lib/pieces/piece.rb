@@ -89,6 +89,13 @@ class Piece
     board.cells[move].piece_color == board.cells[start].foe_color
   end
 
+  # removes the pawn jump if pawn is moved from initial position
+  def pawn_check
+    return unless is_a?(Pawn)
+
+    @pawn_jump = false if @pawn_jump == true
+  end
+
   # list of increments needed to find possible moves
   def transitions
     raise NotImpelementedError

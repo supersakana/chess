@@ -47,6 +47,7 @@ class Board
     land = @cells[translated[1]]
 
     transfer(start, land)
+    land.piece.pawn_check
   end
 
   # moves a piece from start to landing position, captures if land contains foe
@@ -65,11 +66,6 @@ class Board
     end
   end
 
-  # removes the pawn jump if pawn is moved from initial position
-  # def pawn_check
-  #   # code to run
-  # end
-
   # returns legal moves given piece start position
   def legals(start, moves = [])
     @cells[start].piece_transitions.each do |shift|
@@ -80,8 +76,9 @@ class Board
 
   # prints the formatted board
   def print
+    system 'clear'
     display_board(self)
-    display_grave(@grave)
+    display_grave(@grave) unless @grave.all? { |_k, v| v.empty? }
   end
 
   private

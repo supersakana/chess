@@ -153,6 +153,13 @@ describe Board do
         board.move_piece(input)
         expect(board.grave[:player_one]).to eq(['♟'])
       end
+      it 'pawn jump is removed after first move is made' do
+        input = 'a2a4'
+        landing = board.cells[[0, 3]]
+        board.move_piece(input)
+        pawn_shifts = landing.piece_transitions
+        expect(pawn_shifts).to eq([[0, 1], [1, 1], [-1, 1]])
+      end
     end
   end
 
@@ -161,17 +168,17 @@ describe Board do
       it 'returns the correct output (a2a3 => [[0, 1], [0, 2]])' do
         input = 'a2a3'
         result = board.translate(input)
-        expect(result).to eql([[0, 1], [0, 2]])
+        expect(result).to eq([[0, 1], [0, 2]])
       end
       it 'returns the correct output (g8f6 => [[6, 7], [5, 5]])' do
         input = 'g8f6'
         result = board.translate(input)
-        expect(result).to eql([[6, 7], [5, 5]])
+        expect(result).to eq([[6, 7], [5, 5]])
       end
       it 'returns the correct output (d1g5 => [[3, 0], [6, 4]])' do
         input = 'd1g4'
         result = board.translate(input)
-        expect(result).to eql([[3, 0], [6, 3]])
+        expect(result).to eq([[3, 0], [6, 3]])
       end
     end
   end
@@ -312,39 +319,6 @@ describe Board do
 
         result = board.legals(start)
         expect(result).to eq([[4, 3], [3, 3]])
-      end
-    end
-  end
-
-  describe '#iterate_pawn' do
-    context 'when given a shift with a legal shift' do
-      it 'returns move if foe is in diagonal position' do
-        # test to run
-      end
-      it 'returns move if vertical position is open' do
-        # test to run
-      end
-    end
-    context 'when given a shift with an illegal move' do
-      it 'returns an empty array' do
-        # test to run
-      end
-    end
-  end
-
-  describe 'iterate_piece' do
-    context 'when input a valid move' do
-      it 'returns line of legal moves given the transition' do
-        # test to run
-      end
-      it 'it continues iterating if the next cell is empty' do
-        # test to run
-      end
-      it 'pushes a foe position then breaks iteration' do
-        # test to run
-      end
-      it 'breaks iteration if encounters same colored piece' do
-        # test to run
       end
     end
   end

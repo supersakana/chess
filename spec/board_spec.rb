@@ -146,8 +146,11 @@ describe Board do
         expect(landing.piece).to eq(selected)
       end
       it 'captures piece if landing contains opponent piece' do
-        # b_pawn = [6, 6]
-        # board.cells[[0, 2]]
+        # b_pawn = board.cells[[6, 6]].piece
+        # board.cells[[0, 2]].piece = b_pawn
+        # input = 'b2a3'
+        # board.move_piece(input)
+        # expect(board).to receive(:capture)
       end
     end
   end

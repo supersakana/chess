@@ -38,27 +38,35 @@ class Board
     [start, land]
   end
 
-  # ( NEEDS REFACTORING ) moves a piece from start to land position
+  # selects the start and landing piece position and intitiates transfer
   def move_piece(input)
-    transfer = translate(input)
-    selected = @cells[transfer[0]].piece
-    @cells[transfer[0]].piece = nil
+    translated = translate(input)
+    start = @cells[translated[0]]
+    land = @cells[translated[1]]
 
-    capture(@cells[transfer[1]]) unless @cells[transfer[1]].empty?
+    transfer(start, land)
+  end
 
-    @cells[transfer[1]].piece = selected
-    pawn_check
+  # moves a piece from start to landing position, captures if land contains foe piece
+  def transfer(start, land)
+    capture(land) unless land.empty?
+    land.piece = start.piece
+    start.piece = nil
   end
 
   # returns a captured piece given a landing position
   def capture(land)
-    # code to run
+    # if land.piece_color == :light_white
+    #   @grave[player_two] << piece.icon
+    # else
+    #   @grave[player_one] << piece.icon
+    # end
   end
 
   # removes the pawn jump if pawn is moved from initial position
-  def pawn_check
-    # code to run
-  end
+  # def pawn_check
+  #   # code to run
+  # end
 
   # returns legal moves given piece start position
   def legals(start, moves = [])

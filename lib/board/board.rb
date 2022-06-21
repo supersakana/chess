@@ -83,12 +83,12 @@ class Board
   end
 
   # returns true if a king is in check position
-  # def check?
-  #   pieces = @cells.reject { |cell| cell.piece.nil? }
-  #   pieces.any? do |k, _v|
-  #     legals[k].any? { |move| @cells[move].piece.is_a?(King) }
-  #   end
-  # end
+  def check?
+    pieces = @cells.reject { |_k, v| v.empty? }
+    pieces.any? do |k, _v|
+      legals(k).any? { |move| @cells[move].piece.is_a?(King) }
+    end
+  end
 
   private
 

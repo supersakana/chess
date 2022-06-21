@@ -315,10 +315,36 @@ describe Board do
   end
   describe '#check?' do
     context 'when a king is in check' do
-      it 'returns true (White Rook)' do
-        # test to run
+      it 'returns true (White Rook vs Black King)' do
+        board.cells[[4, 3]].piece = w_rook
+        board.cells[[4, 6]].piece = nil
+        result = board.check?
+        expect(result).to be_truthy
+      end
+      it 'returns true (Black Bishop vs White King)' do
+        board.cells[[1, 3]].piece = b_bishop
+        board.cells[[3, 1]].piece = nil
+        result = board.check?
+        expect(result).to be_truthy
+      end
+      it 'returns true (White Queen vs Black King)' do
+        board.cells[[7, 4]].piece = w_queen
+        board.cells[[5, 6]].piece = nil
+        result = board.check?
+        expect(result).to be_truthy
+      end
+      it 'returns true (Black Knight vs White King)' do
+        board.cells[[5, 2]].piece = b_knight
+        result = board.check?
+        expect(result).to be_truthy
+      end
+      xit 'returns false for pawns in check position' do
+        board.cells[[4, 6]].piece = w_pawn
+        result = board.check?
+        expect(result).to be_falsey
       end
     end
   end
 end
 # rubocop:enable Metrics/BlockLength
+# rspec --format documentation spec/board_spec.rb

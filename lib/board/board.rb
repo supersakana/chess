@@ -4,7 +4,9 @@ require 'pry-byebug'
 
 # contains game board functionality(Will be disabled once Detector methods migrate)
 class Board
-  attr_accessor :cells
+  include Display
+
+  attr_accessor :cells, :grave
 
   def initialize
     @cells = create_board
@@ -47,7 +49,7 @@ class Board
     transfer(start, land)
   end
 
-  # moves a piece from start to landing position, captures if land contains foe piece
+  # moves a piece from start to landing position, captures if land contains foe
   def transfer(start, land)
     capture(land) unless land.empty?
     land.piece = start.piece
@@ -56,11 +58,11 @@ class Board
 
   # returns a captured piece given a landing position
   def capture(land)
-    # if land.piece_color == :light_white
-    #   @grave[player_two] << piece.icon
-    # else
-    #   @grave[player_one] << piece.icon
-    # end
+    if land.piece_color == :light_white
+      @grave[:player_two] << land.piece.icon
+    else
+      @grave[:player_one] << land.piece.icon
+    end
   end
 
   # removes the pawn jump if pawn is moved from initial position
@@ -78,15 +80,8 @@ class Board
 
   # prints the formatted board
   def print
-    i = 7
-    puts "   #{('A'..'H').to_a.join('  ')}"
-    until i.negative?
-      row = []
-      @cells.select { |k, v| row << v.form if k[1] == i }
-      puts "#{i + 1} #{row.join('')} #{i + 1}"
-      i -= 1
-    end
-    puts "   #{('A'..'H').to_a.join('  ')}"
+    display_board(self)
+    display_grave(@grave)
   end
 
   private

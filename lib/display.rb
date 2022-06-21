@@ -27,4 +27,22 @@ module Display
     puts 'What is your name?'
     gets.chomp
   end
+
+  # prints of the formatted board
+  def display_board(board, i = 7)
+    puts "   #{('A'..'H').to_a.join('  ')}"
+    until i.negative?
+      row = []
+      board.cells.select { |k, v| row << v.form if k[1] == i }
+      puts "#{i + 1} #{row.join('')} #{i + 1}"
+      i -= 1
+    end
+    puts "   #{('A'..'H').to_a.join('  ')}"
+  end
+
+  # prints the formatted grave for each player
+  def display_grave(grave)
+    puts "Player 1 #{grave[:player_one].join('')} "
+    puts "Player 2 #{grave[:player_two].join('')} "
+  end
 end

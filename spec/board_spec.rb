@@ -11,6 +11,11 @@ require 'pry-byebug'
 describe Board do
   subject(:board) { described_class.new }
 
+  before do
+    board.instance_variable_get(:@cells)
+    board.instance_variable_get(:@grave)
+  end
+
   let(:w_rook) { board.cells[[0, 0]].piece }
   let(:w_bishop) { board.cells[[2, 0]].piece }
   let(:w_queen) { board.cells[[3, 0]].piece }
@@ -24,11 +29,6 @@ describe Board do
   let(:b_king) { board.cells[[4, 7]].piece }
   let(:b_knight) { board.cells[[6, 7]].piece }
   let(:b_pawn) { board.cells[[0, 6]].piece }
-
-  before do
-    board.instance_variable_get(:@cells)
-    board.instance_variable_get(:@grave)
-  end
 
   describe '#valid?' do
     context 'when given an input that is not a length of 4' do
@@ -338,10 +338,18 @@ describe Board do
         result = board.check?
         expect(result).to be_truthy
       end
-      xit 'returns false for pawns in check position' do
-        board.cells[[4, 6]].piece = w_pawn
-        result = board.check?
-        expect(result).to be_falsey
+      # xit 'returns false for pawns in check position' do
+      #   board.cells[[3, 6]].piece = w_pawn
+      #   result = board.check?
+      #   expect(result).to be_falsey
+      # end
+    end
+  end
+
+  describe '#uncheck' do
+    context 'when given a valid move' do
+      it 'unchecks the board (returns true)' do
+        # code to run
       end
     end
   end

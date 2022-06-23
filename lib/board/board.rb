@@ -11,6 +11,7 @@ class Board
 
   def initialize
     @cells = create_board
+
     @grave = {
       player_one: [],
       player_two: []
@@ -80,6 +81,11 @@ class Board
     system 'clear'
     display_board(self)
     display_grave(@grave) unless @grave.all? { |_k, v| v.empty? }
+  end
+
+  # returns a list of moves in order for the user to get out of check
+  def un_check(move, color)
+    # code to run
   end
 
   # returns true if a king is in check position

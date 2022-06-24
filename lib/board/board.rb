@@ -83,9 +83,12 @@ class Board
     display_grave(@grave) unless @grave.all? { |_k, v| v.empty? }
   end
 
-  # returns a list of moves in order for the user to get out of check
-  def un_check(move, color)
-    # code to run
+  # returns false if the inputted move is out of check, true if still in check
+  def un_check(move)
+    board_copy = self
+    board_copy.move_piece(move)
+
+    board_copy.check?
   end
 
   # returns true if a king is in check position

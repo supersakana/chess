@@ -41,7 +41,7 @@ class Game
     end
   end
 
-  # (REFACTOR) player inputs move then move gets validated
+  # player inputs move then move gets validated
   def make_move
     player = turn_player
     move = display_choice(player.name)

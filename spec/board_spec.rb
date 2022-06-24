@@ -348,8 +348,19 @@ describe Board do
 
   describe '#uncheck' do
     context 'when given a valid move' do
-      it 'unchecks the board (returns true)' do
-        # code to run
+      it 'returns false (White Rook vs Black King => Bishop unchecks)' do
+        board.cells[[4, 3]].piece = w_rook
+        board.cells[[4, 6]].piece = nil
+        move = 'f8e7'
+        result = board.un_check(move)
+        expect(result).to be_falsey
+      end
+      it 'returns false (Black Bishop vs White King => Knight unchecks)' do
+        board.cells[[1, 3]].piece = b_bishop
+        board.cells[[3, 1]].piece = nil
+        move = 'b1d2'
+        result = board.un_check(move)
+        expect(result).to be_falsey
       end
     end
   end

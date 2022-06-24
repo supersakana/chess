@@ -8,6 +8,7 @@ require_relative 'player'
 # board files
 require_relative 'board/board'
 require_relative 'board/cell'
+require_relative 'board/detector'
 
 # piece files
 require_relative 'pieces/piece'

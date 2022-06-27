@@ -362,6 +362,20 @@ describe Board do
         result = board.un_check(move)
         expect(result).to be_falsey
       end
+      it 'returns false (White Queen vs Black King => ' do
+        board.cells[[4, 4]].piece = w_queen
+        board.cells[[4, 6]].piece = nil
+        move = 'd8e7'
+        result = board.un_check(move)
+        expect(result).to be_falsey
+      end
+      it 'returns false (Black Knight vs White King' do
+        board.cells[[3, 2]].piece = b_knight
+        board.cells[[4, 1]].piece = nil
+        move = 'e1e2'
+        result = board.un_check(move)
+        expect(result).to be_falsey
+      end
     end
   end
 end

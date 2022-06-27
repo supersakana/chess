@@ -11,7 +11,6 @@ class Board
 
   def initialize
     @cells = create_board
-    @detect = Detector.new
     @grave = {
       player_one: [],
       player_two: []
@@ -24,12 +23,12 @@ class Board
 
     translated = translate(input)
 
-    # if check?
-    #   @detect.un_check?(input)
-    # else
-    player_pieces(color).any? do |k, _v|
-      k == translated[0] && legals(k).include?(translated[1])
-      # end
+    if check?
+      un_check?(input)
+    else
+      player_pieces(color).any? do |k, _v|
+        k == translated[0] && legals(k).include?(translated[1])
+      end
     end
   end
 
@@ -89,7 +88,7 @@ class Board
 
   # returns false if the inputted move is out of check, true if still in check
   def un_check?(input)
-    board_copy = dup
+    board_copy = Marshal.load(Marshal.dump(self))
     board_copy.move_piece(input)
 
     if board_copy.check?

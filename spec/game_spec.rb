@@ -10,6 +10,7 @@ describe Game do
   subject(:game) { described_class.new }
   let(:player_one) { double('first_player', name: 'Alpha') }
   let(:player_two) { double('second_player', name: 'Omega') }
+  let(:board) { double('game_board') }
   describe '#create_player' do
     context 'when a new player is created' do
       before do

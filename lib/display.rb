@@ -28,6 +28,11 @@ module Display
     gets.chomp
   end
 
+  def display_check(name)
+    puts "#{name} is in CHECK!".colorize(color: :yellow)
+    puts 'Make a move to uncheck yourself'
+  end
+
   # prints of the formatted board
   def display_board(board, i = 7)
     puts "   #{('A'..'H').to_a.join('  ')}"

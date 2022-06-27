@@ -131,6 +131,24 @@ describe Board do
         expect(result).to be_truthy
       end
     end
+    context 'when user is in check and the move unchecks board' do
+      before do
+        board.cells[[4, 3]].piece = w_rook
+        board.cells[[4, 6]].piece = nil
+      end
+      it 'returns true' do
+        input = 'f8e7'
+        result = board.valid?(input, :black)
+        expect(result).to be_truthy
+      end
+    end
+    context 'when user is in check and the move is still in check' do
+      it 'returns false' do
+        input = 'e8e7'
+        result = board.valid?(input, :black)
+        expect(result).to be_falsey
+      end
+    end
   end
 
   describe '#move_piece' do
@@ -346,34 +364,50 @@ describe Board do
     end
   end
 
-  describe '#uncheck' do
+  describe '#un_check?' do
     context 'when given a valid move' do
-      it 'returns false (White Rook vs Black King => Bishop unchecks)' do
+      it 'returns true (White Rook vs Black King => Bishop unchecks)' do
         board.cells[[4, 3]].piece = w_rook
         board.cells[[4, 6]].piece = nil
         move = 'f8e7'
-        result = board.un_check(move)
-        expect(result).to be_falsey
+        result = board.un_check?(move)
+        expect(result).to be_truthy
       end
-      it 'returns false (Black Bishop vs White King => Knight unchecks)' do
+      it 'returns true (Black Bishop vs White King => Knight unchecks)' do
         board.cells[[1, 3]].piece = b_bishop
         board.cells[[3, 1]].piece = nil
         move = 'b1d2'
-        result = board.un_check(move)
-        expect(result).to be_falsey
+        result = board.un_check?(move)
+        expect(result).to be_truthy
       end
-      it 'returns false (White Queen vs Black King => ' do
+      it 'returns true (White Queen vs Black King => King unchecks' do
         board.cells[[4, 4]].piece = w_queen
         board.cells[[4, 6]].piece = nil
         move = 'd8e7'
-        result = board.un_check(move)
-        expect(result).to be_falsey
+        result = board.un_check?(move)
+        expect(result).to be_truthy
       end
-      it 'returns false (Black Knight vs White King' do
+      it 'returns true (Black Knight vs White King => King unchecks)' do
         board.cells[[3, 2]].piece = b_knight
         board.cells[[4, 1]].piece = nil
         move = 'e1e2'
-        result = board.un_check(move)
+        result = board.un_check?(move)
+        expect(result).to be_truthy
+      end
+    end
+    context 'when given a move that does not uncheck the user' do
+      it 'returns false (White Rook vs Black King => Still in Check)' do
+        board.cells[[4, 3]].piece = w_rook
+        board.cells[[4, 6]].piece = nil
+        move = 'e8e7'
+        result = board.un_check?(move)
+        expect(result).to be_falsey
+      end
+      it 'returns false (Black Bishop vs White King => Still in Check)' do
+        board.cells[[1, 3]].piece = b_bishop
+        board.cells[[3, 1]].piece = nil
+        move = 'e1d2'
+        result = board.un_check?(move)
         expect(result).to be_falsey
       end
     end

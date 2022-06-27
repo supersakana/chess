@@ -44,6 +44,7 @@ class Game
   # player inputs move then move gets validated
   def make_move
     player = turn_player
+    display_check(player.name) if @board.check?
     move = display_choice(player.name)
     validate(move, player.color)
   end

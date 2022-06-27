@@ -11,7 +11,7 @@ class Board
 
   def initialize
     @cells = create_board
-
+    @detect = Detector.new
     @grave = {
       player_one: [],
       player_two: []
@@ -24,8 +24,12 @@ class Board
 
     translated = translate(input)
 
+    # if check?
+    #   @detect.un_check?(input)
+    # else
     player_pieces(color).any? do |k, _v|
       k == translated[0] && legals(k).include?(translated[1])
+      # end
     end
   end
 
@@ -57,17 +61,17 @@ class Board
     land = @cells[translated[1]]
 
     transfer(start, land)
-    land.piece.check_pawn
+    land.piece.check_pawn unless land.empty?
   end
 
-  # moves a piece from start to landing position, captures if land contains foe
+  # (CHECK THIS) moves a piece from start to landing position, captures if land contains foe
   def transfer(start, land)
     capture(land) unless land.empty?
     land.piece = start.piece
     start.piece = nil
   end
 
-  # returns a captured piece given a landing position
+  # (CHECK THIS) returns a captured piece given a landing position
   def capture(land)
     if land.piece_color == :light_white
       @grave[:player_two] << land.piece.icon
@@ -84,11 +88,15 @@ class Board
   end
 
   # returns false if the inputted move is out of check, true if still in check
-  def un_check(move)
-    board_copy = self
-    board_copy.move_piece(move)
+  def un_check?(input)
+    board_copy = dup
+    board_copy.move_piece(input)
 
-    board_copy.check?
+    if board_copy.check?
+      false
+    else
+      true
+    end
   end
 
   # returns true if a king is in check position

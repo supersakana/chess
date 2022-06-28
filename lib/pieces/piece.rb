@@ -66,15 +66,6 @@ class Piece
   end
   # rubocop:enable Metrics/MethodLength
 
-  # returns a possible move given a transition
-  def create_move(shift, start)
-    x = start[0] + shift[0]
-    y = start[1] + shift[1]
-    return start unless x.between?(0, 7) && y.between?(0, 7)
-
-    [x, y]
-  end
-
   # assigns number of iterations based on given piece
   def iterators(start, board)
     if board.cells[start].piece.line_moves?
@@ -82,6 +73,15 @@ class Piece
     else
       1
     end
+  end
+
+  # returns a possible move given a transition
+  def create_move(shift, start)
+    x = start[0] + shift[0]
+    y = start[1] + shift[1]
+    return start unless x.between?(0, 7) && y.between?(0, 7)
+
+    [x, y]
   end
 
   # returns true if capture color is different from initial piece color

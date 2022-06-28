@@ -44,4 +44,14 @@ class Detector
       legals(k, board).any? { |move| board.cells[move].piece.is_a?(King) }
     end
   end
+
+  # returns true if the user does not have any moves to uncheck itself
+  def checkmate?(color, board)
+    return unless check?(board)
+
+    pieces = board.player_pieces(color)
+    binding.pry
+
+
+  end
 end

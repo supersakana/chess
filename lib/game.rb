@@ -34,29 +34,31 @@ class Game
     Player.new(name, color)
   end
 
-  # general gameplay until winner is declared
+  # general gameplay until checkmate is declared
   def game_loop
-    until @round == 100 # temporary
+    loop do
+      player = turn_player
       @board.print
-      make_move
+      break if @detect.checkmate?(player.color, @board)
+
+      make_move(player)
     end
   end
 
   # player inputs move then move gets validated
-  def make_move
-    player = turn_player
+  def make_move(player)
     display_check(player.name) if @detect.check?(@board)
     move = display_choice(player.name)
-    validate(move, player.color)
+    validate(move, player)
   end
 
   # checks if move is valid
-  def validate(move, color)
-    if @detect.valid?(move, color, @board)
+  def validate(move, player)
+    if @detect.valid?(move, player.color, @board)
       @board.move_piece(move)
       @round += 1
     else
-      make_move
+      make_move(player)
     end
   end
 

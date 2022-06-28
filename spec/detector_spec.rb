@@ -356,6 +356,18 @@ describe Detector do
       end
     end
   end
+  describe '#checkmate?' do
+    context 'when given a board that has contains a checkmate' do
+      it 'returns true' do
+        # test to run
+      end
+    end
+    context 'when given a board that does not contain a checkmate' do
+      it 'returns false' do
+        # test to run
+      end
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength
 # rspec --format documentation spec/detector_spec.rb

@@ -10,6 +10,7 @@ class Game
 
   def initialize
     @board = Board.new
+    @detect = Detector.new
     @player_one = nil
     @player_two = nil
     @round = 1
@@ -44,14 +45,14 @@ class Game
   # player inputs move then move gets validated
   def make_move
     player = turn_player
-    display_check(player.name) if @board.check?
+    display_check(player.name) if @detect.check?(@board)
     move = display_choice(player.name)
     validate(move, player.color)
   end
 
   # checks if move is valid
   def validate(move, color)
-    if @board.valid?(move, color)
+    if @detect.valid?(move, color, @board)
       @board.move_piece(move)
       @round += 1
     else

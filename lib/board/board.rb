@@ -17,21 +17,6 @@ class Board
     }
   end
 
-  # checks if a given move is valid
-  def valid?(input, color)
-    return false unless input.length == 4
-
-    translated = translate(input)
-
-    if check?
-      un_check?(input)
-    else
-      player_pieces(color).any? do |k, _v|
-        k == translated[0] && legals(k).include?(translated[1])
-      end
-    end
-  end
-
   # takes move and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
   def translate(input)
     alpha = ('a'..'h').to_a
@@ -45,14 +30,6 @@ class Board
     @cells.select { |_k, v| v.piece_color == color }
   end
 
-  # returns legal moves given piece start position
-  def legals(start, moves = [])
-    @cells[start].piece_transitions.each do |shift|
-      moves << @cells[start].piece.iterate(shift, start, self)
-    end
-    moves.flatten(1).uniq
-  end
-
   # selects the start and landing piece position then transfers (removes pawn jump if piece is a pawn)
   def move_piece(input)
     translated = translate(input)
@@ -63,14 +40,14 @@ class Board
     land.piece.check_pawn unless land.empty?
   end
 
-  # (CHECK THIS) moves a piece from start to landing position, captures if land contains foe
+  # moves a piece from start to landing position, captures if land contains foe
   def transfer(start, land)
     capture(land) unless land.empty?
     land.piece = start.piece
     start.piece = nil
   end
 
-  # (CHECK THIS) returns a captured piece given a landing position
+  # returns a captured piece given a landing position
   def capture(land)
     if land.piece_color == :light_white
       @grave[:player_two] << land.piece.icon
@@ -84,26 +61,6 @@ class Board
     system 'clear'
     display_board(self)
     display_grave(@grave) unless @grave.all? { |_k, v| v.empty? }
-  end
-
-  # returns false if the inputted move is out of check, true if still in check
-  def un_check?(input)
-    board_copy = Marshal.load(Marshal.dump(self))
-    board_copy.move_piece(input)
-
-    if board_copy.check?
-      false
-    else
-      true
-    end
-  end
-
-  # returns true if a king is in check position
-  def check?
-    pieces = @cells.reject { |_k, v| v.empty? }
-    pieces.any? do |k, _v|
-      legals(k).any? { |move| @cells[move].piece.is_a?(King) }
-    end
   end
 
   private

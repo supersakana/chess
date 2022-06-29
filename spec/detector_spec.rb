@@ -375,16 +375,20 @@ describe Detector do
     end
   end
   describe '#checkmate?' do
+    let(:blank_board) { Board.new }
     before do
-      board.cells.each { |_k, v| v.piece = nil }
+      blank_board.cells.each { |_k, v| v.piece = nil }
     end
     context 'when given a board that has contains a checkmate' do
       it 'returns true (Anastasia Mate)' do
-        board.cells[[6, 0]].piece = w_king
-        board.cells[[4, 2]].piece = w_rook
-        board.cells[[4, 6]].piece = w_knight
-        board.cells[[6, 6]].piece = b_pawn
-        board.cells[[7, 6]].piece = b_king
+        blank_board.cells[[6, 0]].piece = w_king
+        blank_board.cells[[7, 2]].piece = w_rook
+        blank_board.cells[[4, 6]].piece = w_knight
+        blank_board.cells[[6, 6]].piece = b_pawn
+        blank_board.cells[[7, 6]].piece = b_king
+
+        result = detect.checkmate?(:black, blank_board)
+        expect(result).to be_truthy
       end
     end
     context 'when given a board that does not contain a checkmate' do

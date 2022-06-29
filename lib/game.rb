@@ -39,29 +39,12 @@ class Game
     loop do
       player = turn_player
       @board.print
-      display_check(player.name) if @detect.check?(@board)
       break if @detect.checkmate?(player.color, @board)
 
+      display_check(player.name) if @detect.check?(@board)
       make_move(player)
     end
-    p 'GAME OVER'
-  end
-
-  # player inputs move then move gets validated
-  def make_move(player)
-    input = display_choice(player.name)
-    translated = translate(input)
-    validate(input, translated, player)
-  end
-
-  # checks if move is valid
-  def validate(input, translated, player)
-    if @detect.valid?(input, translated, player.color, @board)
-      @board.move_piece(translated)
-      @round += 1
-    else
-      make_move(player)
-    end
+    p 'GAME OVER' # temporary
   end
 
   # switches current player
@@ -73,11 +56,28 @@ class Game
     end
   end
 
+  # player inputs move then move gets validated
+  def make_move(player)
+    input = display_choice(player.name)
+    translated = translate(input)
+    validate(input, translated, player)
+  end
+
   # takes move and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
   def translate(input)
     alpha = ('a'..'h').to_a
     start = [alpha.index(input[0]), input[1].to_i - 1]
     land = [alpha.index(input[2]), input[3].to_i - 1]
     [start, land]
+  end
+
+  # checks if move is valid
+  def validate(input, translated, player)
+    if @detect.valid?(input, translated, player.color, @board)
+      @board.move_piece(translated)
+      @round += 1
+    else
+      make_move(player)
+    end
   end
 end

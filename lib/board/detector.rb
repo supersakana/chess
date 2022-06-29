@@ -23,7 +23,7 @@ class Detector
     moves.flatten(1).uniq
   end
 
-  # simulates a given move and returns true if board is not in check
+  # simulates a given move and returns true if board is not in check anymore
   def un_check?(translated, board)
     board_copy = Marshal.load(Marshal.dump(board))
     board_copy.move_piece(translated)
@@ -45,11 +45,11 @@ class Detector
 
   # returns true if the user does not have any moves to uncheck itself
   def checkmate?(color, board)
-    # return unless check?(board)
+    return unless check?(board)
 
-    # pieces = board.player_pieces(color)
-    # pieces.any? do |k, _v|
-    #   legals(k, board).none? { |move| un_check?(move, board) }
-    # end
+    pieces = board.player_pieces(color)
+    pieces.all? do |start, _v|
+      legals(start, board).none? { |land| un_check?([start, land], board) }
+    end
   end
 end

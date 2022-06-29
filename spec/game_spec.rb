@@ -11,6 +11,7 @@ describe Game do
   let(:player_one) { double('first_player', name: 'Alpha') }
   let(:player_two) { double('second_player', name: 'Omega') }
   let(:board) { double('game_board') }
+
   describe '#create_player' do
     context 'when a new player is created' do
       before do
@@ -30,6 +31,7 @@ describe Game do
       end
     end
   end
+
   describe '#turn_player' do
     before do
       game.instance_variable_set(:@player_one, player_one)
@@ -47,6 +49,26 @@ describe Game do
         game.instance_variable_set(:@round, 2)
         result = game.turn_player
         expect(result).to eq(player_two)
+      end
+    end
+  end
+
+  describe '#translate' do
+    context 'when given a valid inputs' do
+      it 'returns the correct output (a2a3 => [[0, 1], [0, 2]])' do
+        input = 'a2a3'
+        result = game.translate(input)
+        expect(result).to eq([[0, 1], [0, 2]])
+      end
+      it 'returns the correct output (g8f6 => [[6, 7], [5, 5]])' do
+        input = 'g8f6'
+        result = game.translate(input)
+        expect(result).to eq([[6, 7], [5, 5]])
+      end
+      it 'returns the correct output (d1g5 => [[3, 0], [6, 4]])' do
+        input = 'd1g4'
+        result = game.translate(input)
+        expect(result).to eq([[3, 0], [6, 3]])
       end
     end
   end

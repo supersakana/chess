@@ -30,12 +30,14 @@ describe Detector do
     context 'when given an input that is not a length of 4' do
       it 'returns false (length = 3)' do
         input = 'a2a'
-        result = detect.valid?(input, :light_white, board)
+        translated = [[0, 1], [0, nil]]
+        result = detect.valid?(input, translated, :light_white, board)
         expect(result).to be_falsey
       end
       it 'returns false (length = 5)' do
         input = 'a2a3b'
-        result = detect.valid?(input, :light_white, board)
+        translated = [[0, 1], [0, 2]]
+        result = detect.valid?(input, translated, :light_white, board)
         expect(result).to be_falsey
       end
     end
@@ -43,49 +45,57 @@ describe Detector do
       it 'returns false (White Rook a3a8)' do
         board.cells[[0, 2]].piece = w_rook
         input = 'a3a8'
-        result = detect.valid?(input, :light_white, board)
-        expect(result).to be_falsey, board
+        translated = [[0, 2], [0, 7]]
+        result = detect.valid?(input, translated, :light_white, board)
+        expect(result).to be_falsey
       end
       it 'returns false (Black Bishop c5g1)' do
         board.cells[[2, 4]].piece = b_bishop
         input = 'c5g1'
-        result = detect.valid?(input, :black, board)
+        translated = [[2, 4], [6, 0]]
+        result = detect.valid?(input, translated, :black, board)
         expect(result).to be_falsey
       end
       it 'returns false (White Queen g6e8)' do
         board.cells[[6, 5]].piece = w_queen
         input = 'g6e8'
-        result = detect.valid?(input, :light_white, board)
+        translated = [[6, 5], [5, 7]]
+        result = detect.valid?(input, translated, :light_white, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black King f3e1)' do
         board.cells[[5, 2]].piece = b_king
         input = 'f3e1'
-        result = detect.valid?(input, :black, board)
+        translated = [[5, 2], [4, 0]]
+        result = detect.valid?(input, translated, :black, board)
         expect(result).to be_falsey
       end
       it 'returns false (White Knight g3e2)' do
         board.cells[[6, 2]].piece = w_knight
         input = 'g3e2'
-        result = detect.valid?(input, :light_white, board)
+        translated = [[6, 2], [4, 1]]
+        result = detect.valid?(input, translated, :light_white, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black Pawn d3d2)' do
         board.cells[[3, 2]].piece = b_pawn
         input = 'd3d2'
-        result = detect.valid?(input, :black, board)
+        translated = [[3, 2], [3, 1]]
+        result = detect.valid?(input, translated, :black, board)
         expect(result).to be_falsey
       end
     end
     context 'when a user attempts to play opponent pieces' do
       it 'returns false (white picks black piece)' do
         input = 'd7d6'
-        result = detect.valid?(input, :light_white, board)
+        translated = [[3, 6], [3, 5]]
+        result = detect.valid?(input, translated, :light_white, board)
         expect(result).to be_falsey
       end
       it 'returns false (black picks white piece)' do
         input = 'e2e3'
-        result = detect.valid?(input, :black, board)
+        translated = [[4, 1], [4, 2]]
+        result = detect.valid?(input, translated, :black, board)
         expect(result).to be_falsey
       end
     end
@@ -93,37 +103,43 @@ describe Detector do
       it 'returns true (Black Rook h6h2)' do
         board.cells[[7, 5]].piece = b_rook
         input = 'h6h2'
-        result = detect.valid?(input, :black, board)
+        translated = [[7, 5], [7, 1]]
+        result = detect.valid?(input, translated, :black, board)
         expect(result).to be_truthy
       end
       it 'returns true (White Bishop f4c7)' do
         board.cells[[5, 3]].piece = w_bishop
         input = 'f4c7'
-        result = detect.valid?(input, :light_white, board)
+        translated = [[5, 3], [2, 6]]
+        result = detect.valid?(input, translated, :light_white, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Queen d5d2)' do
         board.cells[[3, 4]].piece = b_queen
         input = 'd5d2'
-        result = detect.valid?(input, :black, board)
+        translated = [[3, 4], [3, 1]]
+        result = detect.valid?(input, translated, :black, board)
         expect(result).to be_truthy
       end
       it 'returns true (White King e3f3)' do
         board.cells[[4, 2]].piece = w_king
         input = 'e3f3'
-        result = detect.valid?(input, :light_white, board)
+        translated = [[4, 2], [5, 2]]
+        result = detect.valid?(input, translated, :light_white, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Knight e3d1)' do
         board.cells[[4, 2]].piece = b_knight
         input = 'e3d1'
-        result = detect.valid?(input, :black, board)
+        translated = [[4, 2], [3, 0]]
+        result = detect.valid?(input, translated, :black, board)
         expect(result).to be_truthy
       end
       it 'returns true (White Pawn h6g7)' do
         board.cells[[7, 5]].piece = w_pawn
         input = 'h6g7'
-        result = detect.valid?(input, :light_white, board)
+        translated = [[7, 5], [6, 6]]
+        result = detect.valid?(input, translated, :light_white, board)
         expect(result).to be_truthy
       end
     end
@@ -134,14 +150,16 @@ describe Detector do
       end
       it 'returns true' do
         input = 'f8e7'
-        result = detect.valid?(input, :black, board)
+        translated = [[5, 7], [4, 6]]
+        result = detect.valid?(input, translated, :black, board)
         expect(result).to be_truthy
       end
     end
     context 'when user is in check and the move is still in check' do
       it 'returns false' do
         input = 'e8e7'
-        result = detect.valid?(input, :black, board)
+        translated = [[7, 7], [7, 6]]
+        result = detect.valid?(input, translated, :black, board)
         expect(result).to be_falsey
       end
     end
@@ -313,29 +331,29 @@ describe Detector do
       it 'returns true (White Rook vs Black King => Bishop unchecks)' do
         board.cells[[4, 3]].piece = w_rook
         board.cells[[4, 6]].piece = nil
-        move = 'f8e7'
-        result = detect.un_check?(move, board)
+        translated = [[5, 7], [4, 6]]
+        result = detect.un_check?(translated, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Bishop vs White King => Knight unchecks)' do
         board.cells[[1, 3]].piece = b_bishop
         board.cells[[3, 1]].piece = nil
-        move = 'b1d2'
-        result = detect.un_check?(move, board)
+        translated = [[1, 0], [3, 1]]
+        result = detect.un_check?(translated, board)
         expect(result).to be_truthy
       end
       it 'returns true (White Queen vs Black King => King unchecks' do
         board.cells[[4, 4]].piece = w_queen
         board.cells[[4, 6]].piece = nil
-        move = 'd8e7'
-        result = detect.un_check?(move, board)
+        translated = [[3, 7], [4, 6]]
+        result = detect.un_check?(translated, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Knight vs White King => King unchecks)' do
         board.cells[[3, 2]].piece = b_knight
         board.cells[[4, 1]].piece = nil
-        move = 'e1e2'
-        result = detect.un_check?(move, board)
+        translated = [[4, 0], [4, 1]]
+        result = detect.un_check?(translated, board)
         expect(result).to be_truthy
       end
     end
@@ -343,23 +361,30 @@ describe Detector do
       it 'returns false (White Rook vs Black King => Still in Check)' do
         board.cells[[4, 3]].piece = w_rook
         board.cells[[4, 6]].piece = nil
-        move = 'e8e7'
-        result = detect.un_check?(move, board)
+        translated = [[4, 7], [4, 6]]
+        result = detect.un_check?(translated, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black Bishop vs White King => Still in Check)' do
         board.cells[[1, 3]].piece = b_bishop
         board.cells[[3, 1]].piece = nil
-        move = 'e1d2'
-        result = detect.un_check?(move, board)
+        translated = [[4, 0], [3, 1]]
+        result = detect.un_check?(translated, board)
         expect(result).to be_falsey
       end
     end
   end
   describe '#checkmate?' do
+    before do
+      board.cells.each { |_k, v| v.piece = nil }
+    end
     context 'when given a board that has contains a checkmate' do
-      it 'returns true' do
-        # test to run
+      it 'returns true (Anastasia Mate)' do
+        board.cells[[6, 0]].piece = w_king
+        board.cells[[4, 2]].piece = w_rook
+        board.cells[[4, 6]].piece = w_knight
+        board.cells[[6, 6]].piece = b_pawn
+        board.cells[[7, 6]].piece = b_king
       end
     end
     context 'when given a board that does not contain a checkmate' do

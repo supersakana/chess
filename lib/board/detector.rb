@@ -2,14 +2,12 @@
 
 # contains method for checking the board status
 class Detector
-  # checks if a given move is valid
-  def valid?(input, color, board)
+  # checks if a given input is valid
+  def valid?(input, translated, color, board)
     return false unless input.length == 4
 
-    translated = board.translate(input)
-
     if check?(board)
-      un_check?(input, board)
+      un_check?(translated, board)
     else
       board.player_pieces(color).any? do |k, _v|
         k == translated[0] && legals(k, board).include?(translated[1])
@@ -26,9 +24,9 @@ class Detector
   end
 
   # simulates a given move and returns true if board is not in check
-  def un_check?(input, board)
+  def un_check?(translated, board)
     board_copy = Marshal.load(Marshal.dump(board))
-    board_copy.move_piece(input)
+    board_copy.move_piece(translated)
 
     if check?(board_copy)
       false
@@ -47,11 +45,11 @@ class Detector
 
   # returns true if the user does not have any moves to uncheck itself
   def checkmate?(color, board)
-    return unless check?(board)
+    # return unless check?(board)
 
-    pieces = board.player_pieces(color)
-    binding.pry
-
-
+    # pieces = board.player_pieces(color)
+    # pieces.any? do |k, _v|
+    #   legals(k, board).none? { |move| un_check?(move, board) }
+    # end
   end
 end

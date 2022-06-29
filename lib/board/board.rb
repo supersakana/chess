@@ -17,22 +17,13 @@ class Board
     }
   end
 
-  # takes move and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
-  def translate(input)
-    alpha = ('a'..'h').to_a
-    start = [alpha.index(input[0]), input[1].to_i - 1]
-    land = [alpha.index(input[2]), input[3].to_i - 1]
-    [start, land]
-  end
-
   # returns a list of a player's cells/pieces given the player color
   def player_pieces(color)
     @cells.select { |_k, v| v.piece_color == color }
   end
 
   # selects the start and landing piece position then transfers (removes pawn jump if piece is a pawn)
-  def move_piece(input)
-    translated = translate(input)
+  def move_piece(translated)
     start = @cells[translated[0]]
     land = @cells[translated[1]]
 

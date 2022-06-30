@@ -379,21 +379,125 @@ describe Detector do
     before do
       blank_board.cells.each { |_k, v| v.piece = nil }
     end
-    context 'when given a board that has contains a checkmate' do
-      it 'returns true (Anastasia Mate)' do
+    context 'when simulating Anastasia Mate' do
+      before do
         blank_board.cells[[6, 0]].piece = w_king
-        blank_board.cells[[7, 2]].piece = w_rook
+        blank_board.cells[[4, 2]].piece = w_rook
         blank_board.cells[[4, 6]].piece = w_knight
         blank_board.cells[[6, 6]].piece = b_pawn
         blank_board.cells[[7, 6]].piece = b_king
+      end
+      it 'returns false (one move before checkmate)' do
+        result = detect.checkmate?(:light_white, blank_board)
+        expect(result).to be_falsey
+      end
+      it 'returns true on checkmate' do
+        blank_board.move_piece([[4, 2], [7, 2]])
 
         result = detect.checkmate?(:black, blank_board)
         expect(result).to be_truthy
       end
     end
-    context 'when given a board that does not contain a checkmate' do
-      it 'returns false' do
-        # test to run
+    context 'when simulating Scholars Mate' do
+      before do
+        board.cells[[2, 3]].piece = w_bishop
+        board.cells[[4, 3]].piece = w_pawn
+        board.cells[[4, 4]].piece = b_pawn
+        board.cells[[7, 4]].piece = w_queen
+        board.cells[[2, 5]].piece = b_knight
+        board.cells[[5, 5]].piece = b_knight
+        board.cells[[3, 0]].piece = nil
+        board.cells[[5, 0]].piece = nil
+        board.cells[[4, 1]].piece = nil
+        board.cells[[3, 0]].piece = nil
+        board.cells[[4, 6]].piece = nil
+        board.cells[[1, 7]].piece = nil
+        board.cells[[6, 7]].piece = nil
+      end
+      it 'returns false (one move before checkmate)' do
+        result = detect.checkmate?(:light_white, board)
+        expect(result).to be_falsey
+      end
+      it 'returns true on checkmate' do
+        board.move_piece([[7, 4], [5, 6]])
+        result = detect.checkmate?(:black, board)
+        expect(result).to be_truthy
+      end
+    end
+    context 'when simulating Fools Mate' do
+      before do
+        board.cells[[5, 2]].piece = w_pawn
+        board.cells[[6, 3]].piece = w_pawn
+        board.cells[[4, 4]].piece = b_pawn
+        board.cells[[5, 1]].piece = nil
+        board.cells[[6, 1]].piece = nil
+        board.cells[[4, 6]].piece = nil
+      end
+      it 'returns false (one move before checkmate)' do
+        result = detect.checkmate?(:black, board)
+        expect(result).to be_falsey
+      end
+      it 'returns true on checkmate' do
+        board.move_piece([[3, 7], [7, 3]])
+        result = detect.checkmate?(:white, board)
+        expect(result).to be_truthy
+      end
+    end
+    context 'when simulating Grecos Mate' do
+      before do
+        blank_board.cells[[2, 0]].piece = w_king
+        blank_board.cells[[3, 0]].piece = w_rook
+        blank_board.cells[[2, 3]].piece = w_bishop
+        blank_board.cells[[6, 6]].piece = b_pawn
+        blank_board.cells[[7, 7]].piece = b_king
+      end
+      it 'returns false (one move before checkmate)' do
+        result = detect.checkmate?(:light_white, blank_board)
+        expect(result).to be_falsey
+      end
+      it 'returns true on checkmate' do
+        blank_board.move_piece([[3, 0], [7, 0]])
+
+        result = detect.checkmate?(:black, blank_board)
+        expect(result).to be_truthy
+      end
+    end
+    context 'when simulating Arabian Mate' do
+      before do
+        blank_board.cells[[6, 0]].piece = w_king
+        blank_board.cells[[5, 5]].piece = w_knight
+        blank_board.cells[[1, 6]].piece = w_rook
+        blank_board.cells[[7, 7]].piece = b_king
+      end
+      it 'returns false (one move before checkmate)' do
+        result = detect.checkmate?(:light_white, blank_board)
+        expect(result).to be_falsey
+      end
+      it 'returns true on checkmate' do
+        blank_board.move_piece([[5, 5], [7, 5]])
+
+        result = detect.checkmate?(:black, blank_board)
+        expect(result).to be_truthy
+      end
+    end
+    context 'when simulating Hook Mate' do
+      before do
+        blank_board.cells[[6, 0]].piece = w_king
+        blank_board.cells[[5, 4]].piece = w_pawn
+        blank_board.cells[[6, 5]].piece = w_knight
+        blank_board.cells[[6, 6]].piece = b_pawn
+        blank_board.cells[[7, 6]].piece = b_king
+        blank_board.cells[[2, 7]].piece = w_rook
+      end
+      it 'returns false (one move before checkmate)' do
+        result = detect.checkmate?(:light_white, blank_board)
+        expect(result).to be_falsey
+      end
+      it 'returns true on checkmate' do
+        blank_board.move_piece([[2, 7], [7, 7]])
+
+        result = detect.checkmate?(:black, blank_board)
+        expect(result).to be_truthy
       end
     end
   end

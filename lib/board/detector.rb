@@ -45,8 +45,6 @@ class Detector
 
   # returns true if the user does not have any moves to uncheck itself
   def checkmate?(color, board)
-    return unless check?(board)
-
     pieces = board.player_pieces(color)
     pieces.all? do |start, _v|
       legals(start, board).none? { |land| un_check?([start, land], board) }

@@ -10,18 +10,30 @@ class Detector
       un_check?(translated, player.foe_color, board)
     else
       board.player_pieces(player.color).any? do |k, _v|
-        k == translated[0] && legals(k, board).include?(translated[1])
+        k == translated[0] && legals(k, player.foe_color, board).include?(translated[1])
       end
     end
   end
 
-  # returns legal moves given piece start position
-  # HOW CAN WE MAKE IT SO A PLAYER CAN NOT CHECK THEMSELVES
-  def legals(start, board, moves = [])
+  # returns full list of legal moves given a piece position
+  def legals(start, color, board)
+    possible_moves(start, board).reject { |land| checks_self?([start, land], color, board) }
+  end
+
+  # returns list of possible moves (excludes moves that check self)
+  def possible_moves(start, board, moves = [])
     board.cells[start].piece_transitions.each do |shift|
       moves << board.cells[start].piece.iterate(shift, start, board)
     end
-    moves.flatten(1).uniq # .reject { |land| checks_self?([start, land], board) }
+    moves.flatten(1).uniq
+  end
+
+  # returns true if a translated move checks itself
+  def checks_self?(translated, color, board)
+    board_copy = Marshal.load(Marshal.dump(board))
+    board_copy.move_piece(translated)
+
+    check?(color, board_copy)
   end
 
   # simulates a given move and returns true if board is not in check
@@ -40,7 +52,7 @@ class Detector
   def check?(color, board)
     pieces = board.player_pieces(color)
     pieces.any? do |k, _v|
-      legals(k, board).any? { |move| board.cells[move].piece.is_a?(King) }
+      possible_moves(k, board).any? { |move| board.cells[move].piece.is_a?(King) }
     end
   end
 
@@ -48,7 +60,7 @@ class Detector
   def checkmate?(player, board)
     pieces = board.player_pieces(player.color)
     pieces.all? do |start, _v|
-      legals(start, board).none? { |land| un_check?([start, land], player.foe_color, board) }
+      possible_moves(start, board).none? { |land| un_check?([start, land], player.foe_color, board) }
     end
   end
 

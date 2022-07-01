@@ -39,9 +39,9 @@ class Game
     loop do
       player = turn_player
       @board.print
-      break if @detect.checkmate?(player.color, @board)
+      break if @detect.checkmate?(player, @board)
 
-      display_check(player.name) if @detect.check?(@board)
+      display_check(player.name) if @detect.check?(player.foe_color, @board)
       make_move(player)
     end
     p 'GAME OVER' # temporary
@@ -73,7 +73,7 @@ class Game
 
   # checks if move is valid
   def validate(input, translated, player)
-    if @detect.valid?(input, translated, player.color, @board)
+    if @detect.valid?(input, translated, player, @board)
       @board.move_piece(translated)
       @round += 1
     else

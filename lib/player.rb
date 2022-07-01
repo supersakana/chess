@@ -11,4 +11,13 @@ class Player
     @name = name
     @color = color
   end
+
+  # returns the foe's color
+  def foe_color
+    if @color == :light_white
+      :black
+    else
+      :light_white
+    end
+  end
 end

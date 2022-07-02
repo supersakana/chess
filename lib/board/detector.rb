@@ -46,15 +46,14 @@ class Detector
 
   # returns true if the user does not have any moves to uncheck itself
   def checkmate?(player, board)
-    pieces = board.player_pieces(player.color)
-    pieces.all? do |start, _v|
-      possible_moves(start, board).all? { |land| checks_self?([start, land], player.foe_color, board) }
-    end
+    stalemate?(player, board) && check?(player.foe_color, board)
   end
 
   # returns true if one side has no legal moves to make.
   def stalemate?(player, board)
     pieces = board.player_pieces(player.color)
-    pieces.all? { |start, _v| legals(start, player.foe_color, board) == [] }
+    pieces.all? do |start, _v|
+      legals(start, player.foe_color, board) == []
+    end
   end
 end

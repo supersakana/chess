@@ -478,7 +478,7 @@ describe Detector do
         expect(result).to be_falsey
       end
       it 'returns true on checkmate' do
-        blank_board.move_piece([[5, 5], [7, 5]])
+        blank_board.move_piece([[1, 6], [7, 6]])
 
         result = detect.checkmate?(black_player, blank_board)
         expect(result).to be_truthy
@@ -505,32 +505,7 @@ describe Detector do
       end
     end
   end
-  describe '#checks_self?' do
-    let(:stalemate_board) { Board.new }
-    before do
-      stalemate_board.cells.each { |_k, v| v.piece = nil }
-      stalemate_board.cells[[0, 7]].piece = w_king
-      stalemate_board.cells[[5, 1]].piece = w_queen
-      stalemate_board.cells[[7, 0]].piece = b_king
-    end
-    context 'when given a move that checks itself' do
-      it 'returns true [7, 0] => [6, 0]' do
-        move = [[7, 0], [6, 0]]
-        result = detect.checks_self?(move, :light_white, stalemate_board)
-        expect(result).to be_truthy
-      end
-      it 'returns true [7, 0] => [6, 1]' do
-        move = [[7, 0], [6, 1]]
-        result = detect.checks_self?(move, :light_white, stalemate_board)
-        expect(result).to be_truthy
-      end
-      it 'returns true [7, 0] => [7, 1]' do
-        move = [[7, 0], [6, 0]]
-        result = detect.checks_self?(move, :light_white, stalemate_board)
-        expect(result).to be_truthy
-      end
-    end
-  end
+
   describe '#stalemate' do
     let(:stalemate_board) { Board.new }
     before do

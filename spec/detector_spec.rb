@@ -10,7 +10,9 @@ require 'pry-byebug'
 
 describe Detector do
   subject(:detect) { described_class.new }
+
   let(:board) { Board.new }
+
   let(:white_player) { double('player', color: :light_white, foe_color: :black) }
   let(:black_player) { double('player', color: :black, foe_color: :light_white) }
 
@@ -328,51 +330,51 @@ describe Detector do
       # end
     end
   end
-  describe '#un_check?' do
+  describe '#checks_self?' do
     context 'when given a valid move' do
-      it 'returns true (White Rook vs Black King => Bishop unchecks)' do
+      it 'returns false (White Rook vs Black King => Bishop unchecks)' do
         board.cells[[4, 3]].piece = w_rook
         board.cells[[4, 6]].piece = nil
         translated = [[5, 7], [4, 6]]
-        result = detect.un_check?(translated, :light_white, board)
-        expect(result).to be_truthy
+        result = detect.checks_self?(translated, :light_white, board)
+        expect(result).to be_falsey
       end
-      it 'returns true (Black Bishop vs White King => Knight unchecks)' do
+      it 'returns false (Black Bishop vs White King => Knight unchecks)' do
         board.cells[[1, 3]].piece = b_bishop
         board.cells[[3, 1]].piece = nil
         translated = [[1, 0], [3, 1]]
-        result = detect.un_check?(translated, :black, board)
-        expect(result).to be_truthy
+        result = detect.checks_self?(translated, :black, board)
+        expect(result).to be_falsey
       end
-      it 'returns true (White Queen vs Black King => King unchecks' do
+      it 'returns false (White Queen vs Black King => King unchecks' do
         board.cells[[4, 4]].piece = w_queen
         board.cells[[4, 6]].piece = nil
         translated = [[3, 7], [4, 6]]
-        result = detect.un_check?(translated, :light_white, board)
-        expect(result).to be_truthy
+        result = detect.checks_self?(translated, :light_white, board)
+        expect(result).to be_falsey
       end
-      it 'returns true (Black Knight vs White King => King unchecks)' do
+      it 'returns false (Black Knight vs White King => King unchecks)' do
         board.cells[[3, 2]].piece = b_knight
         board.cells[[4, 1]].piece = nil
         translated = [[4, 0], [4, 1]]
-        result = detect.un_check?(translated, :black, board)
-        expect(result).to be_truthy
+        result = detect.checks_self?(translated, :black, board)
+        expect(result).to be_falsey
       end
     end
     context 'when given a move that does not uncheck the user' do
-      it 'returns false (White Rook vs Black King => Still in Check)' do
+      it 'returns true (White Rook vs Black King => Still in Check)' do
         board.cells[[4, 3]].piece = w_rook
         board.cells[[4, 6]].piece = nil
         translated = [[4, 7], [4, 6]]
-        result = detect.un_check?(translated, :light_white, board)
-        expect(result).to be_falsey
+        result = detect.checks_self?(translated, :light_white, board)
+        expect(result).to be_truthy
       end
-      it 'returns false (Black Bishop vs White King => Still in Check)' do
+      it 'returns true (Black Bishop vs White King => Still in Check)' do
         board.cells[[1, 3]].piece = b_bishop
         board.cells[[3, 1]].piece = nil
         translated = [[4, 0], [3, 1]]
-        result = detect.un_check?(translated, :black, board)
-        expect(result).to be_falsey
+        result = detect.checks_self?(translated, :black, board)
+        expect(result).to be_truthy
       end
     end
   end

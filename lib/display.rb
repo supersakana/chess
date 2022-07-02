@@ -33,6 +33,13 @@ module Display
     puts 'Make a move to uncheck yourself'
   end
 
+  # prints the formatted grave for each player
+  def display_grave(grave)
+    puts "P1 #{grave[:player_one].join('')} "
+    puts "P2 #{grave[:player_two].join('')} "
+    puts ' '
+  end
+
   # prints of the formatted board
   def display_board(board, i = 7)
     puts "   #{('A'..'H').to_a.join('  ')}"
@@ -43,12 +50,5 @@ module Display
       i -= 1
     end
     puts "   #{('A'..'H').to_a.join('  ')}"
-  end
-
-  # prints the formatted grave for each player
-  def display_grave(grave)
-    puts "P1 #{grave[:player_one].join('')} "
-    puts "P2 #{grave[:player_two].join('')} "
-    puts ' '
   end
 end

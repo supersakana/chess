@@ -7,7 +7,7 @@ class Detector
     return false unless input.length == 4
 
     if check?(player.foe_color, board)
-      un_check?(translated, player.foe_color, board)
+      checks_self?(translated, player.foe_color, board) == false
     else
       board.player_pieces(player.color).any? do |k, _v|
         k == translated[0] && legals(k, player.foe_color, board).include?(translated[1])
@@ -28,26 +28,6 @@ class Detector
     moves.flatten(1).uniq
   end
 
-  # returns true if a translated move checks itself
-  def checks_self?(translated, color, board)
-    board_copy = Marshal.load(Marshal.dump(board))
-    board_copy.move_piece(translated)
-
-    check?(color, board_copy)
-  end
-
-  # simulates a given move and returns true if board is not in check
-  def un_check?(translated, color, board)
-    board_copy = Marshal.load(Marshal.dump(board))
-    board_copy.move_piece(translated)
-
-    if check?(color, board_copy)
-      false
-    else
-      true
-    end
-  end
-
   # returns true if a king is in check position
   def check?(color, board)
     pieces = board.player_pieces(color)
@@ -56,19 +36,25 @@ class Detector
     end
   end
 
+  # returns true if a translated move checks itself
+  def checks_self?(translated, color, board)
+    board_copy = Marshal.load(Marshal.dump(board))
+    board_copy.move_piece(translated)
+
+    check?(color, board_copy)
+  end
+
   # returns true if the user does not have any moves to uncheck itself
   def checkmate?(player, board)
     pieces = board.player_pieces(player.color)
     pieces.all? do |start, _v|
-      possible_moves(start, board).none? { |land| un_check?([start, land], player.foe_color, board) }
+      possible_moves(start, board).all? { |land| checks_self?([start, land], player.foe_color, board) }
     end
   end
 
   # returns true if one side has no legal moves to make.
   def stalemate?(player, board)
     pieces = board.player_pieces(player.color)
-    pieces.all? do |start, _v|
-      legals(start, player.foe_color, board) == []
-    end
+    pieces.all? { |start, _v| legals(start, player.foe_color, board) == [] }
   end
 end

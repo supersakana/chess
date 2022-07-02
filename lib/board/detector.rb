@@ -65,8 +65,10 @@ class Detector
   end
 
   # returns true if one side has no legal moves to make.
-  # if the king is not in check, but no piece can be moved without checking itself => true
-  def stalemate?(color, board)
-    # pieces = board.player_pieces(color)
+  def stalemate?(player, board)
+    pieces = board.player_pieces(player.color)
+    pieces.all? do |start, _v|
+      legals(start, player.foe_color, board) == []
+    end
   end
 end

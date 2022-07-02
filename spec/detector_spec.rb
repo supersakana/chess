@@ -512,15 +512,38 @@ describe Detector do
       stalemate_board.cells[[7, 0]].piece = b_king
     end
     context 'when given a move that checks itself' do
-      it 'returns true' do
+      it 'returns true [7, 0] => [6, 0]' do
+        move = [[7, 0], [6, 0]]
+        result = detect.checks_self?(move, :light_white, stalemate_board)
+        expect(result).to be_truthy
+      end
+      it 'returns true [7, 0] => [6, 1]' do
+        move = [[7, 0], [6, 1]]
+        result = detect.checks_self?(move, :light_white, stalemate_board)
+        expect(result).to be_truthy
+      end
+      it 'returns true [7, 0] => [7, 1]' do
         move = [[7, 0], [6, 0]]
         result = detect.checks_self?(move, :light_white, stalemate_board)
         expect(result).to be_truthy
       end
     end
-    context 'when given a move that does not check itself' do
-      it 'returns false' do
-        # test to run
+  end
+  describe '#stalemate' do
+    let(:stalemate_board) { Board.new }
+    before do
+      stalemate_board.cells.each { |_k, v| v.piece = nil }
+    end
+    context 'when given a stalemate board' do
+      before do
+        stalemate_board.cells.each { |_k, v| v.piece = nil }
+        stalemate_board.cells[[0, 7]].piece = w_king
+        stalemate_board.cells[[5, 1]].piece = w_queen
+        stalemate_board.cells[[7, 0]].piece = b_king
+      end
+      it 'returns true' do
+        result = detect.stalemate?(black_player, stalemate_board)
+        expect(result).to be_truthy
       end
     end
   end

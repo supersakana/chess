@@ -39,7 +39,7 @@ class Game
     loop do
       player = turn_player
       @board.print
-      break if @detect.checkmate?(player, @board)
+      break if game_over?(player, @board)
 
       display_check(player.name) if @detect.check?(player.foe_color, @board)
       make_move(player)
@@ -79,5 +79,10 @@ class Game
     else
       make_move(player)
     end
+  end
+
+  # returns true if the game ends in a checkmate or stalemate
+  def game_over?(player, board)
+    @detect.checkmate?(player, board) || @detect.stalemate?(player, board)
   end
 end

@@ -513,7 +513,6 @@ describe Detector do
     end
     context 'when given a stalemate board' do
       before do
-        stalemate_board.cells.each { |_k, v| v.piece = nil }
         stalemate_board.cells[[0, 7]].piece = w_king
         stalemate_board.cells[[5, 1]].piece = w_queen
         stalemate_board.cells[[7, 0]].piece = b_king

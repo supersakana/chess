@@ -28,9 +28,21 @@ module Display
     gets.chomp
   end
 
+  # when a user is in check by opponent
   def display_check(player)
     puts "#{player.name} is in CHECK!".colorize(color: :yellow)
     puts 'Make a move to uncheck yourself'
+  end
+
+  # when a winner is declared
+  def display_winner(player)
+    puts 'CHECKMATE'.colorize(color: :green)
+    puts "#{player.name} is the winner!"
+  end
+
+  # when a stalemate is declared
+  def display_stalemate
+    puts 'STALEMATE'
   end
 
   # prints the formatted grave for each player

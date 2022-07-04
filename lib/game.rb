@@ -6,8 +6,6 @@ require 'pry-byebug'
 class Game
   include Display
 
-  attr_accessor :round
-
   def initialize
     @board = Board.new
     @detect = Detector.new
@@ -20,12 +18,7 @@ class Game
   def start
     two_players
     game_loop
-  end
-
-  # sets up Human vs Human
-  def two_players
-    @player_one = create_player(1, :light_white)
-    @player_two = create_player(2, :black)
+    end_game
   end
 
   # creates a new player object
@@ -39,7 +32,7 @@ class Game
     loop do
       @current = turn_player
       @board.print
-      break if game_over?(@current, @board)
+      break if game_over?(@board)
 
       display_check(@current) if @detect.check?(@current, @board)
       make_move
@@ -70,6 +63,19 @@ class Game
     [start, land]
   end
 
+  # returns true if the game ends in a checkmate or stalemate
+  def game_over?(board)
+    @detect.checkmate?(@current, board) || @detect.stalemate?(@current, board)
+  end
+
+  private
+
+  # sets up Human vs Human
+  def two_players
+    @player_one = create_player(1, :light_white)
+    @player_two = create_player(2, :black)
+  end
+
   # checks if move is valid
   def validate(input, translated)
     if @detect.valid?(input, translated, @current, @board)
@@ -79,8 +85,13 @@ class Game
     end
   end
 
-  # returns true if the game ends in a checkmate or stalemate
-  def game_over?(player, board)
-    @detect.checkmate?(player, board) || @detect.stalemate?(player, board)
+  # declares the winner/draw of game
+  def end_game
+    if @detect.checkmate?(@current, @board)
+      winner = turn_player
+      display_winner(winner)
+    else
+      display_stalemate
+    end
   end
 end

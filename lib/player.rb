@@ -4,7 +4,6 @@
 class Player
   include Display
 
-  attr_accessor :pieces
   attr_reader :name, :color
 
   def initialize(name, color)

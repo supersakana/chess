@@ -181,6 +181,17 @@ describe Detector do
         expect(result).to be_falsey
       end
     end
+    context 'when user inputs pawn jump move but a piece is infront of it' do
+      before do
+        board.cells[[4, 2]].piece = b_pawn
+      end
+      it 'returns false when user tries to pawn jump over piece' do
+        input = 'e2e4'
+        translated = [[4, 1], [4, 3]]
+        result = detect.valid?(input, translated, white_player, board)
+        expect(result).to be_falsey
+      end
+    end
   end
 
   describe '#possible_moves' do
@@ -521,18 +532,18 @@ describe Detector do
   end
 
   describe '#stalemate' do
-    let(:stalemate_board) { Board.new }
+    let(:blank_board) { Board.new }
     before do
-      stalemate_board.cells.each { |_k, v| v.piece = nil }
+      blank_board.cells.each { |_k, v| v.piece = nil }
     end
-    context 'when given a stalemate board' do
+    context 'when given a stalemate board (example 1)' do
       before do
-        stalemate_board.cells[[0, 7]].piece = w_king
-        stalemate_board.cells[[5, 1]].piece = w_queen
-        stalemate_board.cells[[7, 0]].piece = b_king
+        blank_board.cells[[0, 7]].piece = w_king
+        blank_board.cells[[5, 1]].piece = w_queen
+        blank_board.cells[[7, 0]].piece = b_king
       end
       it 'returns true' do
-        result = detect.stalemate?(black_player, stalemate_board)
+        result = detect.stalemate?(black_player, blank_board)
         expect(result).to be_truthy
       end
     end

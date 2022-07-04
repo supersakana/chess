@@ -103,7 +103,8 @@ describe Game do
         blank_board.cells[[7, 0]].piece = b_king
       end
       it 'returns true' do
-        result = game.game_over?(player_two, blank_board)
+        game.instance_variable_set(:@current, player_two)
+        result = game.game_over?(blank_board)
         expect(result).to be_truthy
       end
     end
@@ -116,7 +117,8 @@ describe Game do
         blank_board.cells[[7, 6]].piece = b_king
       end
       it 'it returns true' do
-        result = game.game_over?(player_two, blank_board)
+        game.instance_variable_set(:@current, player_two)
+        result = game.game_over?(blank_board)
         expect(result).to be_truthy
       end
     end
@@ -129,13 +131,15 @@ describe Game do
         blank_board.cells[[7, 6]].piece = b_king
       end
       it 'it returns false' do
-        result = game.game_over?(player_one, blank_board)
+        game.instance_variable_set(:@current, player_one)
+        result = game.game_over?(blank_board)
         expect(result).to be_falsey
       end
     end
     context 'when given an initialized board' do
       it 'it returns false' do
-        result = game.game_over?(player_one, board)
+        game.instance_variable_set(:@current, player_one)
+        result = game.game_over?(board)
         expect(result).to be_falsey
       end
     end

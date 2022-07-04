@@ -160,9 +160,23 @@ describe Detector do
       end
     end
     context 'when user is in check and the move is still in check' do
+      before do
+        allow(detect).to receive(:check?).and_return(true)
+      end
       it 'returns false' do
         input = 'e8e7'
         translated = [[7, 7], [7, 6]]
+        result = detect.valid?(input, translated, black_player, board)
+        expect(result).to be_falsey
+      end
+    end
+    context 'when user is in check the move is invalid' do
+      before do
+        allow(detect).to receive(:check?).and_return(true)
+      end
+      it 'returns false' do
+        input = 'hehe'
+        translated = [[7, -1], [7, -1]]
         result = detect.valid?(input, translated, black_player, board)
         expect(result).to be_falsey
       end
@@ -303,24 +317,24 @@ describe Detector do
       it 'returns true (White Rook vs Black King)' do
         board.cells[[4, 3]].piece = w_rook
         board.cells[[4, 6]].piece = nil
-        result = detect.check?(:light_white, board)
+        result = detect.check?(black_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Bishop vs White King)' do
         board.cells[[1, 3]].piece = b_bishop
         board.cells[[3, 1]].piece = nil
-        result = detect.check?(:black, board)
+        result = detect.check?(white_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (White Queen vs Black King)' do
         board.cells[[7, 4]].piece = w_queen
         board.cells[[5, 6]].piece = nil
-        result = detect.check?(:light_white, board)
+        result = detect.check?(black_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Knight vs White King)' do
         board.cells[[5, 2]].piece = b_knight
-        result = detect.check?(:black, board)
+        result = detect.check?(white_player, board)
         expect(result).to be_truthy
       end
       # xit 'returns false for pawns in check position' do
@@ -336,28 +350,28 @@ describe Detector do
         board.cells[[4, 3]].piece = w_rook
         board.cells[[4, 6]].piece = nil
         translated = [[5, 7], [4, 6]]
-        result = detect.checks_self?(translated, :light_white, board)
+        result = detect.checks_self?(translated, black_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black Bishop vs White King => Knight unchecks)' do
         board.cells[[1, 3]].piece = b_bishop
         board.cells[[3, 1]].piece = nil
         translated = [[1, 0], [3, 1]]
-        result = detect.checks_self?(translated, :black, board)
+        result = detect.checks_self?(translated, white_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (White Queen vs Black King => King unchecks' do
         board.cells[[4, 4]].piece = w_queen
         board.cells[[4, 6]].piece = nil
         translated = [[3, 7], [4, 6]]
-        result = detect.checks_self?(translated, :light_white, board)
+        result = detect.checks_self?(translated, black_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black Knight vs White King => King unchecks)' do
         board.cells[[3, 2]].piece = b_knight
         board.cells[[4, 1]].piece = nil
         translated = [[4, 0], [4, 1]]
-        result = detect.checks_self?(translated, :black, board)
+        result = detect.checks_self?(translated, white_player, board)
         expect(result).to be_falsey
       end
     end
@@ -366,14 +380,14 @@ describe Detector do
         board.cells[[4, 3]].piece = w_rook
         board.cells[[4, 6]].piece = nil
         translated = [[4, 7], [4, 6]]
-        result = detect.checks_self?(translated, :light_white, board)
+        result = detect.checks_self?(translated, black_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Bishop vs White King => Still in Check)' do
         board.cells[[1, 3]].piece = b_bishop
         board.cells[[3, 1]].piece = nil
         translated = [[4, 0], [3, 1]]
-        result = detect.checks_self?(translated, :black, board)
+        result = detect.checks_self?(translated, white_player, board)
         expect(result).to be_truthy
       end
     end

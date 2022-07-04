@@ -41,7 +41,7 @@ class Game
       @board.print
       break if game_over?(@current, @board)
 
-      display_check(@current.name) if @detect.check?(@current.foe_color, @board)
+      display_check(@current) if @detect.check?(@current, @board)
       make_move
     end
   end
@@ -57,7 +57,7 @@ class Game
 
   # player inputs move then move gets validated
   def make_move
-    input = display_choice(@current.name)
+    input = display_choice(@current)
     translated = translate(input)
     validate(input, translated)
   end

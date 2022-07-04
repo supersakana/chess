@@ -12,7 +12,7 @@ module Display
 
   # prompt for player to make a move
   def display_choice(player)
-    puts "#{player}... make your move (i.e. a2a3)"
+    puts "#{player.name}... make your move (i.e. a2a3)"
     gets.chomp.downcase
   end
 
@@ -28,8 +28,8 @@ module Display
     gets.chomp
   end
 
-  def display_check(name)
-    puts "#{name} is in CHECK!".colorize(color: :yellow)
+  def display_check(player)
+    puts "#{player.name} is in CHECK!".colorize(color: :yellow)
     puts 'Make a move to uncheck yourself'
   end
 

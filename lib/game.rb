@@ -13,7 +13,7 @@ class Game
     @detect = Detector.new
     @player_one = nil
     @player_two = nil
-    @round = 1
+    @current = nil
   end
 
   # general functionality between start to end of game
@@ -37,30 +37,29 @@ class Game
   # general gameplay until checkmate is declared
   def game_loop
     loop do
-      player = turn_player
+      @current = turn_player
       @board.print
-      break if game_over?(player, @board)
+      break if game_over?(@current, @board)
 
-      display_check(player.name) if @detect.check?(player.foe_color, @board)
-      make_move(player)
+      display_check(@current.name) if @detect.check?(@current.foe_color, @board)
+      make_move
     end
-    p 'GAME OVER' # temporary
   end
 
   # switches current player
   def turn_player
-    if @round.odd?
-      @player_one
-    else
+    if @current == @player_one
       @player_two
+    else
+      @player_one
     end
   end
 
   # player inputs move then move gets validated
-  def make_move(player)
-    input = display_choice(player.name)
+  def make_move
+    input = display_choice(@current.name)
     translated = translate(input)
-    validate(input, translated, player)
+    validate(input, translated)
   end
 
   # takes move and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
@@ -72,12 +71,11 @@ class Game
   end
 
   # checks if move is valid
-  def validate(input, translated, player)
-    if @detect.valid?(input, translated, player, @board)
+  def validate(input, translated)
+    if @detect.valid?(input, translated, @current, @board)
       @board.move_piece(translated)
-      @round += 1
     else
-      make_move(player)
+      make_move
     end
   end
 

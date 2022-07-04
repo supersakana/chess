@@ -4,6 +4,8 @@
 
 require_relative '../lib/library'
 
+require 'pry-byebug'
+
 # rubocop:disable Metrics/BlockLength
 
 describe Game do
@@ -53,16 +55,16 @@ describe Game do
       game.instance_variable_set(:@player_one, player_one)
       game.instance_variable_set(:@player_two, player_two)
     end
-    context 'when round is odd' do
+    context 'when current player is' do
       it 'returns player two' do
-        game.instance_variable_set(:@round, 1)
+        game.instance_variable_set(:@current, player_two)
         result = game.turn_player
         expect(result).to eq(player_one)
       end
     end
     context 'when round is even' do
       it 'returns player two' do
-        game.instance_variable_set(:@round, 2)
+        game.instance_variable_set(:@current, player_one)
         result = game.turn_player
         expect(result).to eq(player_two)
       end

@@ -576,6 +576,43 @@ describe Detector do
         expect(result).to be_truthy
       end
     end
+    context 'when given a capture-less stalemate' do
+      before do
+        board.cells[[3, 1]].piece = w_knight
+        board.cells[[7, 1]].piece = w_queen
+        board.cells[[1, 2]].piece = b_bishop
+        board.cells[[4, 2]].piece = b_pawn
+        board.cells[[5, 2]].piece = w_pawn
+        board.cells[[6, 2]].piece = w_rook
+        board.cells[[7, 2]].piece = w_pawn
+        board.cells[[0, 3]].piece = w_pawn
+        board.cells[[2, 3]].piece = w_pawn
+        board.cells[[5, 3]].piece = b_pawn
+        board.cells[[7, 3]].piece = b_queen
+        board.cells[[0, 4]].piece = b_bishop
+        board.cells[[2, 4]].piece = b_pawn
+        board.cells[[3, 4]].piece = w_pawn
+        board.cells[[3, 5]].piece = b_pawn
+        board.cells[[5, 1]].piece = nil
+        board.cells[[0, 0]].piece = nil
+        board.cells[[1, 0]].piece = nil
+        board.cells[[3, 0]].piece = nil
+        board.cells[[0, 1]].piece = nil
+        board.cells[[2, 1]].piece = nil
+        board.cells[[2, 6]].piece = nil
+        board.cells[[3, 6]].piece = nil
+        board.cells[[4, 6]].piece = nil
+        board.cells[[5, 6]].piece = nil
+        board.cells[[2, 6]].piece = nil
+        board.cells[[2, 7]].piece = nil
+        board.cells[[3, 7]].piece = nil
+        board.cells[[5, 7]].piece = nil
+      end
+      it 'returns true' do
+        result = detect.stalemate?(white_player, board)
+        expect(result).to be_truthy
+      end
+    end
   end
 end
 # rubocop:enable Metrics/BlockLength

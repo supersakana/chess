@@ -41,10 +41,11 @@ class Pawn < Piece
     false
   end
 
-  # returns line of legal moves given pawn transitions
+  # returns legal moves given pawn transitions
   def iterate(shift, start, board)
     move = create_move(shift, start)
-    if pawn_vertical?(shift, move, board) || (pawn_diagonal?(shift) && opposing_piece?(move, start, board))
+    if (pawn_vertical?(shift, move, board) && jump_block?(shift, move, board)) ||
+       (pawn_diagonal?(shift) && opposing_piece?(move, start, board))
       [move]
     else
       []
@@ -54,6 +55,18 @@ class Pawn < Piece
   # returns true if pawn move has a verticle opening
   def pawn_vertical?(shift, move, board)
     board.cells[move].empty? && shift.include?(0)
+  end
+
+  # checks if a user is blocking a pawn jump
+  def jump_block?(shift, move, board)
+    return true unless [2, -2].include?(shift[1])
+
+    prev = if shift == [0, 2]
+             [move[0], move[1] - 1]
+           else
+             [move[0], move[1] + 1]
+           end
+    board.cells[prev].empty?
   end
 
   # returns true if pawn transition is diagonal

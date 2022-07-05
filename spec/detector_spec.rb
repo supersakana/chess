@@ -536,7 +536,7 @@ describe Detector do
     before do
       blank_board.cells.each { |_k, v| v.piece = nil }
     end
-    context 'when given a stalemate board (example 1)' do
+    context 'when given a stalemate board' do
       before do
         blank_board.cells[[0, 7]].piece = w_king
         blank_board.cells[[5, 1]].piece = w_queen
@@ -544,6 +544,35 @@ describe Detector do
       end
       it 'returns true' do
         result = detect.stalemate?(black_player, blank_board)
+        expect(result).to be_truthy
+      end
+    end
+    context 'when given a stalemate board (with unjumped pawns)' do
+      before do
+        board.cells[[2, 3]].piece = w_pawn
+        board.cells[[7, 3]].piece = w_pawn
+        board.cells[[7, 4]].piece = b_pawn
+        board.cells[[4, 5]].piece = w_queen
+        board.cells[[5, 5]].piece = b_pawn
+        board.cells[[6, 5]].piece = b_king
+        board.cells[[7, 5]].piece = b_rook
+        board.cells[[7, 6]].piece = b_queen
+        board.cells[[3, 0]].piece = nil
+        board.cells[[2, 1]].piece = nil
+        board.cells[[7, 1]].piece = nil
+        board.cells[[0, 6]].piece = nil
+        board.cells[[1, 6]].piece = nil
+        board.cells[[2, 6]].piece = nil
+        board.cells[[3, 6]].piece = nil
+        board.cells[[5, 6]].piece = nil
+        board.cells[[0, 7]].piece = nil
+        board.cells[[1, 7]].piece = nil
+        board.cells[[2, 7]].piece = nil
+        board.cells[[3, 7]].piece = nil
+        board.cells[[4, 7]].piece = nil
+      end
+      it 'returns true' do
+        result = detect.stalemate?(black_player, board)
         expect(result).to be_truthy
       end
     end

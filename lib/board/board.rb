@@ -57,9 +57,8 @@ class Board
   private
 
   # creates a 8x8 grid with coordinates (Hash of 64 values)
-  def create_board
+  def create_board(hash = {})
     coordinates = [0, 1, 2, 3, 4, 5, 6, 7].repeated_permutation(2).to_a
-    hash = {}
     coordinates.each do |value|
       cell = Cell.new(value)
       add_cells(cell, hash)

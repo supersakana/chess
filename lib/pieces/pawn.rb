@@ -13,7 +13,6 @@ class Pawn < Piece
   end
 
   # list of increments needed to find possible pawn moves
-  # Needs refactoring
   def transitions
     if @color == :light_white && @pawn_jump == true
       pawn_shifts[:white_jump]

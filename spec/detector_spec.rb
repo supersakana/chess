@@ -614,6 +614,24 @@ describe Detector do
       end
     end
   end
+  describe '#insufficient_matierial?' do
+    context 'returns true when' do
+      it 'there are only Kings and 1 Knight' do
+        # test to run
+      end
+      it 'there are only Kings and Bishops' do
+        # test to run
+      end
+      it 'there are only Kings and no other pieces' do
+        # test to run
+      end
+    end
+    context 'it returns false when' do
+      it 'the board contains enough material' do
+        # test to run
+      end
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength
 # rspec --format documentation spec/detector_spec.rb

@@ -59,4 +59,9 @@ class Detector
       legal_moves(start, player, board).empty?
     end
   end
+
+  # returns true if there are no more pieces to declare checkmate
+  def insufficient_matierial?
+    # code to run
+  end
 end

@@ -65,7 +65,9 @@ class Game
 
   # returns true if the game ends in a checkmate or stalemate
   def game_over?(board)
-    @detect.checkmate?(@current, board) || @detect.stalemate?(@current, board)
+    @detect.checkmate?(@current, board) ||
+      @detect.stalemate?(@current, board) ||
+      @detect.insufficient_material?(board)
   end
 
   private
@@ -90,6 +92,8 @@ class Game
     if @detect.checkmate?(@current, @board)
       winner = turn_player
       display_winner(winner)
+    elsif @detect.insufficient_material?(@board)
+      display_insufficient
     else
       display_stalemate
     end

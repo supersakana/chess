@@ -22,6 +22,11 @@ class Board
     @cells.select { |_k, v| v.piece_color == color }
   end
 
+  # returns a list of all cells that contains pieces
+  def all_pieces
+    @cells.reject { |_k, v| v.empty? }
+  end
+
   # selects the start and landing piece position then transfers (removes pawn jump if piece is a pawn)
   def move_piece(translated)
     start = @cells[translated[0]]

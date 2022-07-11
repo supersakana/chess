@@ -45,6 +45,11 @@ module Display
     puts 'STALEMATE'
   end
 
+  # when insuffficient material is declared
+  def display_insufficient
+    puts 'DRAW (Insufficient Material)'
+  end
+
   # prints the formatted grave for each player
   def display_grave(grave)
     puts "P1 #{grave[:player_one].join('')} "

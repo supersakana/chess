@@ -614,21 +614,72 @@ describe Detector do
       end
     end
   end
-  describe '#insufficient_matierial?' do
-    context 'returns true when' do
-      it 'there are only Kings and 1 Knight' do
-        # test to run
+  describe '#insufficient_material?' do
+    let(:blank_board) { Board.new }
+    before do
+      blank_board.cells.each { |_k, v| v.piece = nil }
+    end
+    context 'there are only Kings' do
+      before do
+        blank_board.cells[[4, 0]].piece = w_king
+        blank_board.cells[[4, 7]].piece = b_king
       end
-      it 'there are only Kings and Bishops' do
-        # test to run
-      end
-      it 'there are only Kings and no other pieces' do
-        # test to run
+      it 'returns true' do
+        result = detect.insufficient_material?(blank_board)
+        expect(result).to be_truthy
       end
     end
-    context 'it returns false when' do
-      it 'the board contains enough material' do
-        # test to run
+    context 'when the board contains enough material' do
+      it 'returns false' do
+        result = detect.insufficient_material?(board)
+        expect(result).to be_falsey
+      end
+    end
+    context 'there are only Kings and 1 Knight' do
+      before do
+        blank_board.cells[[4, 0]].piece = w_king
+        blank_board.cells[[4, 7]].piece = b_king
+        blank_board.cells[[2, 3]].piece = w_knight
+      end
+      xit 'returns true' do
+        result = detect.insufficient_material?(blank_board)
+        expect(result).to be_truthy
+      end
+    end
+    context 'there are only Kings and same-colored-square Bishops' do
+      before do
+        blank_board.cells[[4, 0]].piece = w_king
+        blank_board.cells[[4, 7]].piece = b_king
+        blank_board.cells[[2, 0]].piece = w_bishop
+        blank_board.cells[[5, 7]].piece = b_bishop
+      end
+      xit 'returns true' do
+        result = detect.insufficient_material?(blank_board)
+        expect(result).to be_truthy
+      end
+    end
+    context 'when the board contain 2 bishops of differnt colored squares and 2 Kings' do
+      before do
+        blank_board.cells[[4, 0]].piece = w_king
+        blank_board.cells[[4, 7]].piece = b_king
+        blank_board.cells[[2, 0]].piece = w_bishop
+        blank_board.cells[[2, 7]].piece = b_bishop
+      end
+      xit 'returns false' do
+        result = detect.insufficient_material?(blank_board)
+        expect(result).to be_falsey
+      end
+    end
+    context 'when the board contains more than 1 knight but only 2 kings' do
+      before do
+        blank_board.cells[[4, 0]].piece = w_king
+        blank_board.cells[[4, 7]].piece = b_king
+        blank_board.cells[[2, 3]].piece = w_knight
+        blank_board.cells[[1, 7]].piece = b_knight
+      end
+      xit 'returns false' do
+        result = detect.insufficient_material?(blank_board)
+        expect(result).to be_falsey
       end
     end
   end

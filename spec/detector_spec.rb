@@ -641,9 +641,21 @@ describe Detector do
         blank_board.cells[[4, 7]].piece = b_king
         blank_board.cells[[2, 3]].piece = w_knight
       end
-      xit 'returns true' do
+      it 'returns true' do
         result = detect.insufficient_material?(blank_board)
         expect(result).to be_truthy
+      end
+    end
+    context 'when the board contains more than 1 knight and kings' do
+      before do
+        blank_board.cells[[4, 0]].piece = w_king
+        blank_board.cells[[4, 7]].piece = b_king
+        blank_board.cells[[2, 3]].piece = w_knight
+        blank_board.cells[[1, 7]].piece = b_knight
+      end
+      it 'returns false' do
+        result = detect.insufficient_material?(blank_board)
+        expect(result).to be_falsey
       end
     end
     context 'there are only Kings and same-colored-square Bishops' do
@@ -653,31 +665,19 @@ describe Detector do
         blank_board.cells[[2, 0]].piece = w_bishop
         blank_board.cells[[5, 7]].piece = b_bishop
       end
-      xit 'returns true' do
+      it 'returns true' do
         result = detect.insufficient_material?(blank_board)
         expect(result).to be_truthy
       end
     end
-    context 'when the board contain 2 bishops of differnt colored squares and 2 Kings' do
+    context 'when the board contain 2 bishops of different colored squares and 2 Kings' do
       before do
         blank_board.cells[[4, 0]].piece = w_king
         blank_board.cells[[4, 7]].piece = b_king
         blank_board.cells[[2, 0]].piece = w_bishop
         blank_board.cells[[2, 7]].piece = b_bishop
       end
-      xit 'returns false' do
-        result = detect.insufficient_material?(blank_board)
-        expect(result).to be_falsey
-      end
-    end
-    context 'when the board contains more than 1 knight but only 2 kings' do
-      before do
-        blank_board.cells[[4, 0]].piece = w_king
-        blank_board.cells[[4, 7]].piece = b_king
-        blank_board.cells[[2, 3]].piece = w_knight
-        blank_board.cells[[1, 7]].piece = b_knight
-      end
-      xit 'returns false' do
+      it 'returns false' do
         result = detect.insufficient_material?(blank_board)
         expect(result).to be_falsey
       end

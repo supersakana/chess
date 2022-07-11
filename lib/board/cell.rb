@@ -3,7 +3,7 @@
 # contains information for each cell on the gameboard
 class Cell
   attr_accessor :piece
-  attr_reader :value
+  attr_reader :value, :bg_color
 
   def initialize(value)
     @value = value

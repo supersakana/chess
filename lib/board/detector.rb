@@ -61,10 +61,28 @@ class Detector
   end
 
   # returns true if there are no more pieces to declare checkmate
-  # A position is a draw by insufficient material if and only if one of the following two conditions hold:
-  # 1) There are only 2 Kings and one Knight on the board
-  # 2) There are only Kings and any number (including 0) of same-color-square Bishops on the board
   def insufficient_material?(board)
-    board.all_pieces.all? { |_k, v| v.piece.is_a?(King) }
+    pieces = board.all_pieces.values
+    kings_knights?(pieces) || kings_bishops?(pieces) || only_kings?(pieces)
+  end
+
+  private
+
+  # returns true if the pieces are only kings and one knight
+  def kings_knights?(pieces)
+    pieces.all? { |v| v.piece.is_a?(King) || v.piece.is_a?(Knight) } &&
+      pieces.one? { |v| v.piece.is_a?(Knight) }
+  end
+
+  # returns true if the pieces are only kings and bishops with same color square
+  def kings_bishops?(pieces)
+    bishops = pieces.select { |v| v.piece.is_a?(Bishop) }
+    pieces.all? { |v| v.piece.is_a?(King) || v.piece.is_a?(Bishop) } &&
+      bishops.map(&:bg_color).uniq.length == 1
+  end
+
+  # returns true if only pieces left are kings
+  def only_kings?(pieces)
+    pieces.all? { |v| v.piece.is_a?(King) }
   end
 end

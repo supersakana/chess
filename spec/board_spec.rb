@@ -59,6 +59,22 @@ describe Board do
       end
     end
   end
+  describe '#promote' do
+    context 'when given a valid input to promote' do
+      it 'converts pawn to Rook' do
+        # test to run
+      end
+      it 'converts pawn to Bishop' do
+        # test to run
+      end
+      it 'converts pawn to Knight' do
+        # test to run
+      end
+      it 'converts pawn to Queen' do
+        # test to run
+      end
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength
 # rspec --format documentation spec/board_spec.rb

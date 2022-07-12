@@ -33,7 +33,7 @@ class Board
     land = @cells[translated[1]]
 
     transfer(start, land)
-    evaluate(land)
+    land.piece.check_pawn unless land.empty?
   end
 
   # moves a piece from start to landing position, captures if land contains foe
@@ -52,6 +52,23 @@ class Board
     end
   end
 
+  # converts a pawn to promo piece if pawn can promote
+  def promote(land)
+    return unless @cells[land].piece.promote?(land)
+
+    promo = display_promotion
+    validate_promo(land, promo)
+  end
+
+  # converts pawn into inputted promo, else repromts user
+  def validate_promo(land, promo)
+    if %w[r b k q].include?(promo)
+      @cells[land].convert(promo)
+    else
+      promote(land)
+    end
+  end
+
   # prints the formatted board
   def print
     system 'clear'
@@ -60,11 +77,6 @@ class Board
   end
 
   private
-
-  # after a move is made, checks if piece needs promotion or disable pawn jump
-  def evaluate(land)
-    land.piece.check_pawn unless land.empty?
-  end
 
   # creates a 8x8 grid with coordinates (Hash of 64 values)
   def create_board(hash = {})

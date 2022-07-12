@@ -139,41 +139,6 @@ describe Cell do
       end
     end
   end
-  describe '#promote?' do
-    let(:w_pawn) { double('pawn', color: :light_white, piece_color: :light_white) }
-    let(:b_pawn) { double('pawn', color: :black, piece_color: :black) }
-    context 'when a white pawn occupies the top row' do
-      before do
-        cell.instance_variable_set(:@value, [0, 7])
-        cell.instance_variable_set(:@piece, w_pawn)
-        allow(cell.piece).to receive(:is_a?).and_return(true)
-      end
-      it 'returns true' do
-        result = cell.promote?
-        expect(result).to be_truthy
-      end
-    end
-    context 'when a black pawn occupies the bottom row' do
-      before do
-        cell.instance_variable_set(:@value, [0, 0])
-        cell.instance_variable_set(:@piece, b_pawn)
-        allow(cell.piece).to receive(:is_a?).and_return(true)
-      end
-      it 'returns true' do
-        result = cell.promote?
-        expect(result).to be_truthy
-      end
-    end
-    context 'it returns false when' do
-      before do
-        allow(cell.piece).to receive(:is_a?).and_return(false)
-      end
-      it 'there is not a pawn occupying' do
-        result = cell.promote?
-        expect(result).to be_falsey
-      end
-    end
-  end
 end
 # rubocop:enable Metrics/BlockLength
 # rspec --format documentation spec/cell_spec.rb

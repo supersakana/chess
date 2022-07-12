@@ -49,13 +49,23 @@ class Cell
     @piece.transitions unless empty?
   end
 
-  # returns true if a pawn piece need promotion
-  def promote?
-    return unless @piece.is_a?(Pawn)
+  # converts a piece from piece to promotion piece
+  # rubocop:disable Metrics/MethodLength
+  def convert(promo)
+    color = @piece.color == :black ? [7, 7] : [0, 0]
 
-    piece_color == :light_white && @value[1] == 7 ||
-      piece_color == :black && @value[1].zero?
+    @piece = case promo
+             when 'r'
+               Rook.new(color)
+             when 'b'
+               Bishop.new(color)
+             when 'k'
+               Knight.new(color)
+             else
+               Queen.new(color)
+             end
   end
+  # rubocop:enable Metrics/MethodLength
 
   # returns the formatted cell
   def form

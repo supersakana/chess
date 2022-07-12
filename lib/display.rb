@@ -34,6 +34,17 @@ module Display
     puts 'Make a move to uncheck yourself'
   end
 
+  # when a users pawn is ready to promote
+  def display_promotion
+    puts 'PROMOTION'
+    puts 'Input a piece to promote into'
+    puts "'r' -> Rook"
+    puts "'b' -> Bishop"
+    puts "'k' -> Knight"
+    puts "'q' -> Queen"
+    gets.chomp
+  end
+
   # when a winner is declared
   def display_winner(player)
     puts 'CHECKMATE'.colorize(color: :green)

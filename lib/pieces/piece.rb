@@ -96,6 +96,14 @@ class Piece
     @pawn_jump = false if @pawn_jump == true
   end
 
+  # returns true if a pawn piece need promotion
+  def promote?(position)
+    return unless is_a?(Pawn)
+
+    @color == :light_white && position[1] == 7 ||
+      @color == :black && position[1].zero?
+  end
+
   # list of increments needed to find possible moves
   def transitions
     raise NotImpelementedError

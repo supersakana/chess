@@ -78,10 +78,11 @@ class Game
     @player_two = create_player(2, :black)
   end
 
-  # checks if move is valid
+  # checks if move is valid then moves piece and promotes if neccissary
   def validate(input, translated)
     if @detect.valid?(input, translated, @current, @board)
       @board.move_piece(translated)
+      @board.promote(translated[1])
     else
       make_move
     end

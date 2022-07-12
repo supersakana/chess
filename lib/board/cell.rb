@@ -49,6 +49,14 @@ class Cell
     @piece.transitions unless empty?
   end
 
+  # returns true if a pawn piece need promotion
+  def promote?
+    return unless @piece.is_a?(Pawn)
+
+    piece_color == :light_white && @value[1] == 7 ||
+      piece_color == :black && @value[1].zero?
+  end
+
   # returns the formatted cell
   def form
     if piece.nil?

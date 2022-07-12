@@ -33,7 +33,7 @@ class Board
     land = @cells[translated[1]]
 
     transfer(start, land)
-    land.piece.check_pawn unless land.empty?
+    evaluate(land)
   end
 
   # moves a piece from start to landing position, captures if land contains foe
@@ -60,6 +60,11 @@ class Board
   end
 
   private
+
+  # after a move is made, checks if piece needs promotion or disable pawn jump
+  def evaluate(land)
+    land.piece.check_pawn unless land.empty?
+  end
 
   # creates a 8x8 grid with coordinates (Hash of 64 values)
   def create_board(hash = {})

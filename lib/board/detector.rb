@@ -60,7 +60,7 @@ class Detector
     end
   end
 
-  # returns true if there are no more pieces to declare checkmate
+  # returns true if there are no more effective pieces to declare checkmate
   def insufficient_material?(board)
     pieces = board.all_pieces.values
     kings_knights?(pieces) || kings_bishops?(pieces) || only_kings?(pieces)
@@ -70,19 +70,19 @@ class Detector
 
   # returns true if the pieces are only kings and one knight
   def kings_knights?(pieces)
-    pieces.all? { |v| v.piece.is_a?(King) || v.piece.is_a?(Knight) } &&
-      pieces.one? { |v| v.piece.is_a?(Knight) }
+    pieces.all? { |cell| cell.piece.is_a?(King) || cell.piece.is_a?(Knight) } &&
+      pieces.one? { |cell| cell.piece.is_a?(Knight) }
   end
 
   # returns true if the pieces are only kings and bishops with same color square
   def kings_bishops?(pieces)
-    bishops = pieces.select { |v| v.piece.is_a?(Bishop) }
-    pieces.all? { |v| v.piece.is_a?(King) || v.piece.is_a?(Bishop) } &&
+    bishops = pieces.select { |cell| cell.piece.is_a?(Bishop) }
+    pieces.all? { |cell| cell.piece.is_a?(King) || cell.piece.is_a?(Bishop) } &&
       bishops.map(&:bg_color).uniq.length == 1
   end
 
   # returns true if only pieces left are kings
   def only_kings?(pieces)
-    pieces.all? { |v| v.piece.is_a?(King) }
+    pieces.all? { |cell| cell.piece.is_a?(King) }
   end
 end

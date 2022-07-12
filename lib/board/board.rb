@@ -60,15 +60,6 @@ class Board
     validate_promo(land, promo)
   end
 
-  # converts pawn into inputted promo, else repromts user
-  def validate_promo(land, promo)
-    if %w[r b k q].include?(promo)
-      @cells[land].convert(promo)
-    else
-      promote(land)
-    end
-  end
-
   # prints the formatted board
   def print
     system 'clear'
@@ -77,6 +68,15 @@ class Board
   end
 
   private
+
+  # converts pawn into inputted promo, else repromts user
+  def validate_promo(land, promo)
+    if %w[r b k q].include?(promo)
+      @cells[land].convert(promo)
+    else
+      promote(land)
+    end
+  end
 
   # creates a 8x8 grid with coordinates (Hash of 64 values)
   def create_board(hash = {})

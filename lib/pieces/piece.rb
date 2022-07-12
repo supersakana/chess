@@ -50,7 +50,7 @@ class Piece
   # returns line of legal moves given a piece's shift (excludes pawns)
   # rubocop:disable Metrics/MethodLength
   def iterate(shift, start, board, move = start, line = [])
-    i = iterators(start, board)
+    i = iterator
     i.times do
       move = create_move(shift, move)
       if board.cells[move].empty?
@@ -65,15 +65,6 @@ class Piece
     line
   end
   # rubocop:enable Metrics/MethodLength
-
-  # assigns number of iterations based on given piece
-  def iterators(start, board)
-    if board.cells[start].piece.line_moves?
-      7
-    else
-      1
-    end
-  end
 
   # returns a possible move given a transition
   def create_move(shift, start)
@@ -111,6 +102,11 @@ class Piece
 
   # returns true if possible moves are liniar (false if single coordinates)
   def line_moves?
+    raise NotImpelementedError
+  end
+
+  # assigns number of iterations based on given piece
+  def iterator
     raise NotImpelementedError
   end
 end

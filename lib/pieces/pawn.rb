@@ -35,11 +35,6 @@ class Pawn < Piece
     }
   end
 
-  # returns true if possible moves are liniar (false if single coordinates)
-  def line_moves?
-    false
-  end
-
   # returns legal moves given pawn transitions
   def iterate(shift, start, board)
     move = create_move(shift, start)

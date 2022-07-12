@@ -15,8 +15,8 @@ class Queen < Piece
     [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]
   end
 
-  # returns true if possible moves are liniar (false if single coordinates)
-  def line_moves?
-    true
+  # assigns number of iterations based on given piece
+  def iterator
+    7
   end
 end

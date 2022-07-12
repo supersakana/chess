@@ -4,11 +4,9 @@
 require_relative 'display'
 require_relative 'game'
 require_relative 'player'
-
-# board files
-require_relative 'board/board'
-require_relative 'board/cell'
-require_relative 'board/detector'
+require_relative 'board'
+require_relative 'cell'
+require_relative 'detector'
 
 # piece files
 require_relative 'pieces/piece'

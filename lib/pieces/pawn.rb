@@ -2,23 +2,24 @@
 
 # contains pawn functionality
 class Pawn < Piece
-  attr_accessor :pawn_jump
+  attr_accessor :pawn_jump, :jumped
   attr_reader :icon
 
   def initialize(position)
     super(position)
     @color = create_color(position)
     @icon = "\u265F"
-    @pawn_jump = true
+    @jump_enabled = true
+    @jumped = false
   end
 
   # list of increments needed to find possible pawn moves
   def transitions
-    if @color == :light_white && @pawn_jump == true
+    if @color == :light_white && @jump_enabled == true
       pawn_shifts[:white_jump]
-    elsif @color == :light_white && @pawn_jump == false
+    elsif @color == :light_white && @jump_enabled == false
       pawn_shifts[:white]
-    elsif @color == :black && @pawn_jump == true
+    elsif @color == :black && @jump_enabled == true
       pawn_shifts[:black_jump]
     else
       pawn_shifts[:black]
@@ -38,8 +39,8 @@ class Pawn < Piece
   # returns legal moves given pawn transitions
   def iterate(shift, start, board)
     move = create_move(shift, start)
-    if (pawn_vertical?(shift, move, board) && jump_block?(shift, move, board)) ||
-       (pawn_diagonal?(shift) && opposing_piece?(move, start, board))
+    if (vertical_shift?(shift, move, board) && blocked_jump?(shift, move, board)) ||
+       (diagonal_shift?(shift) && opposing_piece?(move, start, board))
       [move]
     else
       []
@@ -47,12 +48,17 @@ class Pawn < Piece
   end
 
   # returns true if pawn move has a verticle opening
-  def pawn_vertical?(shift, move, board)
+  def vertical_shift?(shift, move, board)
     board.cells[move].empty? && shift.include?(0)
   end
 
+  # returns true if pawn transition is diagonal
+  def diagonal_shift?(shift)
+    [[1, 1], [-1, 1], [1, -1], [-1, -1]].include?(shift)
+  end
+
   # checks if a user is blocking a pawn jump
-  def jump_block?(shift, move, board)
+  def blocked_jump?(shift, move, board)
     return true unless [2, -2].include?(shift[1])
 
     prev = if shift == [0, 2]
@@ -61,10 +67,5 @@ class Pawn < Piece
              [move[0], move[1] + 1]
            end
     board.cells[prev].empty?
-  end
-
-  # returns true if pawn transition is diagonal
-  def pawn_diagonal?(shift)
-    [[1, 1], [-1, 1], [1, -1], [-1, -1]].include?(shift)
   end
 end

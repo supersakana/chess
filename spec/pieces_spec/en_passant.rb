@@ -6,8 +6,20 @@ require_relative '../../lib/library'
 
 describe EnPassant do
   subject(:en_passant) { described_class.new }
+
+  let(:board) { Board.new }
+
+  let(:w_pawn) { board.cells[[0, 1]].piece }
+  let(:b_pawn) { board.cells[[0, 6]].piece }
+
   describe '#en_passant?' do
-    context 'when foe pawn is in position but did not jumo' do
+    before do
+      board.cells[[4, 4]].piece = w_pawn
+      board.cells[[3, 4]].piece = b_pawn
+      board.cells[[4, 1]].piece = nil
+      board.cells[[3, 6]].piece = nil
+    end
+    context 'when foe pawn is in position but did not jump' do
       it 'returns false' do
         # test to run
       end

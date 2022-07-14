@@ -50,12 +50,44 @@ describe Board do
         board.move_piece(translated)
         expect(board.grave[:player_one]).to eq(['♟'])
       end
+    end
+    context 'when the pawn gets inspected' do
       it 'pawn jump is removed after first move is made' do
         translated = [[0, 1], [0, 3]]
         landing = board.cells[[0, 3]]
         board.move_piece(translated)
         pawn_shifts = landing.piece_transitions
         expect(pawn_shifts).to eq([[0, 1], [1, 1], [-1, 1]])
+      end
+      it 'pawn @jumped is true if the pawn made a jump move' do
+        translated = [[0, 1], [0, 3]]
+        board.move_piece(translated)
+        pawn = board.cells[[0, 3]].piece
+        result = pawn.jumped
+        expect(result).to be_truthy
+      end
+      it 'pawn @jumped remains false if jump is not made' do
+        translated = [[0, 1], [0, 2]]
+        board.move_piece(translated)
+        pawn = board.cells[[0, 2]].piece
+        result = pawn.jumped
+        expect(result).to be_falsey
+      end
+      it 'pawn @jumped remains flase if in jump position but did not jump' do
+        board.cells[[0, 2]].piece = w_pawn
+        board.cells[[0, 1]].piece = nil
+        translated = [[0, 2], [0, 3]]
+        board.move_piece(translated)
+        pawn = board.cells[[0, 3]].piece
+        result = pawn.jumped
+        expect(result).to be_falsey
+      end
+      it 'pawn @jumped can be true for black pawns too' do
+        translated = [[0, 6], [0, 4]]
+        board.move_piece(translated)
+        pawn = board.cells[[0, 4]].piece
+        result = pawn.jumped
+        expect(result).to be_truthy
       end
     end
   end

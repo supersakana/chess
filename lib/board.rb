@@ -33,7 +33,7 @@ class Board
     land = @cells[translated[1]]
 
     transfer(start, land)
-    land.piece.check_pawn unless land.empty?
+    land.piece.inspect_pawn(start, land) unless land.empty?
   end
 
   # moves a piece from start to landing position, captures if land contains foe

@@ -80,11 +80,14 @@ class Piece
     board.cells[move].piece_color == board.cells[start].foe_color
   end
 
-  # removes the pawn jump if pawn is moved from initial position
-  def check_pawn
+  # removes the pawn jump if pawn is moved from initial position and marks is a pawn made a jump or not
+  def inspect_pawn(start, land)
     return unless is_a?(Pawn)
 
-    @pawn_jump = false if @pawn_jump == true
+    jump = land.piece.color == :black ? -2 : 2
+
+    @jump_enabled = false if @jump_enabled == true
+    @jumped = true if (start.value[1] + jump) == land.value[1]
   end
 
   # returns true if a pawn piece need promotion

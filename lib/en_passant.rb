@@ -9,22 +9,37 @@ class EnPassant
     @enabled = false
   end
 
-  # returns true if the user can make an en passant move
+  # returns true if the user is enabled to make an en passant move
+  # def open?(start, board)
+  #   true?(start, board) && @enabled == true
+  # end
+
+  # # enables the en_passant to be open
+  # def enable
+  #   @enabled = true unless enable.nil?
+  # end
+
+  # returns true if en passant conditions are met
   def true?(start, board)
-    left_cell = board.cells[[start[0] - 1, start[1]]]
-    right_cell = board.cells[[start[0] + 1, start[1]]]
+    selected = board.cells[start]
+    left = board.cells[[start[0] - 1, start[1]]]
+    right = board.cells[[start[0] + 1, start[1]]]
 
-    # color is white and on 5th rank
-    @color == :light_white &&
-      start[1] == 4 &&
+    correct_row?(selected) &&
+      (foe_jumped?(left, selected) || foe_jumped?(right, selected))
+  end
 
-      # left or right cell is a pawn of opposing color
-      (left_cell.piece.is_a?(Pawn) && color == :black) || (right_cell.piece.is_a?(Pawn) && color == :black) &&
+  # returns true if pawn position is in correct row for ep
+  def correct_row?(selected)
+    correct_row = selected.piece_color == :light_white ? 4 : 3
 
-        # en passant is enabled
-        @enabled == true &&
+    selected.value[1] == correct_row
+  end
 
-        # the opponet pawn jumped
-        (left_cell.piece.jumped || right_cell.piece.jumped)
+  # returns true if left/right foe pawns jumped
+  def foe_jumped?(cell, selected)
+    cell.piece.is_a?(Pawn) &&
+      cell.piece_color == selected.foe_color &&
+      cell.piece.jumped
   end
 end

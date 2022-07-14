@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# rspec --format documentation spec/pieces_spec/piece_spec.rb
+# rspec --format documentation spec/piece_spec.rb
 
-require_relative '../../lib/library'
+require_relative '../lib/library'
 
 describe Piece do
   subject(:piece) { described_class.new([0, 0]) }

@@ -11,6 +11,7 @@ class Pawn < Piece
     @icon = "\u265F"
     @jump_enabled = true
     @jumped = false
+    @en_passant = EnPassant.new
   end
 
   # list of increments needed to find possible pawn moves

@@ -50,22 +50,17 @@ class Cell
   end
 
   # converts a piece from piece to promotion piece
-  # rubocop:disable Metrics/MethodLength
   def convert(promo)
     color = @piece.color == :black ? [7, 7] : [0, 0]
 
     @piece = case promo
-             when 'r'
-               Rook.new(color)
-             when 'b'
-               Bishop.new(color)
-             when 'k'
-               Knight.new(color)
+             when 'r' then Rook.new(color)
+             when 'b' then Bishop.new(color)
+             when 'k' then Knight.new(color)
              else
                Queen.new(color)
              end
   end
-  # rubocop:enable Metrics/MethodLength
 
   # returns the formatted cell
   def form

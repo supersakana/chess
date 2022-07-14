@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry-byebug'
-
 # contains method for detecting the board's status
 class Detector
   # checks if a given input is valid

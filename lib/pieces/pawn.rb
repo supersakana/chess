@@ -42,13 +42,20 @@ class Pawn < Piece
     @en_passant.enable if @en_passant.true?(start, board)
 
     move = create_move(shift, start)
-    if (vertical_shift?(shift, move, board) && blocked_jump?(shift, move, board)) ||
-       (diagonal_shift?(shift) && opposing_piece?(move, start, board)) ||
-       @en_passant.open?(start, move, board)
+    if pawn_conditions?(shift, start, move, board)
       [move]
     else
       []
     end
+  end
+
+  private
+
+  # returns true if all pawn conditions are met
+  def pawn_conditions?(shift, start, move, board)
+    (vertical_shift?(shift, move, board) && blocked_jump?(shift, move, board)) ||
+      (diagonal_shift?(shift) && opposing_piece?(move, start, board)) ||
+      @en_passant.open?(start, move, board)
   end
 
   # returns true if pawn move has a verticle opening

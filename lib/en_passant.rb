@@ -42,6 +42,8 @@ class EnPassant
 
   # returns true if left/right foe pawns jumped
   def foe_jumped?(cell, selected)
+    return if cell.nil?
+
     cell.piece.is_a?(Pawn) &&
       cell.piece_color == selected.foe_color &&
       cell.piece.jumped

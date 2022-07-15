@@ -192,6 +192,21 @@ describe Detector do
         expect(result).to be_falsey
       end
     end
+    context 'when given an en passant input with correct condiitons' do
+      before do
+        board.cells[[4, 4]].piece = w_pawn
+        board.cells[[3, 4]].piece = b_pawn
+        board.cells[[4, 1]].piece = nil
+        board.cells[[3, 6]].piece = nil
+      end
+      it 'returns true' do
+        board.cells[[3, 4]].piece.instance_variable_set(:@jumped, true)
+        input = 'e5d6'
+        translated = [[4, 4], [3, 5]]
+        result = detect.valid?(input, translated, white_player, board)
+        expect(result).to be_truthy
+      end
+    end
   end
 
   describe '#possible_moves' do
@@ -319,6 +334,32 @@ describe Detector do
 
         result = detect.possible_moves(start, board)
         expect(result).to eq([[4, 3], [3, 3]])
+      end
+    end
+    context 'in a situation where an en passant is valid' do
+      it 'returns correct locations (White Pawn [4, 4])' do
+        board.cells[[4, 4]].piece = w_pawn
+        board.cells[[3, 4]].piece = b_pawn
+        board.cells[[4, 1]].piece = nil
+        board.cells[[3, 6]].piece = nil
+        board.cells[[3, 4]].piece.instance_variable_set(:@jumped, true)
+        board.cells[[4, 4]].piece.instance_variable_set(:@jump_enabled, false)
+        start = [4, 4]
+
+        result = detect.possible_moves(start, board)
+        expect(result).to eq([[4, 5], [3, 5]])
+      end
+      it 'returns correct locations (Black Pawn [3, 3])' do
+        board.cells[[3, 3]].piece = b_pawn
+        board.cells[[4, 3]].piece = w_pawn
+        board.cells[[4, 1]].piece = nil
+        board.cells[[3, 6]].piece = nil
+        board.cells[[4, 3]].piece.instance_variable_set(:@jumped, true)
+        board.cells[[3, 3]].piece.instance_variable_set(:@jump_enabled, false)
+        start = [3, 3]
+
+        result = detect.possible_moves(start, board)
+        expect(result).to eq([[3, 2], [4, 2]])
       end
     end
   end

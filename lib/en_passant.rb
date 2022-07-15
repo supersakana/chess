@@ -10,14 +10,18 @@ class EnPassant
   end
 
   # returns true if the user is enabled to make an en passant move
-  # def open?(start, board)
-  #   true?(start, board) && @enabled == true
-  # end
+  def open?(start, move, board)
+    selected = board.cells[start]
+    shift = selected.piece_color == :black ? 1 : -1
+    foe = board.cells[[move[0], move[1] + shift]]
+
+    true?(start, board) && @enabled == true && foe.piece_color == selected.foe_color
+  end
 
   # # enables the en_passant to be open
-  # def enable
-  #   @enabled = true unless enable.nil?
-  # end
+  def enable
+    @enabled = true unless @enabled.nil?
+  end
 
   # returns true if en passant conditions are met
   def true?(start, board)

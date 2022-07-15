@@ -39,9 +39,12 @@ class Pawn < Piece
 
   # returns legal moves given pawn transitions
   def iterate(shift, start, board)
+    @en_passant.enable if @en_passant.true?(start, board)
+
     move = create_move(shift, start)
     if (vertical_shift?(shift, move, board) && blocked_jump?(shift, move, board)) ||
-       (diagonal_shift?(shift) && opposing_piece?(move, start, board))
+       (diagonal_shift?(shift) && opposing_piece?(move, start, board)) ||
+       @en_passant.open?(start, move, board)
       [move]
     else
       []

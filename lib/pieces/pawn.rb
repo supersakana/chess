@@ -2,16 +2,18 @@
 
 # contains pawn functionality
 class Pawn < Piece
-  attr_accessor :pawn_jump, :jumped
+  attr_accessor :pawn_jump, :jumped, :ep_enabled
   attr_reader :icon
+
+  include EnPassant
 
   def initialize(position)
     super(position)
     @color = create_color(position)
     @icon = "\u265F"
+    @ep_enabled = false # ep = en passant
     @jump_enabled = true
     @jumped = false
-    @en_passant = EnPassant.new
   end
 
   # list of increments needed to find possible pawn moves
@@ -39,7 +41,7 @@ class Pawn < Piece
 
   # returns legal moves given pawn transitions
   def iterate(shift, start, board)
-    @en_passant.enable if @en_passant.true?(start, board)
+    @ep_enabled = true if ep_true?(start, board)
 
     move = create_move(shift, start)
     if pawn_conditions?(shift, start, move, board)
@@ -55,7 +57,7 @@ class Pawn < Piece
   def pawn_conditions?(shift, start, move, board)
     (vertical_shift?(shift, move, board) && blocked_jump?(shift, move, board)) ||
       (diagonal_shift?(shift) && opposing_piece?(move, start, board)) ||
-      @en_passant.open?(start, move, board)
+      ep_open?(start, move, board, @ep_enabled)
   end
 
   # returns true if pawn move has a verticle opening

@@ -7,16 +7,13 @@ require_relative '../lib/library'
 require 'pry-byebug'
 
 # rubocop:disable Metrics/BlockLength
-
 describe EnPassant do
-  subject(:en_passant) { described_class.new }
-
   let(:board) { Board.new }
 
   let(:w_pawn) { board.cells[[0, 1]].piece }
   let(:b_pawn) { board.cells[[0, 6]].piece }
 
-  describe '#en_passant?' do
+  describe '#ep_true?' do
     before do
       board.cells[[4, 4]].piece = w_pawn
       board.cells[[3, 4]].piece = b_pawn
@@ -29,7 +26,7 @@ describe EnPassant do
       end
       it 'returns true' do
         start = [4, 4]
-        result = en_passant.true?(start, board)
+        result = b_pawn.ep_true?(start, board)
         expect(result).to be_truthy
       end
     end
@@ -39,7 +36,7 @@ describe EnPassant do
       end
       it 'returns false' do
         start = [4, 4]
-        result = en_passant.true?(start, board)
+        result = b_pawn.ep_true?(start, board)
         expect(result).to be_falsey
       end
     end

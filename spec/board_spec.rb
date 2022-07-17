@@ -90,6 +90,22 @@ describe Board do
         expect(result).to be_truthy
       end
     end
+    context 'when an en passant is enabled not used' do
+      before do
+        b_pawn.instance_variable_set(:@jumped, true)
+        w_pawn.instance_variable_set(:@ep_enabled, true)
+        board.cells[[4, 4]].piece = w_pawn
+        board.cells[[3, 4]].piece = b_pawn
+        board.cells[[4, 1]].piece = nil
+        board.cells[[3, 6]].piece = nil
+      end
+      it 'disables the pawns en passant (ep_enabled = nil)' do
+        translated = [[6, 0], [7, 2]]
+        board.move_piece(translated)
+        result = board.cells[[4, 4]].piece.ep_enabled
+        expect(result).to be_nil
+      end
+    end
   end
   describe '#promote' do
     context 'when given a valid input to promote' do

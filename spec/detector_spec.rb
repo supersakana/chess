@@ -201,6 +201,7 @@ describe Detector do
       end
       it 'returns true' do
         board.cells[[3, 4]].piece.instance_variable_set(:@jumped, true)
+        board.cells[[4, 4]].piece.instance_variable_set(:@ep_enabled, true)
         input = 'e5d6'
         translated = [[4, 4], [3, 5]]
         result = detect.valid?(input, translated, white_player, board)
@@ -344,6 +345,7 @@ describe Detector do
         board.cells[[3, 6]].piece = nil
         board.cells[[3, 4]].piece.instance_variable_set(:@jumped, true)
         board.cells[[4, 4]].piece.instance_variable_set(:@jump_enabled, false)
+        board.cells[[4, 4]].piece.instance_variable_set(:@ep_enabled, true)
         start = [4, 4]
 
         result = detect.possible_moves(start, board)
@@ -356,6 +358,7 @@ describe Detector do
         board.cells[[3, 6]].piece = nil
         board.cells[[4, 3]].piece.instance_variable_set(:@jumped, true)
         board.cells[[3, 3]].piece.instance_variable_set(:@jump_enabled, false)
+        board.cells[[3, 3]].piece.instance_variable_set(:@ep_enabled, true)
         start = [3, 3]
 
         result = detect.possible_moves(start, board)

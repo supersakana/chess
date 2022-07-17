@@ -33,7 +33,14 @@ class Board
     land = @cells[translated[1]]
 
     transfer(start, land)
-    land.piece.inspect_pawn(start, land) unless land.empty?
+    analyze_board(start, land)
+  end
+
+  # checks if an en_passant needs to be disable, inspects pawn, etc... (wip)
+  def analyze_board(start, land)
+    pawns = player_pieces(land.piece_color).select { |_k, v| v.piece.is_a?(Pawn) }
+    pawns.each { |_k, v| v.piece.ep_enabled = nil if v.piece.ep_enabled == true }
+    land.piece.inspect_pawn(start, land, self) unless land.empty?
   end
 
   # moves a piece from start to landing position, captures if land contains foe

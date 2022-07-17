@@ -41,7 +41,7 @@ class Pawn < Piece
 
   # returns legal moves given pawn transitions
   def iterate(shift, start, board)
-    @ep_enabled = true if ep_true?(start, board)
+    # @ep_enabled = true if ep_true?(start, board)
 
     move = create_move(shift, start)
     if pawn_conditions?(shift, start, move, board)

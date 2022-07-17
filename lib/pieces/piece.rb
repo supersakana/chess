@@ -81,11 +81,13 @@ class Piece
   end
 
   # removes the pawn jump if pawn is moved from initial position and marks is a pawn made a jump or not
-  def inspect_pawn(start, land)
+  def inspect_pawn(start, land, board)
     return unless is_a?(Pawn)
 
     jump = land.piece.color == :black ? -2 : 2
 
+    # binding.pry if start.value == [3, 4]
+    @ep_enabled = true if ep_true?(land.value, board)
     @jump_enabled = false if @jump_enabled == true
     @jumped = true if (start.value[1] + jump) == land.value[1]
   end

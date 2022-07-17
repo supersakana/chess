@@ -36,27 +36,23 @@ class Board
     analyze_board(start, land)
   end
 
-  # checks if an en_passant needs to be disable, inspects pawn, etc... (wip)
-  def analyze_board(start, land)
-    pawns = player_pieces(land.piece_color).select { |_k, v| v.piece.is_a?(Pawn) }
-    pawns.each { |_k, v| v.piece.ep_enabled = nil if v.piece.ep_enabled == true }
-    land.piece.inspect_pawn(start, land, self) unless land.empty?
-  end
-
   # moves a piece from start to landing position, captures if land contains foe
   def transfer(start, land)
-    capture(land) unless land.empty?
+    capture(start, land) if !land.empty? || start.ep_enabled?
     land.piece = start.piece
     start.piece = nil
   end
 
   # returns a captured piece given a landing position
-  def capture(land)
+  def capture(start, land)
+    land = ep_land(start, land) if start.ep_enabled?
+
     if land.piece_color == :light_white
       @grave[:player_two] << land.piece.icon
     else
       @grave[:player_one] << land.piece.icon
     end
+    land.piece = nil
   end
 
   # converts a pawn to promo piece if pawn can promote
@@ -98,5 +94,18 @@ class Board
   # adds cell with data
   def add_cells(cell, hash)
     hash[cell.value] = cell
+  end
+
+  # returns the foe piece to be captured during en passant
+  def ep_land(start, land)
+    shift = start.piece_color == :light_white ? -1 : 1
+    @cells[[land.value[0], land.value[1] + shift]]
+  end
+
+  # checks if an en_passant needs to be disable, inspects pawn, etc... (wip)
+  def analyze_board(start, land)
+    pawns = player_pieces(land.piece_color).select { |_k, v| v.piece.is_a?(Pawn) }
+    pawns.each { |_k, v| v.piece.ep_enabled = nil if v.piece.ep_enabled == true }
+    land.piece.inspect_pawn(start, land, self) unless land.empty?
   end
 end

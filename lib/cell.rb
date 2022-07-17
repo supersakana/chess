@@ -44,6 +44,13 @@ class Cell
     end
   end
 
+  # returns true if the cells piece has an en passant avalible
+  def ep_enabled?
+    return unless @piece.is_a?(Pawn)
+
+    @piece.ep_enabled == true
+  end
+
   # returns piece transitions
   def piece_transitions
     @piece.transitions unless empty?

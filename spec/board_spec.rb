@@ -90,7 +90,7 @@ describe Board do
         expect(result).to be_truthy
       end
     end
-    context 'when an en passant is enabled not used' do
+    context 'when an en passant is enabled' do
       before do
         b_pawn.instance_variable_set(:@jumped, true)
         w_pawn.instance_variable_set(:@ep_enabled, true)
@@ -99,11 +99,16 @@ describe Board do
         board.cells[[4, 1]].piece = nil
         board.cells[[3, 6]].piece = nil
       end
-      it 'disables the pawns en passant (ep_enabled = nil)' do
+      it 'disables the pawns en passant (ep_enabled = nil) if not usec' do
         translated = [[6, 0], [7, 2]]
         board.move_piece(translated)
         result = board.cells[[4, 4]].piece.ep_enabled
         expect(result).to be_nil
+      end
+      it 'captures the foe piece correctly' do
+        translated = [[4, 4], [3, 5]]
+        board.move_piece(translated)
+        expect(board.grave[:player_one]).to eq(['♟'])
       end
     end
   end

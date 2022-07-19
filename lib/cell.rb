@@ -13,7 +13,7 @@ class Cell
 
   # creates the correct piece for the correct position
   def create_piece(value)
-    @piece = Piece.call(value)
+    @piece = Piece.create(value)
   end
 
   # returns a cell background color
@@ -72,6 +72,15 @@ class Cell
   # returns piece transitions
   def piece_shifts
     @piece.transitions unless empty?
+  end
+
+  # checks pawn jumped, disables, jump, enables ep
+  def inspect_pawn(start, land, board)
+    return unless pawn?
+
+    piece.pawn_jumped(start, land)
+    piece.enable_ep(land, board)
+    piece.disable_jump
   end
 
   # returns true if a pawn piece need promotion

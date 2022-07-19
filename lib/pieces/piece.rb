@@ -4,43 +4,35 @@
 class Piece
   attr_reader :color
 
-  def initialize(position)
-    @color = create_color(position)
+  def initialize(key)
+    @color = create_color(key)
   end
 
-  # creates a piece based on initial position
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-  def self.call(position)
-    if starts[:rook].include?(position)
-      Rook.new(position)
-    elsif starts[:bishop].include?(position)
-      Bishop.new(position)
-    elsif starts[:knight].include?(position)
-      Knight.new(position)
-    elsif starts[:king].include?(position)
-      King.new(position)
-    elsif starts[:queen].include?(position)
-      Queen.new(position)
-    elsif [1, 6].include?(position[1])
-      Pawn.new(position)
+  # creates a specific piece given initial position
+  # rubocop:disable Metrics/AbcSize, Style/EmptyCaseCondition
+  def self.create(key)
+    case
+    when starts[:rook].include?(key) then Rook.new(key)
+    when starts[:bishop].include?(key) then Bishop.new(key)
+    when starts[:knight].include?(key) then Knight.new(key)
+    when starts[:king].include?(key) then King.new(key)
+    when starts[:queen].include?(key) then Queen.new(key)
+    when [1, 6].include?(key[1]) then Pawn.new(key)
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize, Style/EmptyCaseCondition
 
-  # starting positions for each piece
   def self.starts
-    {
-      rook: [[0, 0], [7, 0], [0, 7], [7, 7]],
+    { rook: [[0, 0], [7, 0], [0, 7], [7, 7]],
       bishop: [[2, 0], [5, 0], [2, 7], [5, 7]],
       knight: [[1, 0], [6, 0], [1, 7], [6, 7]],
       king: [[4, 0], [4, 7]],
-      queen: [[3, 0], [3, 7]]
-    }
+      queen: [[3, 0], [3, 7]] }
   end
 
   # returns a piece color based on initial row position
-  def create_color(position)
-    if position[1] < 2
+  def create_color(key)
+    if key[1] < 2
       :light_white
     else
       :black
@@ -50,8 +42,7 @@ class Piece
   # returns line of possible moves given a piece's shift (excludes pawns)
   # rubocop:disable Metrics/MethodLength
   def iterate(shift, start, board, move = start, line = [])
-    i = iterator
-    i.times do
+    iterator.times do
       move = create_move(shift, move)
       if board.cells[move].empty?
         line << move
@@ -78,17 +69,6 @@ class Piece
   # returns true if capture color is different from initial piece color
   def opposing_piece?(move, start, board)
     board.cells[move].piece_color == board.cells[start].foe_color
-  end
-
-  # removes the pawn jump if pawn is moved from initial position and marks is a pawn made a jump or not
-  def inspect_pawn(start, land, board)
-    return unless is_a?(Pawn)
-
-    jump = land.piece.color == :black ? -2 : 2
-
-    @jumped = true if (start.value[1] + jump) == land.value[1]
-    @ep_enabled = true if ep_true?(land.value, board)
-    @jump_enabled = false if @jump_enabled == true
   end
 
   # list of increments needed to find possible moves

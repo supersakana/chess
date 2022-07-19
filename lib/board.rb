@@ -106,7 +106,7 @@ class Board
   # checks if an en passant or pawn jump needs to be disable and inspects pawn status
   def inspect(start, land)
     player_pawns(land).each { |_k, v| v.disable_ep }
-    land.piece.inspect_pawn(start, land, self) unless land.empty?
+    land.inspect_pawn(start, land, self) unless land.empty?
   end
 
   # returns list of player pawns given cell

@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
-# contains method for detecting the board's status
+# contains method for detecting board status and validating inputs
 class Detector
   # checks if a given input is valid
-  def valid?(input, translated, player, board)
-    return false unless input.length == 4
-
-    legal?(translated, player, board) && checks_self?(translated, player, board) == false
+  def valid?(key, player, board)
+    legal?(key, player, board) && !checks_self?(key, player, board)
   end
 
   # returns true if a given input is a legal move
-  def legal?(translated, player, board)
+  def legal?(key, player, board)
     board.player_pieces(player.color).any? do |start, _v|
-      start == translated[0] && legal_moves(start, player, board).include?(translated[1])
+      start == key[0] && legal_moves(start, player, board).include?(key[1])
     end
   end
 
@@ -23,16 +21,16 @@ class Detector
 
   # returns list of possible moves (excludes moves that check self)
   def possible_moves(start, board, moves = [])
-    board.cells[start].piece_transitions.each do |shift|
+    board.cells[start].piece_shifts.each do |shift|
       moves << board.cells[start].piece.iterate(shift, start, board)
     end
     moves.flatten(1).uniq
   end
 
   # returns true if a translated move checks itself
-  def checks_self?(translated, player, board)
+  def checks_self?(key, player, board)
     board_copy = Marshal.load(Marshal.dump(board))
-    board_copy.move_piece(translated)
+    board_copy.move_piece(key)
 
     check?(player, board_copy)
   end
@@ -41,7 +39,7 @@ class Detector
   def check?(player, board)
     pieces = board.player_pieces(player.foe_color)
     pieces.any? do |k, _v|
-      possible_moves(k, board).any? { |move| board.cells[move].piece.is_a?(King) }
+      possible_moves(k, board).any? { |move| board.cells[move].king? }
     end
   end
 
@@ -68,19 +66,19 @@ class Detector
 
   # returns true if the pieces are only kings and one knight
   def kings_knights?(pieces)
-    pieces.all? { |cell| cell.piece.is_a?(King) || cell.piece.is_a?(Knight) } &&
-      pieces.one? { |cell| cell.piece.is_a?(Knight) }
+    pieces.all? { |piece| piece.king? || piece.knight? } &&
+      pieces.one?(&:knight?)
   end
 
   # returns true if the pieces are only kings and bishops with same color square
   def kings_bishops?(pieces)
-    bishops = pieces.select { |cell| cell.piece.is_a?(Bishop) }
-    pieces.all? { |cell| cell.piece.is_a?(King) || cell.piece.is_a?(Bishop) } &&
+    bishops = pieces.select(&:bishop?)
+    pieces.all? { |piece| piece.king? || piece.bishop? } &&
       bishops.map(&:bg_color).uniq.length == 1
   end
 
   # returns true if only pieces left are kings
   def only_kings?(pieces)
-    pieces.all? { |cell| cell.piece.is_a?(King) }
+    pieces.all?(&:king?)
   end
 end

@@ -51,16 +51,8 @@ class Game
   # player inputs move then move gets validated
   def make_move
     input = display_choice(@current)
-    translated = translate(input)
-    validate(input, translated)
-  end
-
-  # takes move and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
-  def translate(input)
-    alpha = ('a'..'h').to_a
-    start = [alpha.index(input[0]), input[1].to_i - 1]
-    land = [alpha.index(input[2]), input[3].to_i - 1]
-    [start, land]
+    key = key(input)
+    validate(input, key)
   end
 
   # returns true if the game ends in a checkmate or stalemate
@@ -78,11 +70,19 @@ class Game
     @player_two = create_player(2, :black)
   end
 
+  # takes input and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
+  def key(input)
+    alpha = ('a'..'h').to_a
+    start = [alpha.index(input[0]), input[1].to_i - 1]
+    land = [alpha.index(input[2]), input[3].to_i - 1]
+    [start, land]
+  end
+
   # checks if move is valid then moves piece and promotes if neccissary
-  def validate(input, translated)
-    if @detect.valid?(input, translated, @current, @board)
-      @board.move_piece(translated)
-      @board.promote(translated[1])
+  def validate(input, key)
+    if @detect.valid?(key, @current, @board) && input.length == 4
+      @board.move_piece(key)
+      @board.promote(key[1])
     else
       make_move
     end

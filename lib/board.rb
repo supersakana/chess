@@ -17,28 +17,29 @@ class Board
     }
   end
 
-  # returns a list of a player's cells/pieces given the player color
+  # returns a list of a player cells given team color
   def player_pieces(color)
-    @cells.select { |_k, v| v.piece_color == color }
+    @cells.select { |_k, cell| cell.piece_color == color }
   end
 
   # returns a list of all cells that contains pieces
   def all_pieces
-    @cells.reject { |_k, v| v.empty? }
+    @cells.reject { |_k, cell| cell.empty? }
   end
 
-  # selects the start and landing piece position then transfers (removes pawn jump if piece is a pawn)
-  def move_piece(translated)
-    start = @cells[translated[0]]
-    land = @cells[translated[1]]
+  # selects the start and landing piece position then transfers
+  def move_piece(key)
+    start = @cells[key[0]]
+    land = @cells[key[1]]
+    # binding.pry if key == [[1, 3], [1, 2]]
 
     transfer(start, land)
-    analyze_board(start, land)
+    inspect(start, land)
   end
 
-  # moves a piece from start to landing position, captures if land contains foe
+  # moves piece from start to land position
   def transfer(start, land)
-    capture(start, land) if !land.empty? || start.ep_enabled?
+    capture(start, land) if land.occupied? || start.ep_enabled? # ep = en passant
     land.piece = start.piece
     start.piece = nil
   end
@@ -52,7 +53,7 @@ class Board
     else
       @grave[:player_one] << land.piece.icon
     end
-    land.piece = nil
+    # land.piece = nil
   end
 
   # converts a pawn to promo piece if pawn can promote
@@ -67,7 +68,7 @@ class Board
   def print
     system 'clear'
     display_board(self)
-    display_grave(@grave) unless @grave.all? { |_k, v| v.empty? }
+    display_grave(@grave) unless @grave.values.all?(&:empty?)
   end
 
   private
@@ -83,9 +84,9 @@ class Board
 
   # creates a 8x8 grid with coordinates (Hash of 64 values)
   def create_board(hash = {})
-    coordinates = [0, 1, 2, 3, 4, 5, 6, 7].repeated_permutation(2).to_a
-    coordinates.each do |value|
-      cell = Cell.new(value)
+    key_values = [0, 1, 2, 3, 4, 5, 6, 7].repeated_permutation(2).to_a
+    key_values.each do |xy|
+      cell = Cell.new(xy)
       add_cells(cell, hash)
     end
     hash
@@ -102,10 +103,14 @@ class Board
     @cells[[land.value[0], land.value[1] + shift]]
   end
 
-  # checks if an en_passant needs to be disable, inspects pawn, etc... (wip)
-  def analyze_board(start, land)
-    pawns = player_pieces(land.piece_color).select { |_k, v| v.piece.is_a?(Pawn) }
-    pawns.each { |_k, v| v.piece.ep_enabled = nil if v.piece.ep_enabled == true }
+  # checks if an en passant needs to be disable and inspects pawn status
+  def inspect(start, land)
+    player_pawns(land).each { |_k, v| v.disable_ep }
     land.piece.inspect_pawn(start, land, self) unless land.empty?
+  end
+
+  # returns list of player pawns given cell
+  def player_pawns(cell)
+    player_pieces(cell.piece_color).select { |_k, v| v.pawn? }
   end
 end

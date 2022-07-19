@@ -18,15 +18,17 @@ class Cell
 
   # returns a cell background color
   def create_bg(value)
-    if (value[0] + value[1]).odd?
-      :white
-    else
-      :light_black
-    end
+    (value[0] + value[1]).odd? ? :white : :light_black
   end
 
+  # true if cell piece is nil
   def empty?
     @piece.nil?
+  end
+
+  # true if cell contains a piece
+  def occupied?
+    !empty?
   end
 
   # returns the color of piece
@@ -34,25 +36,27 @@ class Cell
     return @piece.color unless empty?
   end
 
+  # returns foe color of piece
   def foe_color
     return if empty?
 
-    if piece_color == :light_white
-      :black
-    else
-      :light_white
-    end
+    piece_color == :light_white ? :black : :light_white
   end
 
   # returns true if the cells piece has an en passant avalible
   def ep_enabled?
-    return unless @piece.is_a?(Pawn)
+    return unless pawn?
 
     @piece.ep_enabled == true
   end
 
+  # disables a pawns en passant
+  def disable_ep
+    @piece.ep_enabled = nil if pawn?
+  end
+
   # returns piece transitions
-  def piece_transitions
+  def piece_shifts
     @piece.transitions unless empty?
   end
 
@@ -67,6 +71,26 @@ class Cell
              else
                Queen.new(color)
              end
+  end
+
+  # returns true if piece is a pawn
+  def pawn?
+    @piece.is_a?(Pawn)
+  end
+
+  # returns true if piece is a king
+  def king?
+    @piece.is_a?(King)
+  end
+
+  # returns true if piece is a knight
+  def knight?
+    @piece.is_a?(Knight)
+  end
+
+  # returns true if piece is a bishop
+  def bishop?
+    @piece.is_a?(Bishop)
   end
 
   # returns the formatted cell

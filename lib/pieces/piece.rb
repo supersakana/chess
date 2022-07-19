@@ -47,7 +47,7 @@ class Piece
     end
   end
 
-  # returns line of legal moves given a piece's shift (excludes pawns)
+  # returns line of possible moves given a piece's shift (excludes pawns)
   # rubocop:disable Metrics/MethodLength
   def iterate(shift, start, board, move = start, line = [])
     i = iterator
@@ -86,7 +86,6 @@ class Piece
 
     jump = land.piece.color == :black ? -2 : 2
 
-    # binding.pry if start.value == [3, 4]
     @ep_enabled = true if ep_true?(land.value, board)
     @jump_enabled = false if @jump_enabled == true
     @jumped = true if (start.value[1] + jump) == land.value[1]

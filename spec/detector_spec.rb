@@ -31,119 +31,91 @@ describe Detector do
   let(:b_pawn) { board.cells[[0, 6]].piece }
 
   describe '#valid?' do
-    context 'when given an input that is not a length of 4' do
-      it 'returns false (length = 3)' do
-        input = 'a2a'
-        translated = [[0, 1], [0, nil]]
-        result = detect.valid?(input, translated, white_player, board)
-        expect(result).to be_falsey
-      end
-      it 'returns false (length = 5)' do
-        input = 'a2a3b'
-        translated = [[0, 1], [0, 2]]
-        result = detect.valid?(input, translated, white_player, board)
-        expect(result).to be_falsey
-      end
-    end
     context 'when given an input that is illegal' do
       it 'returns false (White Rook a3a8)' do
         board.cells[[0, 2]].piece = w_rook
-        input = 'a3a8'
-        translated = [[0, 2], [0, 7]]
-        result = detect.valid?(input, translated, white_player, board)
+        key = [[0, 2], [0, 7]]
+        result = detect.valid?(key, white_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black Bishop c5g1)' do
         board.cells[[2, 4]].piece = b_bishop
-        input = 'c5g1'
-        translated = [[2, 4], [6, 0]]
-        result = detect.valid?(input, translated, black_player, board)
+        key = [[2, 4], [6, 0]]
+        result = detect.valid?(key, black_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (White Queen g6e8)' do
         board.cells[[6, 5]].piece = w_queen
-        input = 'g6e8'
-        translated = [[6, 5], [5, 7]]
-        result = detect.valid?(input, translated, white_player, board)
+        key = [[6, 5], [5, 7]]
+        result = detect.valid?(key, white_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black King f3e1)' do
         board.cells[[5, 2]].piece = b_king
-        input = 'f3e1'
-        translated = [[5, 2], [4, 0]]
-        result = detect.valid?(input, translated, black_player, board)
+        key = [[5, 2], [4, 0]]
+        result = detect.valid?(key, black_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (White Knight g3e2)' do
         board.cells[[6, 2]].piece = w_knight
-        input = 'g3e2'
-        translated = [[6, 2], [4, 1]]
-        result = detect.valid?(input, translated, white_player, board)
+        key = [[6, 2], [4, 1]]
+        result = detect.valid?(key, white_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black Pawn d3d2)' do
         board.cells[[3, 2]].piece = b_pawn
-        input = 'd3d2'
-        translated = [[3, 2], [3, 1]]
-        result = detect.valid?(input, translated, black_player, board)
+        key = [[3, 2], [3, 1]]
+        result = detect.valid?(key, black_player, board)
         expect(result).to be_falsey
       end
     end
     context 'when a user attempts to play opponent pieces' do
       it 'returns false (white picks black piece)' do
-        input = 'd7d6'
-        translated = [[3, 6], [3, 5]]
-        result = detect.valid?(input, translated, white_player, board)
+        key = [[3, 6], [3, 5]]
+        result = detect.valid?(key, white_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (black picks white piece)' do
-        input = 'e2e3'
-        translated = [[4, 1], [4, 2]]
-        result = detect.valid?(input, translated, black_player, board)
+        key = [[4, 1], [4, 2]]
+        result = detect.valid?(key, black_player, board)
         expect(result).to be_falsey
       end
     end
     context 'when a user inputs a valid move' do
       it 'returns true (Black Rook h6h2)' do
         board.cells[[7, 5]].piece = b_rook
-        input = 'h6h2'
-        translated = [[7, 5], [7, 1]]
-        result = detect.valid?(input, translated, black_player, board)
+        key = [[7, 5], [7, 1]]
+        result = detect.valid?(key, black_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (White Bishop f4c7)' do
         board.cells[[5, 3]].piece = w_bishop
-        input = 'f4c7'
-        translated = [[5, 3], [2, 6]]
-        result = detect.valid?(input, translated, white_player, board)
+        key = [[5, 3], [2, 6]]
+        result = detect.valid?(key, white_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Queen d5d2)' do
         board.cells[[3, 4]].piece = b_queen
-        input = 'd5d2'
-        translated = [[3, 4], [3, 1]]
-        result = detect.valid?(input, translated, black_player, board)
+        key = [[3, 4], [3, 1]]
+        result = detect.valid?(key, black_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (White King e3f3)' do
         board.cells[[4, 2]].piece = w_king
-        input = 'e3f3'
-        translated = [[4, 2], [5, 2]]
-        result = detect.valid?(input, translated, white_player, board)
+        key = [[4, 2], [5, 2]]
+        result = detect.valid?(key, white_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Knight e3d1)' do
         board.cells[[4, 2]].piece = b_knight
-        input = 'e3d1'
-        translated = [[4, 2], [3, 0]]
-        result = detect.valid?(input, translated, black_player, board)
+        key = [[4, 2], [3, 0]]
+        result = detect.valid?(key, black_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (White Pawn h6g7)' do
         board.cells[[7, 5]].piece = w_pawn
-        input = 'h6g7'
-        translated = [[7, 5], [6, 6]]
-        result = detect.valid?(input, translated, white_player, board)
+        key = [[7, 5], [6, 6]]
+        result = detect.valid?(key, white_player, board)
         expect(result).to be_truthy
       end
     end
@@ -153,9 +125,8 @@ describe Detector do
         board.cells[[4, 6]].piece = nil
       end
       it 'returns true' do
-        input = 'f8e7'
-        translated = [[5, 7], [4, 6]]
-        result = detect.valid?(input, translated, black_player, board)
+        key = [[5, 7], [4, 6]]
+        result = detect.valid?(key, black_player, board)
         expect(result).to be_truthy
       end
     end
@@ -164,9 +135,8 @@ describe Detector do
         allow(detect).to receive(:check?).and_return(true)
       end
       it 'returns false' do
-        input = 'e8e7'
-        translated = [[7, 7], [7, 6]]
-        result = detect.valid?(input, translated, black_player, board)
+        key = [[7, 7], [7, 6]]
+        result = detect.valid?(key, black_player, board)
         expect(result).to be_falsey
       end
     end
@@ -175,9 +145,8 @@ describe Detector do
         allow(detect).to receive(:check?).and_return(true)
       end
       it 'returns false' do
-        input = 'hehe'
-        translated = [[7, -1], [7, -1]]
-        result = detect.valid?(input, translated, black_player, board)
+        key = [[7, -1], [7, -1]]
+        result = detect.valid?(key, black_player, board)
         expect(result).to be_falsey
       end
     end
@@ -186,9 +155,8 @@ describe Detector do
         board.cells[[4, 2]].piece = b_pawn
       end
       it 'returns false when user tries to pawn jump over piece' do
-        input = 'e2e4'
-        translated = [[4, 1], [4, 3]]
-        result = detect.valid?(input, translated, white_player, board)
+        key = [[4, 1], [4, 3]]
+        result = detect.valid?(key, white_player, board)
         expect(result).to be_falsey
       end
     end
@@ -202,9 +170,8 @@ describe Detector do
       it 'returns true' do
         board.cells[[3, 4]].piece.instance_variable_set(:@jumped, true)
         board.cells[[4, 4]].piece.instance_variable_set(:@ep_enabled, true)
-        input = 'e5d6'
-        translated = [[4, 4], [3, 5]]
-        result = detect.valid?(input, translated, white_player, board)
+        key = [[4, 4], [3, 5]]
+        result = detect.valid?(key, white_player, board)
         expect(result).to be_truthy
       end
     end
@@ -322,7 +289,7 @@ describe Detector do
         board.cells[[4, 4]].piece = b_pawn
         start = [3, 3]
         board.cells[start].piece = w_pawn
-        allow(board.cells[start]).to receive(:piece_transitions).and_return([[0, 1], [1, 1], [-1, 1]])
+        allow(board.cells[start]).to receive(:piece_shifts).and_return([[0, 1], [1, 1], [-1, 1]])
 
         result = detect.possible_moves(start, board)
         expect(result).to eq([[3, 4], [4, 4]])
@@ -331,7 +298,7 @@ describe Detector do
         board.cells[[3, 3]].piece = w_pawn
         start = [4, 4]
         board.cells[start].piece = b_pawn
-        allow(board.cells[start]).to receive(:piece_transitions).and_return([[0, -1], [1, -1], [-1, -1]])
+        allow(board.cells[start]).to receive(:piece_shifts).and_return([[0, -1], [1, -1], [-1, -1]])
 
         result = detect.possible_moves(start, board)
         expect(result).to eq([[4, 3], [3, 3]])

@@ -5,7 +5,7 @@
 require_relative 'library'
 
 system 'clear'
-puts <<~HEREDOC.colorize(color: :green)
+puts <<~HEREDOC.colorize(color: :light_green)
 
   #{'                                                                                 '}
       ,o888888o.    8 8888        8 8 8888888888      d888888o.      d888888o.#{'   '}
@@ -18,6 +18,8 @@ puts <<~HEREDOC.colorize(color: :green)
   `8 8888       .8' 8 8888        8 8 8888         8b   `8.`8888. 8b   `8.`8888.#{' '}
      8888     ,88'  8 8888        8 8 8888         `8b.  ;8.`8888 `8b.  ;8.`8888#{' '}
       `8888888P'    8 8888        8 8 888888888888  `Y8888P ,88P'  `Y8888P ,88P'#{' '}
+
+   'Created by Zac Williamson'
 
 HEREDOC
 puts "Press 'ENTER' to play"

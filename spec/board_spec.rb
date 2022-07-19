@@ -56,7 +56,7 @@ describe Board do
         translated = [[0, 1], [0, 3]]
         landing = board.cells[[0, 3]]
         board.move_piece(translated)
-        pawn_shifts = landing.piece_transitions
+        pawn_shifts = landing.piece_shifts
         expect(pawn_shifts).to eq([[0, 1], [1, 1], [-1, 1]])
       end
       it 'pawn @jumped is true if the pawn made a jump move' do

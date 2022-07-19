@@ -86,9 +86,9 @@ class Piece
 
     jump = land.piece.color == :black ? -2 : 2
 
+    @jumped = true if (start.value[1] + jump) == land.value[1]
     @ep_enabled = true if ep_true?(land.value, board)
     @jump_enabled = false if @jump_enabled == true
-    @jumped = true if (start.value[1] + jump) == land.value[1]
   end
 
   # returns true if a pawn piece need promotion

@@ -53,6 +53,7 @@ class Cell
   # disables a pawns en passant
   def disable_ep
     @piece.ep_enabled = nil if pawn?
+    @piece.jumped = nil
   end
 
   # returns piece transitions

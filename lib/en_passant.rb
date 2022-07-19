@@ -38,6 +38,6 @@ module EnPassant
 
     cell.piece.is_a?(Pawn) &&
       cell.piece_color == selected.foe_color &&
-      cell.piece.jumped
+      cell.piece.jumped == true
   end
 end

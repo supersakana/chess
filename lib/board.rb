@@ -53,7 +53,7 @@ class Board
     else
       @grave[:player_one] << land.piece.icon
     end
-    # land.piece = nil
+    land.piece = nil
   end
 
   # converts a pawn to promo piece if pawn can promote
@@ -103,7 +103,7 @@ class Board
     @cells[[land.value[0], land.value[1] + shift]]
   end
 
-  # checks if an en passant needs to be disable and inspects pawn status
+  # checks if an en passant or pawn jump needs to be disable and inspects pawn status
   def inspect(start, land)
     player_pawns(land).each { |_k, v| v.disable_ep }
     land.piece.inspect_pawn(start, land, self) unless land.empty?

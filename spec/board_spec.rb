@@ -110,6 +110,12 @@ describe Board do
         board.move_piece(translated)
         expect(board.grave[:player_one]).to eq(['♟'])
       end
+      it 'moves properly if an ep move was not made' do
+        translated = [[4, 4], [4, 5]]
+        board.move_piece(translated)
+        land = board.cells[[4, 5]].piece
+        expect(land).to eq(w_pawn)
+      end
     end
   end
   describe '#promote' do

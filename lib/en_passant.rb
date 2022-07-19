@@ -23,6 +23,18 @@ module EnPassant
       (foe_jumped?(left, selected) || foe_jumped?(right, selected))
   end
 
+  # returns true if the move is an en passant
+  def ep_move?(start, land)
+    diagonal = [[1, 1], [1, -1], [-1, -1], [-1, 1]]
+
+    diagonal.any? do |shift|
+      x = start.value[0] + shift[0]
+      y = start.value[1] + shift[1]
+      land.value == [x, y]
+    end &&
+      start.pawn? && start.piece.ep_enabled == true
+  end
+
   private
 
   # returns true if pawn position is in correct row for ep

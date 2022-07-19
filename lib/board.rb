@@ -5,6 +5,7 @@ require 'pry-byebug'
 # contains game board functionality(Will be disabled once Detector methods migrate)
 class Board
   include Display
+  include EnPassant
 
   attr_reader :cells
   attr_accessor :grave
@@ -38,15 +39,14 @@ class Board
 
   # moves piece from start to land position
   def transfer(start, land)
-    # binding.pry if start.value == [3, 3] && land.value == [2, 2]
-    capture(start, land) if land.occupied? || start.ep_move?(land) # ep = en passant
+    capture(start, land) if land.occupied? || ep_move?(start, land) # ep = en passant
     land.piece = start.piece
     start.piece = nil
   end
 
   # returns a captured piece given a landing position
   def capture(start, land)
-    land = ep_land(start, land) if start.ep_move?(land)
+    land = ep_land(start, land) if ep_move?(start, land)
 
     if land.piece_color == :light_white
       @grave[:player_two] << land.piece.icon
@@ -58,7 +58,7 @@ class Board
 
   # converts a pawn to promo piece if pawn can promote
   def promote(land)
-    return unless @cells[land].piece.promote?(land)
+    return unless @cells[land].promote?
 
     promo = display_promotion
     validate_promo(land, promo)

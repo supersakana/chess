@@ -70,7 +70,7 @@ class Game
     @player_two = create_player(2, :black)
   end
 
-  # takes input and returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
+  # returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
   def key(input)
     alpha = ('a'..'h').to_a
     start = [alpha.index(input[0]), input[1].to_i - 1]

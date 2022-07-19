@@ -31,54 +31,6 @@ class Cell
     !empty?
   end
 
-  # returns the color of piece
-  def piece_color
-    return @piece.color unless empty?
-  end
-
-  # returns foe color of piece
-  def foe_color
-    return if empty?
-
-    piece_color == :light_white ? :black : :light_white
-  end
-
-  # returns true if the move is an en passant
-  def ep_move?(land)
-    diagonal = [[1, 1], [1, -1], [-1, -1], [-1, 1]]
-
-    diagonal.any? do |shift|
-      x = @value[0] + shift[0]
-      y = @value[1] + shift[1]
-      land.value == [x, y]
-    end &&
-      pawn? && @piece.ep_enabled == true
-  end
-
-  # disables a pawns en passant
-  def disable_ep
-    @piece.ep_enabled = nil if pawn?
-    @piece.jumped = nil
-  end
-
-  # returns piece transitions
-  def piece_shifts
-    @piece.transitions unless empty?
-  end
-
-  # converts a piece from piece to promotion piece
-  def convert(promo)
-    color = @piece.color == :black ? [7, 7] : [0, 0]
-
-    @piece = case promo
-             when 'r' then Rook.new(color)
-             when 'b' then Bishop.new(color)
-             when 'k' then Knight.new(color)
-             else
-               Queen.new(color)
-             end
-  end
-
   # returns true if piece is a pawn
   def pawn?
     @piece.is_a?(Pawn)
@@ -97,6 +49,50 @@ class Cell
   # returns true if piece is a bishop
   def bishop?
     @piece.is_a?(Bishop)
+  end
+
+  # returns the color of piece
+  def piece_color
+    return @piece.color unless empty?
+  end
+
+  # returns foe color of piece
+  def foe_color
+    return if empty?
+
+    piece_color == :light_white ? :black : :light_white
+  end
+
+  # disables a pawns en passant
+  def disable_ep
+    @piece.ep_enabled = nil if pawn?
+    @piece.jumped = nil
+  end
+
+  # returns piece transitions
+  def piece_shifts
+    @piece.transitions unless empty?
+  end
+
+  # returns true if a pawn piece need promotion
+  def promote?
+    return unless pawn?
+
+    piece_color == :light_white && @value[1] == 7 ||
+      piece_color == :black && @value[1].zero?
+  end
+
+  # converts a piece from piece to promotion piece
+  def convert(promo)
+    color = @piece.color == :black ? [7, 7] : [0, 0]
+
+    @piece = case promo
+             when 'r' then Rook.new(color)
+             when 'b' then Bishop.new(color)
+             when 'k' then Knight.new(color)
+             else
+               Queen.new(color)
+             end
   end
 
   # returns the formatted cell

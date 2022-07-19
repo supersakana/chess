@@ -55,7 +55,6 @@ class Pawn < Piece
 
   # returns true if all pawn conditions are met
   def pawn_conditions?(shift, start, move, board)
-    # binding.pry if start == [3, 3]
     (vertical_shift?(shift, move, board) && blocked_jump?(shift, move, board)) ||
       (diagonal_shift?(shift) && opposing_piece?(move, start, board)) ||
       ep_open?(start, move, board, @ep_enabled)

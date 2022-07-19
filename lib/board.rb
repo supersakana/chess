@@ -31,7 +31,6 @@ class Board
   def move_piece(key)
     start = @cells[key[0]]
     land = @cells[key[1]]
-    # binding.pry if key == [[1, 3], [1, 2]]
 
     transfer(start, land)
     inspect(start, land)
@@ -39,14 +38,15 @@ class Board
 
   # moves piece from start to land position
   def transfer(start, land)
-    capture(start, land) if land.occupied? || start.ep_enabled? # ep = en passant
+    # binding.pry if start.value == [3, 3] && land.value == [2, 2]
+    capture(start, land) if land.occupied? || start.ep_move?(land) # ep = en passant
     land.piece = start.piece
     start.piece = nil
   end
 
   # returns a captured piece given a landing position
   def capture(start, land)
-    land = ep_land(start, land) if start.ep_enabled?
+    land = ep_land(start, land) if start.ep_move?(land)
 
     if land.piece_color == :light_white
       @grave[:player_two] << land.piece.icon

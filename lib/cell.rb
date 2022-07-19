@@ -43,11 +43,16 @@ class Cell
     piece_color == :light_white ? :black : :light_white
   end
 
-  # returns true if the cells piece has an en passant avalible
-  def ep_enabled?
-    return unless pawn?
+  # returns true if the move is an en passant
+  def ep_move?(land)
+    diagonal = [[1, 1], [1, -1], [-1, -1], [-1, 1]]
 
-    @piece.ep_enabled == true
+    diagonal.any? do |shift|
+      x = @value[0] + shift[0]
+      y = @value[1] + shift[1]
+      land.value == [x, y]
+    end &&
+      pawn? && @piece.ep_enabled == true
   end
 
   # disables a pawns en passant

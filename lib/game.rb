@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Layout/MultilineOperationIndentation
+
 require 'pry-byebug'
 
 # contains main game functionality
@@ -21,10 +23,10 @@ class Game
     end_game
   end
 
-  # creates a new player object
-  def create_player(number, color)
-    name = display_name(number, color)
-    Player.new(name, color)
+  # sets up Human vs Human
+  def two_players
+    @player_one = create_player(1, :light_white)
+    @player_two = create_player(2, :black)
   end
 
   # general gameplay until checkmate is declared
@@ -58,16 +60,16 @@ class Game
   # returns true if the game ends in a checkmate or stalemate
   def game_over?(board)
     @detect.checkmate?(@current, board) ||
-      @detect.stalemate?(@current, board) ||
-      @detect.insufficient_material?(board)
+    @detect.stalemate?(@current, board) ||
+    @detect.insufficient_material?(board)
   end
 
   private
 
-  # sets up Human vs Human
-  def two_players
-    @player_one = create_player(1, :light_white)
-    @player_two = create_player(2, :black)
+  # creates a new player object
+  def create_player(number, color)
+    name = display_name(number, color)
+    Player.new(name, color)
   end
 
   # returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
@@ -100,3 +102,4 @@ class Game
     end
   end
 end
+# rubocop:enable Layout/MultilineOperationIndentation

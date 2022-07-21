@@ -175,6 +175,78 @@ describe Detector do
         expect(result).to be_truthy
       end
     end
+    context 'when given an castling move' do
+      before do
+        board.cells[[1, 0]].piece = nil
+        board.cells[[2, 0]].piece = nil
+        board.cells[[3, 0]].piece = nil
+        board.cells[[5, 0]].piece = nil
+        board.cells[[6, 0]].piece = nil
+        board.cells[[1, 7]].piece = nil
+        board.cells[[2, 7]].piece = nil
+        board.cells[[3, 7]].piece = nil
+        board.cells[[5, 7]].piece = nil
+        board.cells[[6, 7]].piece = nil
+      end
+      xit 'returns true (White King Side)' do
+        key = [[4, 0], [6, 0]]
+        result = detect.valid?(key, white_player, board)
+        expect(result).to be_truthy
+      end
+      xit 'returns true (White Queen Side)' do
+        key = [[4, 0], [2, 0]]
+        result = detect.valid?(key, white_player, board)
+        expect(result).to be_truthy
+      end
+      xit 'returns true (Black King Side)' do
+        key = [[4, 7], [6, 7]]
+        result = detect.valid?(key, black_player, board)
+        expect(result).to be_truthy
+      end
+      xit 'returns true (Black Queen Side)' do
+        key = [[4, 7], [2, 7]]
+        result = detect.valid?(key, black_player, board)
+        expect(result).to be_truthy
+      end
+      xit 'returns false if Rook has moved' do
+        rook = board.cells[[0, 0]].piece
+        rook.moved = true
+        key = [[4, 0], [2, 0]]
+        result = detect.valid?(key, white_player, board)
+        expect(result).to be_falsey
+      end
+      xit 'returns false if King has moved' do
+        king = board.cells[[4, 0]].piece
+        king.moved = true
+        key = [[4, 0], [2, 0]]
+        result = detect.valid?(key, white_player, board)
+        expect(result).to be_falsey
+      end
+      xit 'returns false if King is in check' do
+        board.cells[[3, 2]].piece = b_knight
+        key = [[4, 0], [2, 0]]
+        result = detect.valid?(key, white_player, board)
+        expect(result).to be_falsey
+      end
+      xit 'returns false if landing position puts king in check' do
+        board.cells[[2, 2]].piece = b_knight
+        key = [[4, 0], [2, 0]]
+        result = detect.valid?(key, white_player, board)
+        expect(result).to be_falsey
+      end
+      xit 'returns false if passes through check' do
+        board.cells[[2, 1]].piece = nil
+        board.cells[[1, 2]].piece = b_bishop
+        result = detect.valid?(key, white_player, board)
+        expect(result).to be_falsey
+      end
+      xit 'returns false if other piece is between king and rook' do
+        board.cells[[2, 0]].piece = w_bishop
+        key = [[4, 0], [2, 0]]
+        result = detect.valid?(key, white_player, board)
+        expect(result).to be_falsey
+      end
+    end
   end
 
   describe '#possible_moves' do

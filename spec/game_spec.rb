@@ -31,26 +31,6 @@ describe Game do
   let(:b_knight) { board.cells[[6, 7]].piece }
   let(:b_pawn) { board.cells[[0, 6]].piece }
 
-  describe '#create_player' do
-    context 'when a new player is created' do
-      before do
-        allow(game).to receive(:display_name).and_return('Stranger')
-      end
-      it 'creates an object of the player class' do
-        player = game.create_player(1, :light_white)
-        expect(player).to be_a(Player)
-      end
-      it 'has a name' do
-        player = game.create_player(1, :light_white)
-        expect(player.name).to eq('Stranger')
-      end
-      it 'has a color' do
-        player = game.create_player(1, :light_white)
-        expect(player.color).to eq(:light_white)
-      end
-    end
-  end
-
   describe '#turn_player' do
     before do
       game.instance_variable_set(:@player_one, player_one)

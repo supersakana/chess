@@ -117,6 +117,14 @@ describe Board do
         expect(land).to eq(w_pawn)
       end
     end
+    context 'when any piece is moved' do
+      it 'the piece objects @move = true' do
+        key = [[1, 0], [0, 2]]
+        board.move_piece(key)
+        land = board.cells[[0, 2]].piece
+        expect(land.moved).to eq(true)
+      end
+    end
   end
   describe '#promote' do
     context 'when given a valid input to promote' do

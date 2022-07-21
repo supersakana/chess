@@ -103,10 +103,11 @@ class Board
     @cells[[land.value[0], land.value[1] + shift]]
   end
 
-  # checks if an en passant or pawn jump needs to be disable and inspects pawn status
+  # checks updates status of moved pieces (pawns included)
   def inspect(start, land)
     player_pawns(land).each { |_k, v| v.disable_ep }
     land.inspect_pawn(start, land, self) unless land.empty?
+    land.piece.moved = true
   end
 
   # returns list of player pawns given cell

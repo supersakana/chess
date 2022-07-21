@@ -2,10 +2,12 @@
 
 # superclass and factory for all pieces
 class Piece
+  attr_accessor :moved
   attr_reader :color
 
   def initialize(key)
     @color = create_color(key)
+    @moved = false
   end
 
   # creates a specific piece given initial position

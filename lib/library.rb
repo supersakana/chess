@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
-# general files
+# modules
 require_relative 'display'
 require_relative 'en_passant'
+require_relative 'castling'
+
+# general files
 require_relative 'game'
 require_relative 'player'
 require_relative 'board'

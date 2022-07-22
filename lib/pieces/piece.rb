@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/AbcSize, Style/EmptyCaseCondition, Metrics/MethodLength
+
 # superclass and factory for all pieces
 class Piece
   attr_accessor :moved
@@ -11,7 +13,6 @@ class Piece
   end
 
   # creates a specific piece given initial position
-  # rubocop:disable Metrics/AbcSize, Style/EmptyCaseCondition
   def self.create(key)
     case
     when starts[:rook].include?(key) then Rook.new(key)
@@ -22,7 +23,6 @@ class Piece
     when [1, 6].include?(key[1]) then Pawn.new(key)
     end
   end
-  # rubocop:enable Metrics/AbcSize, Style/EmptyCaseCondition
 
   def self.starts
     { rook: [[0, 0], [7, 0], [0, 7], [7, 7]],
@@ -42,7 +42,6 @@ class Piece
   end
 
   # returns line of possible moves given a piece's shift (excludes pawns)
-  # rubocop:disable Metrics/MethodLength
   def iterate(shift, start, board, move = start, line = [])
     iterator.times do
       move = create_move(shift, move)
@@ -57,7 +56,6 @@ class Piece
     end
     line
   end
-  # rubocop:enable Metrics/MethodLength
 
   # returns a possible move given a transition
   def create_move(shift, start)
@@ -71,6 +69,10 @@ class Piece
   # returns true if capture color is different from initial piece color
   def opposing_piece?(move, start, board)
     board.cells[move].piece_color == board.cells[start].foe_color
+  end
+
+  def moved?
+    @moved == true
   end
 
   # list of increments needed to find possible moves
@@ -88,3 +90,4 @@ class Piece
     raise NotImpelementedError
   end
 end
+# rubocop:enable Metrics/AbcSize, Style/EmptyCaseCondition, Metrics/MethodLength

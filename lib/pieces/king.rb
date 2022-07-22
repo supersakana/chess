@@ -4,6 +4,8 @@
 class King < Piece
   attr_reader :icon
 
+  include Castling
+
   def initialize(position)
     super
     @color = create_color(position)
@@ -14,6 +16,12 @@ class King < Piece
   def transitions
     [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]
   end
+
+  # def king_shifts
+  #   { default: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]],
+  #     queenside: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1] [-2, 0]],
+  #     kingside: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1] [2, 0]] }
+  # end
 
   # assigns number of iterations based on given piece
   def iterator

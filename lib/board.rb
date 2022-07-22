@@ -2,7 +2,7 @@
 
 require 'pry-byebug'
 
-# contains game board functionality(Will be disabled once Detector methods migrate)
+# contains game board functionality
 class Board
   include Display
   include EnPassant

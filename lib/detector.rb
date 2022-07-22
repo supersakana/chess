@@ -38,8 +38,8 @@ class Detector
   # returns true if a king is in check position
   def check?(player, board)
     pieces = board.player_pieces(player.foe_color)
-    pieces.any? do |k, _v|
-      possible_moves(k, board).any? { |move| board.cells[move].king? }
+    pieces.any? do |start, _v|
+      possible_moves(start, board).any? { |move| board.cells[move].king? }
     end
   end
 

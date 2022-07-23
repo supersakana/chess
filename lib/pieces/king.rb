@@ -13,15 +13,21 @@ class King < Piece
   end
 
   # list of increments needed to find possible knight moves
-  def transitions
-    [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]
+  def transitions(board)
+    if kingside?(self, board)
+      king_shifts[:kingside]
+    elsif queenside?(self, board)
+      king_shifts[:queenside]
+    else
+      king_shifts[:default]
+    end
   end
 
-  # def king_shifts
-  #   { default: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]],
-  #     queenside: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1] [-2, 0]],
-  #     kingside: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1] [2, 0]] }
-  # end
+  def king_shifts
+    { kingside: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [2, 0]],
+      queenside: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [-2, 0]],
+      default: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]] }
+  end
 
   # assigns number of iterations based on given piece
   def iterator

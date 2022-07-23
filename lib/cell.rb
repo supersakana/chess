@@ -31,6 +31,10 @@ class Cell
     !empty?
   end
 
+  def moved?
+    piece.moved == true
+  end
+
   # returns true if piece is a pawn
   def pawn?
     @piece.is_a?(Pawn)
@@ -49,6 +53,11 @@ class Cell
   # returns true if piece is a bishop
   def bishop?
     @piece.is_a?(Bishop)
+  end
+
+  # returns true if piece is a rook
+  def rook?
+    @piece.is_a?(Rook)
   end
 
   # returns the color of piece
@@ -70,8 +79,14 @@ class Cell
   end
 
   # returns piece transitions
-  def piece_shifts
-    @piece.transitions unless empty?
+  def piece_shifts(board)
+    return if empty?
+
+    if king?
+      @piece.transitions(board)
+    else
+      @piece.transitions
+    end
   end
 
   # checks pawn jumped, disables, jump, enables ep

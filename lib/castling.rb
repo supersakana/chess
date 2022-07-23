@@ -12,13 +12,13 @@ module Castling
   end
 
   # returns true if there is a queen side castling open
-  def queenside?
+  def queenside?(king, board)
     castling_true?(king, board) && vaccant?(king, board, [2, 3])
   end
 
   # returns true if conditions for castling are true
   def castling_true?(king, board)
-    king.moved?.false &&
+    king.moved? == false &&
     rooks_moveless?(king.color, board) &&
     not_check?(king, board)
   end
@@ -57,8 +57,8 @@ module Castling
 
   # returns true if either rook has not moved
   def rooks_moveless?(color, board)
-    rooks = board.player_pieces(color).select(&:rook?)
-    rooks.any? { |rook| rook.moved?.false }
+    rooks = board.player_pieces(color).values.select(&:rook?)
+    rooks.any? { |rook| rook.moved? }
   end
 end
 # rubocop:enable Layout/MultilineOperationIndentation

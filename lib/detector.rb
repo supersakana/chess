@@ -21,7 +21,7 @@ class Detector
 
   # returns list of possible moves (excludes moves that check self)
   def possible_moves(start, board, moves = [])
-    board.cells[start].piece_shifts.each do |shift|
+    board.cells[start].piece_shifts(board).each do |shift|
       moves << board.cells[start].piece.iterate(shift, start, board)
     end
     moves.flatten(1).uniq

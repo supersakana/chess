@@ -188,59 +188,60 @@ describe Detector do
         board.cells[[5, 7]].piece = nil
         board.cells[[6, 7]].piece = nil
       end
-      xit 'returns true (White King Side)' do
+      it 'returns true (White King Side)' do
         key = [[4, 0], [6, 0]]
         result = detect.valid?(key, white_player, board)
         expect(result).to be_truthy
       end
-      xit 'returns true (White Queen Side)' do
+      it 'returns true (White Queen Side)' do
         key = [[4, 0], [2, 0]]
         result = detect.valid?(key, white_player, board)
         expect(result).to be_truthy
       end
-      xit 'returns true (Black King Side)' do
+      it 'returns true (Black King Side)' do
         key = [[4, 7], [6, 7]]
         result = detect.valid?(key, black_player, board)
         expect(result).to be_truthy
       end
-      xit 'returns true (Black Queen Side)' do
+      it 'returns true (Black Queen Side)' do
         key = [[4, 7], [2, 7]]
         result = detect.valid?(key, black_player, board)
         expect(result).to be_truthy
       end
-      xit 'returns false if Rook has moved' do
+      it 'returns false if Rook has moved' do
         rook = board.cells[[0, 0]].piece
         rook.moved = true
         key = [[4, 0], [2, 0]]
         result = detect.valid?(key, white_player, board)
         expect(result).to be_falsey
       end
-      xit 'returns false if King has moved' do
+      it 'returns false if King has moved' do
         king = board.cells[[4, 0]].piece
         king.moved = true
         key = [[4, 0], [2, 0]]
         result = detect.valid?(key, white_player, board)
         expect(result).to be_falsey
       end
-      xit 'returns false if King is in check' do
+      it 'returns false if King is in check' do
         board.cells[[3, 2]].piece = b_knight
         key = [[4, 0], [2, 0]]
         result = detect.valid?(key, white_player, board)
         expect(result).to be_falsey
       end
-      xit 'returns false if landing position puts king in check' do
+      it 'returns false if landing position puts king in check' do
         board.cells[[2, 2]].piece = b_knight
         key = [[4, 0], [2, 0]]
         result = detect.valid?(key, white_player, board)
         expect(result).to be_falsey
       end
-      xit 'returns false if passes through check' do
+      it 'returns false if passes through check' do
         board.cells[[2, 1]].piece = nil
         board.cells[[1, 2]].piece = b_bishop
+        key = [[4, 0], [2, 0]]
         result = detect.valid?(key, white_player, board)
         expect(result).to be_falsey
       end
-      xit 'returns false if other piece is between king and rook' do
+      it 'returns false if other piece is between king and rook' do
         board.cells[[2, 0]].piece = w_bishop
         key = [[4, 0], [2, 0]]
         result = detect.valid?(key, white_player, board)
@@ -402,6 +403,44 @@ describe Detector do
 
         result = detect.possible_moves(start, board)
         expect(result).to eq([[3, 2], [4, 2]])
+      end
+    end
+    context 'in a castling situation' do
+      before do
+        board.cells[[1, 0]].piece = nil
+        board.cells[[2, 0]].piece = nil
+        board.cells[[3, 0]].piece = nil
+        board.cells[[5, 0]].piece = nil
+        board.cells[[6, 0]].piece = nil
+        board.cells[[1, 7]].piece = nil
+        board.cells[[2, 7]].piece = nil
+        board.cells[[3, 7]].piece = nil
+        board.cells[[5, 7]].piece = nil
+        board.cells[[6, 7]].piece = nil
+      end
+      it 'returns correct locations (White Kingside)' do
+        board.cells[[0, 0]].piece.moved = true
+        start = [4, 0]
+        result = detect.possible_moves(start, board)
+        expect(result).to eq([[5, 0], [3, 0], [6, 0]])
+      end
+      it 'returns correct locations (White Queenside)' do
+        board.cells[[7, 0]].piece.moved = true
+        start = [4, 0]
+        result = detect.possible_moves(start, board)
+        expect(result).to eq([[5, 0], [3, 0], [2, 0]])
+      end
+      it 'returns correct locations (Black Kingside)' do
+        board.cells[[0, 7]].piece.moved = true
+        start = [4, 7]
+        result = detect.possible_moves(start, board)
+        expect(result).to eq([[5, 7], [3, 7], [6, 7]])
+      end
+      it 'returns correct locations (Black Kingside)' do
+        board.cells[[7, 7]].piece.moved = true
+        start = [4, 7]
+        result = detect.possible_moves(start, board)
+        expect(result).to eq([[5, 7], [3, 7], [2, 7]])
       end
     end
   end

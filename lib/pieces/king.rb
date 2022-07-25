@@ -14,7 +14,9 @@ class King < Piece
 
   # list of increments needed to find possible knight moves
   def transitions(board)
-    if kingside?(self, board)
+    if kingside?(self, board) && queenside?(self, board)
+      king_shifts[:kq_side]
+    elsif kingside?(self, board)
       king_shifts[:kingside]
     elsif queenside?(self, board)
       king_shifts[:queenside]
@@ -24,7 +26,8 @@ class King < Piece
   end
 
   def king_shifts
-    { kingside: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [2, 0]],
+    { kq_side: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [-2, 0], [2, 0]],
+      kingside: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [2, 0]],
       queenside: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [-2, 0]],
       default: [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]] }
   end

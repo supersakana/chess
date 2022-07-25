@@ -8,19 +8,21 @@ require 'pry-byebug'
 module Castling
   # returns true if there is a king side castling open
   def kingside?(king, board)
-    castling_true?(king, board) && vaccant?(king, board, [5, 6])
+    castling_true?(king, board) &&
+    vaccant?(king, board, [5, 6]) &&
+    moveless_rook?(7, king, board)
   end
 
   # returns true if there is a queen side castling open
   def queenside?(king, board)
-    castling_true?(king, board) && vaccant?(king, board, [2, 3])
+    castling_true?(king, board) &&
+    vaccant?(king, board, [2, 3]) &&
+    moveless_rook?(0, king, board)
   end
 
   # returns true if conditions for castling are true
   def castling_true?(king, board)
-    king.moved? == false &&
-    rooks_moveless?(king.color, board) &&
-    not_check?(king, board)
+    king.moved == false && not_check?(king, board)
   end
 
   private
@@ -52,13 +54,15 @@ module Castling
   # returns foe pieces given king piece color
   def foe(color, board)
     foe_color = color == :black ? :light_white : :black
-    board.player_pieces(foe_color)
+    board.player_pieces(foe_color).reject { |_k, v| v.king? }
   end
 
   # returns true if either rook has not moved
-  def rooks_moveless?(color, board)
-    rooks = board.player_pieces(color).values.select(&:rook?)
-    rooks.any? { |rook| rook.moved? }
+  def moveless_rook?(x, king, board)
+    y = king.color == :black ? 7 : 0
+    return if board.cells[[x, y]].empty?
+
+    board.cells[[x, y]].piece.moved == false
   end
 end
 # rubocop:enable Layout/MultilineOperationIndentation

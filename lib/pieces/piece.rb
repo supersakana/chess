@@ -71,10 +71,6 @@ class Piece
     board.cells[move].piece_color == board.cells[start].foe_color
   end
 
-  def moved?
-    @moved == true
-  end
-
   # list of increments needed to find possible moves
   def transitions
     raise NotImpelementedError

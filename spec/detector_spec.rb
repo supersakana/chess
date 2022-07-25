@@ -176,75 +176,76 @@ describe Detector do
       end
     end
     context 'when given an castling move' do
+      let(:castling) { Board.new }
       before do
-        board.cells[[1, 0]].piece = nil
-        board.cells[[2, 0]].piece = nil
-        board.cells[[3, 0]].piece = nil
-        board.cells[[5, 0]].piece = nil
-        board.cells[[6, 0]].piece = nil
-        board.cells[[1, 7]].piece = nil
-        board.cells[[2, 7]].piece = nil
-        board.cells[[3, 7]].piece = nil
-        board.cells[[5, 7]].piece = nil
-        board.cells[[6, 7]].piece = nil
+        castling.cells[[1, 0]].piece = nil
+        castling.cells[[2, 0]].piece = nil
+        castling.cells[[3, 0]].piece = nil
+        castling.cells[[5, 0]].piece = nil
+        castling.cells[[6, 0]].piece = nil
+        castling.cells[[1, 7]].piece = nil
+        castling.cells[[2, 7]].piece = nil
+        castling.cells[[3, 7]].piece = nil
+        castling.cells[[5, 7]].piece = nil
+        castling.cells[[6, 7]].piece = nil
       end
       it 'returns true (White King Side)' do
         key = [[4, 0], [6, 0]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.valid?(key, white_player, castling)
         expect(result).to be_truthy
       end
       it 'returns true (White Queen Side)' do
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.valid?(key, white_player, castling)
         expect(result).to be_truthy
       end
       it 'returns true (Black King Side)' do
         key = [[4, 7], [6, 7]]
-        result = detect.valid?(key, black_player, board)
+        result = detect.valid?(key, black_player, castling)
         expect(result).to be_truthy
       end
       it 'returns true (Black Queen Side)' do
         key = [[4, 7], [2, 7]]
-        result = detect.valid?(key, black_player, board)
+        result = detect.valid?(key, black_player, castling)
         expect(result).to be_truthy
       end
       it 'returns false if Rook has moved' do
-        rook = board.cells[[0, 0]].piece
+        rook = castling.cells[[0, 0]].piece
         rook.moved = true
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.valid?(key, white_player, castling)
         expect(result).to be_falsey
       end
       it 'returns false if King has moved' do
-        king = board.cells[[4, 0]].piece
+        king = castling.cells[[4, 0]].piece
         king.moved = true
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.valid?(key, white_player, castling)
         expect(result).to be_falsey
       end
       it 'returns false if King is in check' do
-        board.cells[[3, 2]].piece = b_knight
+        castling.cells[[3, 2]].piece = b_knight
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.valid?(key, white_player, castling)
         expect(result).to be_falsey
       end
       it 'returns false if landing position puts king in check' do
-        board.cells[[2, 2]].piece = b_knight
+        castling.cells[[2, 2]].piece = b_knight
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.valid?(key, white_player, castling)
         expect(result).to be_falsey
       end
       it 'returns false if passes through check' do
-        board.cells[[2, 1]].piece = nil
-        board.cells[[1, 2]].piece = b_bishop
+        castling.cells[[2, 1]].piece = nil
+        castling.cells[[1, 2]].piece = b_bishop
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.valid?(key, white_player, castling)
         expect(result).to be_falsey
       end
       it 'returns false if other piece is between king and rook' do
-        board.cells[[2, 0]].piece = w_bishop
+        castling.cells[[2, 0]].piece = w_bishop
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.valid?(key, white_player, castling)
         expect(result).to be_falsey
       end
     end

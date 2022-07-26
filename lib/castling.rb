@@ -25,6 +25,14 @@ module Castling
     land.king? && start.value[0] + i == land.value[0]
   end
 
+  # transfers a rook to correct position given a kings castling move
+  def move_rook(board, land, x = land.value[0], y = land.value[1])
+    i = x == 6 ? -2 : 3
+    rook = x == 6 ? [7, y] : [0, y]
+    rook_land = [rook[0] + i, rook[1]]
+    board.move_piece([rook, rook_land])
+  end
+
   private
 
   # returns true if queen/king side is vaccant for castling

@@ -85,16 +85,8 @@ class Board
   def inspect(start, land)
     player_pawns(land).each { |_k, v| v.disable_ep }
     land.inspect_pawn(start, land, self) unless land.empty?
-    move_rook(land) if castling_move?(start, land)
+    move_rook(self, land) if castling_move?(start, land)
     land.piece.moved = true
-  end
-
-  # transfers a rook to correct position given a kings castling move
-  def move_rook(land, x = land.value[0], y = land.value[1])
-    i = x == 6 ? -2 : 3
-    rook = x == 6 ? [7, y] : [0, y]
-    rook_land = [rook[0] + i, rook[1]]
-    move_piece([rook, rook_land])
   end
 
   # returns list of player pawns given cell

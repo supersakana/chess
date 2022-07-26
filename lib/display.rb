@@ -45,6 +45,13 @@ module Display
     gets.chomp
   end
 
+  def display_helper
+    puts ''
+    puts "'e' -> exit  's' -> save"
+    puts "'d' -> draw  'r' -> resign"
+    puts ''
+  end
+
   # when a winner is declared
   def display_winner(player)
     puts 'CHECKMATE'.colorize(color: :green)
@@ -61,10 +68,18 @@ module Display
     puts 'DRAW (Insufficient Material)'
   end
 
+  # prompts user if they want to exit and gets choice to exit or not
+  def display_exit
+    puts 'WARNING'.colorize(color: :yellow)
+    puts 'Are you sure you want to exit the game?'
+    puts "'y' -> yes  'n' -> no"
+    gets.chomp
+  end
+
   # prints the formatted grave for each player
   def display_grave(grave)
-    puts "P1 #{grave[:player_one].map(&:value).sum} #{grave[:player_one].map(&:icon).join('')} "
-    puts "P2 #{grave[:player_two].map(&:value).sum} #{grave[:player_two].map(&:icon).join('')} "
+    puts "White #{grave[:player_one].map(&:value).sum} #{grave[:player_one].map(&:icon).join('')} "
+    puts "Black #{grave[:player_two].map(&:value).sum} #{grave[:player_two].map(&:icon).join('')} "
     puts ' '
   end
 

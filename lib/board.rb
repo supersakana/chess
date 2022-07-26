@@ -61,6 +61,7 @@ class Board
   def print
     system 'clear'
     display_board(self)
+    display_helper
     display_grave(@grave) unless @grave.values.all?(&:empty?)
   end
 

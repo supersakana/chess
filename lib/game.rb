@@ -8,6 +8,7 @@ require 'pry-byebug'
 class Game
   include Display
   include Promotion
+  include Helper
 
   def initialize
     @board = Board.new
@@ -83,7 +84,9 @@ class Game
 
   # checks if move is valid then moves piece and promotes if neccissary
   def validate(input, key)
-    if @detect.legal?(key, @current, @board) && input.length == 4
+    if %w[e s d r].include?(input)
+      consult(input, self)
+    elsif @detect.legal?(key, @current, @board) && input.length == 4
       @board.move_piece(key)
       promote(@board, key[1])
     else

@@ -63,8 +63,8 @@ module Display
 
   # prints the formatted grave for each player
   def display_grave(grave)
-    puts "P1 #{grave[:player_one].join('')} "
-    puts "P2 #{grave[:player_two].join('')} "
+    puts "P1 #{grave[:player_one].map(&:value).sum} #{grave[:player_one].map(&:icon).join('')} "
+    puts "P2 #{grave[:player_two].map(&:value).sum} #{grave[:player_two].map(&:icon).join('')} "
     puts ' '
   end
 

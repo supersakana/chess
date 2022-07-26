@@ -2,12 +2,13 @@
 
 # contains knight functionality
 class Knight < Piece
-  attr_reader :icon
+  attr_reader :icon, :value
 
   def initialize(position)
     super
     @color = create_color(position)
     @icon = "\u265E"
+    @value = 3
   end
 
   # list of increments needed to find possible knight moves

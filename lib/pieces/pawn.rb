@@ -5,7 +5,7 @@
 # contains pawn functionality
 class Pawn < Piece
   attr_accessor :pawn_jump, :jumped, :ep_enabled
-  attr_reader :icon
+  attr_reader :icon, :value
 
   include EnPassant
 
@@ -13,6 +13,7 @@ class Pawn < Piece
     super
     @color = create_color(position)
     @icon = "\u265F"
+    @value = 1
     @ep_enabled = false # ep = en passant
     @jump_enabled = true
     @jumped = false

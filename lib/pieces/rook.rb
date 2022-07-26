@@ -2,12 +2,13 @@
 
 # contains rook functionality
 class Rook < Piece
-  attr_reader :icon
+  attr_reader :icon, :value
 
   def initialize(position)
     super
     @color = create_color(position)
     @icon = "\u265C"
+    @value = 5
   end
 
   # list of increments needed to find possible rook moves

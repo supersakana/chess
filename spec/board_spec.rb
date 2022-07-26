@@ -48,7 +48,7 @@ describe Board do
         board.cells[[0, 2]].piece = b_pawn
         translated = [[1, 1], [0, 2]]
         board.move_piece(translated)
-        expect(board.grave[:player_one]).to eq(['♟'])
+        expect(board.grave[:player_one][0]).to be_a(Pawn)
       end
     end
     context 'when the pawn gets inspected' do
@@ -108,7 +108,7 @@ describe Board do
       it 'captures the foe piece correctly' do
         translated = [[4, 4], [3, 5]]
         board.move_piece(translated)
-        expect(board.grave[:player_one]).to eq(['♟'])
+        expect(board.grave[:player_one][0]).to be_a(Pawn)
       end
       it 'moves properly if an ep move was not made' do
         translated = [[4, 4], [4, 5]]

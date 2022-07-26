@@ -50,9 +50,9 @@ class Board
     land = ep_land(start, land) if ep_move?(start, land)
 
     if land.piece_color == :light_white
-      @grave[:player_two] << land.piece.icon
+      @grave[:player_two] << land.piece
     else
-      @grave[:player_one] << land.piece.icon
+      @grave[:player_one] << land.piece
     end
     land.piece = nil
   end

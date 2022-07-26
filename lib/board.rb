@@ -98,12 +98,6 @@ class Board
     hash[cell.value] = cell
   end
 
-  # returns the foe piece to be captured during en passant
-  def ep_land(start, land)
-    shift = start.piece_color == :light_white ? -1 : 1
-    @cells[[land.value[0], land.value[1] + shift]]
-  end
-
   # checks updates status of moved pieces (pawns included)
   def inspect(start, land)
     player_pawns(land).each { |_k, v| v.disable_ep }
@@ -114,7 +108,6 @@ class Board
 
   # transfers a rook to correct position given a castling move
   def move_rook(land, x = land.value[0], y = land.value[1])
-    # binding.pry
     i = x == 6 ? -2 : 3
     rook = x == 6 ? [7, y] : [0, y]
     rook_land = [rook[0] + i, rook[1]]

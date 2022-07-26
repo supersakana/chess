@@ -30,54 +30,54 @@ describe Detector do
   let(:b_knight) { board.cells[[6, 7]].piece }
   let(:b_pawn) { board.cells[[0, 6]].piece }
 
-  describe '#valid?' do
+  describe '#legal?' do
     context 'when given an input that is illegal' do
       it 'returns false (White Rook a3a8)' do
         board.cells[[0, 2]].piece = w_rook
         key = [[0, 2], [0, 7]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.legal?(key, white_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black Bishop c5g1)' do
         board.cells[[2, 4]].piece = b_bishop
         key = [[2, 4], [6, 0]]
-        result = detect.valid?(key, black_player, board)
+        result = detect.legal?(key, black_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (White Queen g6e8)' do
         board.cells[[6, 5]].piece = w_queen
         key = [[6, 5], [5, 7]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.legal?(key, white_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black King f3e1)' do
         board.cells[[5, 2]].piece = b_king
         key = [[5, 2], [4, 0]]
-        result = detect.valid?(key, black_player, board)
+        result = detect.legal?(key, black_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (White Knight g3e2)' do
         board.cells[[6, 2]].piece = w_knight
         key = [[6, 2], [4, 1]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.legal?(key, white_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black Pawn d3d2)' do
         board.cells[[3, 2]].piece = b_pawn
         key = [[3, 2], [3, 1]]
-        result = detect.valid?(key, black_player, board)
+        result = detect.legal?(key, black_player, board)
         expect(result).to be_falsey
       end
     end
     context 'when a user attempts to play opponent pieces' do
       it 'returns false (white picks black piece)' do
         key = [[3, 6], [3, 5]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.legal?(key, white_player, board)
         expect(result).to be_falsey
       end
       it 'returns false (black picks white piece)' do
         key = [[4, 1], [4, 2]]
-        result = detect.valid?(key, black_player, board)
+        result = detect.legal?(key, black_player, board)
         expect(result).to be_falsey
       end
     end
@@ -85,37 +85,37 @@ describe Detector do
       it 'returns true (Black Rook h6h2)' do
         board.cells[[7, 5]].piece = b_rook
         key = [[7, 5], [7, 1]]
-        result = detect.valid?(key, black_player, board)
+        result = detect.legal?(key, black_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (White Bishop f4c7)' do
         board.cells[[5, 3]].piece = w_bishop
         key = [[5, 3], [2, 6]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.legal?(key, white_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Queen d5d2)' do
         board.cells[[3, 4]].piece = b_queen
         key = [[3, 4], [3, 1]]
-        result = detect.valid?(key, black_player, board)
+        result = detect.legal?(key, black_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (White King e3f3)' do
         board.cells[[4, 2]].piece = w_king
         key = [[4, 2], [5, 2]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.legal?(key, white_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Knight e3d1)' do
         board.cells[[4, 2]].piece = b_knight
         key = [[4, 2], [3, 0]]
-        result = detect.valid?(key, black_player, board)
+        result = detect.legal?(key, black_player, board)
         expect(result).to be_truthy
       end
       it 'returns true (White Pawn h6g7)' do
         board.cells[[7, 5]].piece = w_pawn
         key = [[7, 5], [6, 6]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.legal?(key, white_player, board)
         expect(result).to be_truthy
       end
     end
@@ -126,7 +126,7 @@ describe Detector do
       end
       it 'returns true' do
         key = [[5, 7], [4, 6]]
-        result = detect.valid?(key, black_player, board)
+        result = detect.legal?(key, black_player, board)
         expect(result).to be_truthy
       end
     end
@@ -136,7 +136,7 @@ describe Detector do
       end
       it 'returns false' do
         key = [[7, 7], [7, 6]]
-        result = detect.valid?(key, black_player, board)
+        result = detect.legal?(key, black_player, board)
         expect(result).to be_falsey
       end
     end
@@ -146,7 +146,7 @@ describe Detector do
       end
       it 'returns false' do
         key = [[7, -1], [7, -1]]
-        result = detect.valid?(key, black_player, board)
+        result = detect.legal?(key, black_player, board)
         expect(result).to be_falsey
       end
     end
@@ -156,7 +156,7 @@ describe Detector do
       end
       it 'returns false when user tries to pawn jump over piece' do
         key = [[4, 1], [4, 3]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.legal?(key, white_player, board)
         expect(result).to be_falsey
       end
     end
@@ -171,7 +171,7 @@ describe Detector do
         board.cells[[3, 4]].piece.instance_variable_set(:@jumped, true)
         board.cells[[4, 4]].piece.instance_variable_set(:@ep_enabled, true)
         key = [[4, 4], [3, 5]]
-        result = detect.valid?(key, white_player, board)
+        result = detect.legal?(key, white_player, board)
         expect(result).to be_truthy
       end
     end
@@ -191,61 +191,61 @@ describe Detector do
       end
       it 'returns true (White King Side)' do
         key = [[4, 0], [6, 0]]
-        result = detect.valid?(key, white_player, castling)
+        result = detect.legal?(key, white_player, castling)
         expect(result).to be_truthy
       end
       it 'returns true (White Queen Side)' do
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, castling)
+        result = detect.legal?(key, white_player, castling)
         expect(result).to be_truthy
       end
       it 'returns true (Black King Side)' do
         key = [[4, 7], [6, 7]]
-        result = detect.valid?(key, black_player, castling)
+        result = detect.legal?(key, black_player, castling)
         expect(result).to be_truthy
       end
       it 'returns true (Black Queen Side)' do
         key = [[4, 7], [2, 7]]
-        result = detect.valid?(key, black_player, castling)
+        result = detect.legal?(key, black_player, castling)
         expect(result).to be_truthy
       end
       it 'returns false if Rook has moved' do
         rook = castling.cells[[0, 0]].piece
         rook.moved = true
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, castling)
+        result = detect.legal?(key, white_player, castling)
         expect(result).to be_falsey
       end
       it 'returns false if King has moved' do
         king = castling.cells[[4, 0]].piece
         king.moved = true
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, castling)
+        result = detect.legal?(key, white_player, castling)
         expect(result).to be_falsey
       end
       it 'returns false if King is in check' do
         castling.cells[[3, 2]].piece = b_knight
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, castling)
+        result = detect.legal?(key, white_player, castling)
         expect(result).to be_falsey
       end
       it 'returns false if landing position puts king in check' do
         castling.cells[[2, 2]].piece = b_knight
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, castling)
+        result = detect.legal?(key, white_player, castling)
         expect(result).to be_falsey
       end
       it 'returns false if passes through check' do
         castling.cells[[2, 1]].piece = nil
         castling.cells[[1, 2]].piece = b_bishop
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, castling)
+        result = detect.legal?(key, white_player, castling)
         expect(result).to be_falsey
       end
       it 'returns false if other piece is between king and rook' do
         castling.cells[[2, 0]].piece = w_bishop
         key = [[4, 0], [2, 0]]
-        result = detect.valid?(key, white_player, castling)
+        result = detect.legal?(key, white_player, castling)
         expect(result).to be_falsey
       end
     end

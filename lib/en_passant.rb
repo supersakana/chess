@@ -25,6 +25,12 @@ module EnPassant
     diag?(start, land) && start.pawn? && start.piece.ep_enabled == true
   end
 
+  # returns the foe piece to be captured during en passant
+  def ep_land(start, land)
+    shift = start.piece_color == :light_white ? -1 : 1
+    @cells[[land.value[0], land.value[1] + shift]]
+  end
+
   private
 
   # returns true if en passant would capture foe

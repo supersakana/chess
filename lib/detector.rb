@@ -2,11 +2,6 @@
 
 # contains method for detecting board status and validating inputs
 class Detector
-  # checks if a given input is valid
-  def valid?(key, player, board)
-    legal?(key, player, board) && !checks_self?(key, player, board)
-  end
-
   # returns true if a given input is a legal move
   def legal?(key, player, board)
     board.player_pieces(player.color).any? do |start, _v|

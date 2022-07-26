@@ -82,7 +82,7 @@ class Game
 
   # checks if move is valid then moves piece and promotes if neccissary
   def validate(input, key)
-    if @detect.valid?(key, @current, @board) && input.length == 4
+    if @detect.legal?(key, @current, @board) && input.length == 4
       @board.move_piece(key)
       @board.promote(key[1])
     else

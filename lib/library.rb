@@ -5,6 +5,7 @@ require_relative 'display'
 require_relative 'promotion'
 require_relative 'en_passant'
 require_relative 'castling'
+require_relative 'insufficient_material'
 
 # general files
 require_relative 'game'

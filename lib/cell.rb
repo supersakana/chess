@@ -72,12 +72,6 @@ class Cell
     piece_color == :light_white ? :black : :light_white
   end
 
-  # disables a pawns en passant
-  def disable_ep
-    @piece.ep_enabled = nil if pawn?
-    @piece.jumped = nil
-  end
-
   # returns piece transitions
   def piece_shifts(board)
     return if empty?
@@ -92,6 +86,12 @@ class Cell
     piece.pawn_jumped(start, land)
     piece.enable_ep(land, board)
     piece.disable_jump
+  end
+
+  # disables a pawns en passant
+  def disable_ep
+    @piece.ep_enabled = nil if pawn?
+    @piece.jumped = nil
   end
 
   # returns the formatted cell

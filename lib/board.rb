@@ -89,7 +89,7 @@ class Board
     land.piece.moved = true
   end
 
-  # transfers a rook to correct position given a castling move
+  # transfers a rook to correct position given a kings castling move
   def move_rook(land, x = land.value[0], y = land.value[1])
     i = x == 6 ? -2 : 3
     rook = x == 6 ? [7, y] : [0, y]

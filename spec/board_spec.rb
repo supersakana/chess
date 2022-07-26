@@ -125,6 +125,45 @@ describe Board do
         expect(land.moved).to eq(true)
       end
     end
+    context 'when a castling move is made' do
+      let(:castling) { Board.new }
+      before do
+        castling.cells[[1, 0]].piece = nil
+        castling.cells[[2, 0]].piece = nil
+        castling.cells[[3, 0]].piece = nil
+        castling.cells[[5, 0]].piece = nil
+        castling.cells[[6, 0]].piece = nil
+        castling.cells[[1, 7]].piece = nil
+        castling.cells[[2, 7]].piece = nil
+        castling.cells[[3, 7]].piece = nil
+        castling.cells[[5, 7]].piece = nil
+        castling.cells[[6, 7]].piece = nil
+      end
+      it 'places the rook in correct position (White Kingside)' do
+        key = [[4, 0], [6, 0]]
+        castling.move_piece(key)
+        rook = castling.cells[[5, 0]].piece
+        expect(rook).to be_a(Rook)
+      end
+      it 'places the rook in correct position (White Queenside)' do
+        key = [[4, 0], [2, 0]]
+        castling.move_piece(key)
+        rook = castling.cells[[3, 0]].piece
+        expect(rook).to be_a(Rook)
+      end
+      it 'places the rook in correct position (Black Kingside)' do
+        key = [[4, 7], [6, 7]]
+        castling.move_piece(key)
+        rook = castling.cells[[5, 7]].piece
+        expect(rook).to be_a(Rook)
+      end
+      it 'places the rook in correct position (Black Queenside)' do
+        key = [[4, 7], [2, 7]]
+        castling.move_piece(key)
+        rook = castling.cells[[3, 7]].piece
+        expect(rook).to be_a(Rook)
+      end
+    end
   end
   describe '#promote' do
     context 'when given a valid input to promote' do

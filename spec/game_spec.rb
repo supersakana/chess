@@ -59,6 +59,8 @@ describe Game do
     end
     context 'when given a stalemate board' do
       before do
+        w_king.moved = true
+        b_king.moved = true
         blank_board.cells[[0, 7]].piece = w_king
         blank_board.cells[[5, 1]].piece = w_queen
         blank_board.cells[[7, 0]].piece = b_king

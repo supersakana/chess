@@ -1,28 +1,28 @@
 # frozen_string_literal: true
 
-# rubocop:disable Layout/MultilineOperationIndentation
-
 require 'pry-byebug'
 
 # contains methods that detect if a valid castling move is open
 module Castling
   # returns true if there is a king side castling open
   def kingside?(king, board)
-    castling_true?(king, board) &&
-    vaccant?(king, board, [5, 6]) &&
-    moveless_rook?(7, king, board)
+    castling_true?(king, board) && vaccant?(king, board, [5, 6]) && moveless_rook?(7, king, board)
   end
 
   # returns true if there is a queen side castling open
   def queenside?(king, board)
-    castling_true?(king, board) &&
-    vaccant?(king, board, [2, 3]) &&
-    moveless_rook?(0, king, board)
+    castling_true?(king, board) && vaccant?(king, board, [2, 3]) && moveless_rook?(0, king, board)
   end
 
   # returns true if conditions for castling are true
   def castling_true?(king, board)
     king.moved == false && not_check?(king, board)
+  end
+
+  # returns true if a given start, land position is a castling move
+  def castling_move?(start, land)
+    i = land.value[0] == 6 ? 2 : -2
+    land.king? && start.value[0] + i == land.value[0]
   end
 
   private
@@ -65,4 +65,3 @@ module Castling
     board.cells[[x, y]].piece.moved == false
   end
 end
-# rubocop:enable Layout/MultilineOperationIndentation

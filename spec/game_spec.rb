@@ -52,6 +52,39 @@ describe Game do
     end
   end
 
+  describe '#promote' do
+    context 'when given a valid input to promote' do
+      before do
+        board.cells[[0, 7]].piece = w_pawn
+      end
+      land = [0, 7]
+      it 'converts pawn to Rook' do
+        allow(game).to receive(:display_promotion).and_return('r')
+        game.promote(board, land)
+        piece = board.cells[land].piece
+        expect(piece).to be_a(Rook)
+      end
+      it 'converts pawn to Bishop' do
+        allow(game).to receive(:display_promotion).and_return('b')
+        game.promote(board, land)
+        piece = board.cells[land].piece
+        expect(piece).to be_a(Bishop)
+      end
+      it 'converts pawn to Knight' do
+        allow(game).to receive(:display_promotion).and_return('k')
+        game.promote(board, land)
+        piece = board.cells[land].piece
+        expect(piece).to be_a(Knight)
+      end
+      it 'converts pawn to Queen' do
+        allow(game).to receive(:display_promotion).and_return('q')
+        game.promote(board, land)
+        piece = board.cells[land].piece
+        expect(piece).to be_a(Queen)
+      end
+    end
+  end
+
   describe '#game_over?' do
     let(:blank_board) { Board.new }
     before do

@@ -165,38 +165,6 @@ describe Board do
       end
     end
   end
-  describe '#promote' do
-    context 'when given a valid input to promote' do
-      before do
-        board.cells[[0, 7]].piece = w_pawn
-      end
-      land = [0, 7]
-      it 'converts pawn to Rook' do
-        allow(board).to receive(:display_promotion).and_return('r')
-        board.promote(land)
-        piece = board.cells[land].piece
-        expect(piece).to be_a(Rook)
-      end
-      it 'converts pawn to Bishop' do
-        allow(board).to receive(:display_promotion).and_return('b')
-        board.promote(land)
-        piece = board.cells[land].piece
-        expect(piece).to be_a(Bishop)
-      end
-      it 'converts pawn to Knight' do
-        allow(board).to receive(:display_promotion).and_return('k')
-        board.promote(land)
-        piece = board.cells[land].piece
-        expect(piece).to be_a(Knight)
-      end
-      it 'converts pawn to Queen' do
-        allow(board).to receive(:display_promotion).and_return('q')
-        board.promote(land)
-        piece = board.cells[land].piece
-        expect(piece).to be_a(Queen)
-      end
-    end
-  end
 end
 # rubocop:enable Metrics/BlockLength
 # rspec --format documentation spec/board_spec.rb

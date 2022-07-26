@@ -82,11 +82,7 @@ class Cell
   def piece_shifts(board)
     return if empty?
 
-    if king?
-      @piece.transitions(board)
-    else
-      @piece.transitions
-    end
+    king? ? @piece.transitions(board) : @piece.transitions
   end
 
   # checks pawn jumped, disables, jump, enables ep
@@ -96,27 +92,6 @@ class Cell
     piece.pawn_jumped(start, land)
     piece.enable_ep(land, board)
     piece.disable_jump
-  end
-
-  # returns true if a pawn piece need promotion
-  def promote?
-    return unless pawn?
-
-    piece_color == :light_white && @value[1] == 7 ||
-      piece_color == :black && @value[1].zero?
-  end
-
-  # converts a piece from piece to promotion piece
-  def convert(promo)
-    color = @piece.color == :black ? [7, 7] : [0, 0]
-
-    @piece = case promo
-             when 'r' then Rook.new(color)
-             when 'b' then Bishop.new(color)
-             when 'k' then Knight.new(color)
-             else
-               Queen.new(color)
-             end
   end
 
   # returns the formatted cell

@@ -7,6 +7,7 @@ require 'pry-byebug'
 # contains main game functionality
 class Game
   include Display
+  include Promotion
 
   def initialize
     @board = Board.new
@@ -84,7 +85,7 @@ class Game
   def validate(input, key)
     if @detect.legal?(key, @current, @board) && input.length == 4
       @board.move_piece(key)
-      @board.promote(key[1])
+      promote(@board, key[1])
     else
       make_move
     end

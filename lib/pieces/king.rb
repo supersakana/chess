@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Style/EmptyCaseCondition
+
 # contains king functionality
 class King < Piece
   attr_reader :icon
@@ -14,12 +16,10 @@ class King < Piece
 
   # list of increments needed to find possible knight moves
   def transitions(board)
-    if kingside?(self, board) && queenside?(self, board)
-      king_shifts[:kq_side]
-    elsif kingside?(self, board)
-      king_shifts[:kingside]
-    elsif queenside?(self, board)
-      king_shifts[:queenside]
+    case
+    when kingside?(self, board) && queenside?(self, board) then king_shifts[:kq_side]
+    when kingside?(self, board) then king_shifts[:kingside]
+    when queenside?(self, board) then king_shifts[:queenside]
     else
       king_shifts[:default]
     end
@@ -37,3 +37,4 @@ class King < Piece
     1
   end
 end
+# rubocop:enable Style/EmptyCaseCondition

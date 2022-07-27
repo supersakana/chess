@@ -25,5 +25,25 @@ HEREDOC
 puts "Press 'ENTER' to play"
 gets
 
-game = Game.new
-game.start
+# starts a new game
+def play_game
+  game = Game.new
+  game.start
+  replay
+end
+
+# prompts
+def replay
+  puts 'Would you like to play a new game?'
+  puts "'y' -> yes 'n' -> no"
+  choice = gets.chomp
+
+  if choice == 'y'
+    play_game
+  else
+    puts 'Thanks for playing!'
+    exit
+  end
+end
+
+play_game

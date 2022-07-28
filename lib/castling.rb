@@ -40,14 +40,14 @@ module Castling
   def vaccant?(king, board, shift)
     y = king.color == :black ? 7 : 0
     shift.all? do |x|
-      board.cells[[x, y]].empty? && can_cross?([x, y], king, board)
+      board.on([x, y]).empty? && can_cross?([x, y], king, board)
     end
   end
 
   # returns true if cell in castling path will not be in check
   def can_cross?(cell, king, board)
     board_copy = Marshal.load(Marshal.dump(board))
-    board_copy.cells[cell].piece = king
+    board_copy.on(cell).piece = king
 
     not_check?(king, board_copy)
   end
@@ -55,7 +55,7 @@ module Castling
   # returns true if a king is not in check
   def not_check?(king, board)
     foe(king.color, board).all? do |start, _v|
-      possible_moves(start, board).none? { |land| board.cells[land].king? }
+      possibles(start, board).none? { |land| board.on(land).king? }
     end
   end
 
@@ -68,8 +68,8 @@ module Castling
   # returns true if either rook has not moved
   def moveless_rook?(x, king, board)
     y = king.color == :black ? 7 : 0
-    return if board.cells[[x, y]].empty?
+    return if board.on([x, y]).empty?
 
-    board.cells[[x, y]].piece.moved == false
+    board.on([x, y]).piece.moved == false
   end
 end

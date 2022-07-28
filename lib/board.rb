@@ -19,6 +19,11 @@ class Board
     }
   end
 
+  # returns a board cell given a cell
+  def on(cell)
+    @cells[cell]
+  end
+
   # returns a list of a player cells given team color
   def player_pieces(color)
     @cells.select { |_k, cell| cell.piece_color == color }
@@ -31,8 +36,8 @@ class Board
 
   # selects the start and landing piece position then transfers
   def move_piece(key)
-    start = @cells[key[0]]
-    land = @cells[key[1]]
+    start = on(key[0])
+    land = on(key[1])
 
     transfer(start, land)
     inspect(start, land)
@@ -40,7 +45,7 @@ class Board
 
   # moves piece from start to land position
   def transfer(start, land)
-    capture(start, land) if land.occupied? || ep_move?(start, land) # ep = en passant
+    capture(start, land) if land.occupied? || ep_move?(start, land)
     land.piece = start.piece
     start.piece = nil
   end

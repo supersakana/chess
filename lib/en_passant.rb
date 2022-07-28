@@ -13,9 +13,9 @@ module EnPassant
 
   # returns true if en passant conditions are met on either left or right side
   def ep_true?(start, board)
-    user = board.cells[start]
-    left = board.cells[[start[0] - 1, start[1]]]
-    right = board.cells[[start[0] + 1, start[1]]]
+    user = board.on(start)
+    left = board.on([start[0] - 1, start[1]])
+    right = board.on([start[0] + 1, start[1]])
 
     ep_row?(user) && (foe_jumped?(left, user) || foe_jumped?(right, user))
   end
@@ -28,7 +28,7 @@ module EnPassant
   # returns the foe piece to be captured during en passant
   def ep_land(start, land)
     shift = start.piece_color == :light_white ? -1 : 1
-    @cells[[land.value[0], land.value[1] + shift]]
+    on([land.value[0], land.value[1] + shift])
   end
 
   private
@@ -37,7 +37,7 @@ module EnPassant
   def ep_foe?(start, board, move)
     user = board.cells[start]
     shift = user.piece_color == :black ? 1 : -1
-    foe = board.cells[[move[0], move[1] + shift]]
+    foe = board.on([move[0], move[1] + shift])
 
     foe.piece_color == user.foe_color
   end

@@ -68,7 +68,7 @@ class Piece
 
   # returns true if capture color is different from initial piece color
   def opposing_piece?(move, start, board)
-    board.cells[move].piece_color == board.cells[start].foe_color
+    board.on(move).piece_color == board.on(start).foe_color
   end
 
   # list of increments needed to find possible moves

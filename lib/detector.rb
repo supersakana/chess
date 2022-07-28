@@ -6,19 +6,19 @@ module Detector
   # returns true if a given input is a legal move
   def legal?(key, player, board)
     board.player_pieces(player.color).any? do |start, _v|
-      start == key[0] && legal_moves(start, player, board).include?(key[1])
+      start == key[0] && legals(start, player, board).include?(key[1])
     end
   end
 
   # returns full list of legal moves given a piece position
-  def legal_moves(start, player, board)
-    possible_moves(start, board).reject { |land| checks_self?([start, land], player, board) }
+  def legals(start, player, board)
+    possibles(start, board).reject { |land| checks_self?([start, land], player, board) }
   end
 
   # returns list of possible moves (excludes moves that check self)
-  def possible_moves(start, board, moves = [])
-    board.cells[start].piece_shifts(board).each do |shift|
-      moves << board.cells[start].piece.iterate(shift, start, board)
+  def possibles(start, board, moves = [])
+    board.on(start).piece_shifts(board).each do |shift|
+      moves << board.on(start).piece.iterate(shift, start, board)
     end
     moves.flatten(1).uniq
   end
@@ -35,7 +35,7 @@ module Detector
   def check?(player, board)
     pieces = board.player_pieces(player.foe_color)
     pieces.any? do |start, _v|
-      possible_moves(start, board).any? { |move| board.cells[move].king? }
+      possibles(start, board).any? { |move| board.on(move).king? }
     end
   end
 
@@ -48,7 +48,7 @@ module Detector
   def stalemate?(player, board)
     pieces = board.player_pieces(player.color)
     pieces.all? do |start, _v|
-      legal_moves(start, player, board).empty?
+      legals(start, player, board).empty?
     end
   end
 end

@@ -14,7 +14,7 @@ class Pawn < Piece
     @color = create_color(position)
     @icon = "\u265F"
     @value = 1
-    @ep_enabled = false # ep = en passant
+    @ep_enabled = false
     @jump_enabled = true
     @jumped = false
   end
@@ -51,7 +51,7 @@ class Pawn < Piece
 
   # changes pawn status to @jump = true if pawn jump occured
   def pawn_jumped(start, land)
-    jump = land.piece.color == :black ? -2 : 2
+    jump = land.piece_color == :black ? -2 : 2
     @jumped = true if (start.value[1] + jump) == land.value[1]
   end
 
@@ -76,7 +76,7 @@ class Pawn < Piece
 
   # returns true if valid verticle move
   def verti?(shift, move, board)
-    board.cells[move].empty? && shift.include?(0) && can_jump?(shift, move, board)
+    board.on(move).empty? && shift.include?(0) && can_jump?(shift, move, board)
   end
 
   # returns true if valid diagonal move
@@ -89,7 +89,7 @@ class Pawn < Piece
     return true unless [2, -2].include?(shift[1])
 
     prev = shift == [0, 2] ? [move[0], move[1] - 1] : [move[0], move[1] + 1]
-    board.cells[prev].empty?
+    board.on(prev).empty?
   end
 end
 # rubocop:enable Style/EmptyCaseCondition, Layout/MultilineOperationIndentation

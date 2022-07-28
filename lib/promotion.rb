@@ -9,7 +9,7 @@ module Promotion
   include Display
   # converts a pawn to promo piece if pawn can promote
   def promote(board, land)
-    pawn = board.cells[land]
+    pawn = board.on(land)
     return unless promote?(pawn)
 
     promo = display_promotion

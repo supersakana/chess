@@ -48,13 +48,19 @@ module Display
   def display_helper
     puts ''
     puts "'e' -> exit  's' -> save"
-    puts "'d' -> draw  'r' -> resign"
+    puts ''
+  end
+
+  # when a checkmate is declared
+  def display_checkmate(player)
+    puts ''
+    puts 'CHECKMATE'.colorize(color: :green)
+    display_winner(player)
     puts ''
   end
 
   # when a winner is declared
   def display_winner(player)
-    puts 'CHECKMATE'.colorize(color: :green)
     puts "#{player.name} is the winner!"
   end
 
@@ -66,6 +72,26 @@ module Display
   # when insuffficient material is declared
   def display_insufficient
     puts 'DRAW (Insufficient Material)'
+  end
+
+  # prompts the user if they want to save their game
+  def display_save
+    puts 'Saving the game will overwrite the existing data...'
+    puts 'Are you sure you want to save?'
+    puts "'y' -> yes  'n' -> no"
+    gets.chomp
+  end
+
+  # shows the game has successfully been saved
+  def display_saved
+    puts 'Game successfully saved'
+  end
+
+  # shows existing game files
+  def display_load
+    puts 'We see there is an exsisting game'
+    puts "Select the file you want to load or press 'ENTER' to play a new game"
+    puts ''
   end
 
   # prompts user if they want to exit and gets choice to exit or not

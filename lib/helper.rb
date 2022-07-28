@@ -4,14 +4,13 @@ require 'pry-byebug'
 
 # contains methods that support the user given special inputs
 module Helper
-  # supports user given an input esdr
-  def consult(input, game)
-    case input
-    when 'e' then exit_game(game)
-    when 's' # save_game
-    when 'd' # draw
-    else 'r'
-      # resign
+  include Data
+  # supports user given an input
+  def helper(input, game)
+    if input == 'e'
+      exit_game(game)
+    else
+      save_prompt(game)
     end
   end
 
@@ -23,5 +22,17 @@ module Helper
     else
       game.make_move
     end
+  end
+
+  def save_prompt(game)
+    choice = display_save
+    save_game if choice == 'y'
+
+    game.make_move
+  end
+
+# prompts user if they want to load an existing file
+  def load_game
+    display_load
   end
 end

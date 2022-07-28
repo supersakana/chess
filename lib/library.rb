@@ -2,6 +2,7 @@
 
 # modules
 require_relative 'display'
+require_relative 'data'
 require_relative 'helper'
 require_relative 'promotion'
 require_relative 'en_passant'

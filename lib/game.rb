@@ -20,6 +20,7 @@ class Game
 
   # general functionality between start to end of game
   def start
+    load_game if Dir.exist?('output')
     two_players
     game_loop
     end_game
@@ -85,7 +86,7 @@ class Game
   # checks if move is valid then moves piece and promotes if neccissary
   def validate(input, key)
     if %w[e s d r].include?(input)
-      consult(input, self)
+      helper(input, self)
     elsif @detect.legal?(key, @current, @board) && input.length == 4
       @board.move_piece(key)
       promote(@board, key[1])
@@ -95,10 +96,9 @@ class Game
   end
 
   # declares the winner/draw of game
-  def end_game
+  def end_game(winner = turn_player)
     if @detect.checkmate?(@current, @board)
-      winner = turn_player
-      display_winner(winner)
+      display_checkmate(winner)
     elsif @detect.insufficient_material?(@board)
       display_insufficient
     else

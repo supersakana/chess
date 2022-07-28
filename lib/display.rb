@@ -66,12 +66,16 @@ module Display
 
   # when a stalemate is declared
   def display_stalemate
+    puts ''
     puts 'STALEMATE'
+    puts ''
   end
 
   # when insuffficient material is declared
   def display_insufficient
+    puts ''
     puts 'DRAW (Insufficient Material)'
+    puts ''
   end
 
   # prompts the user if they want to save their game

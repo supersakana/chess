@@ -28,12 +28,11 @@ module Data
 
   # opens a file given file number
   def open_file(choice)
-    return unless choice.positive? && choice < Dir.entries('output').length - 1
-
     saved_file = Dir.entries('output')[choice + 1]
     game = YAML.load(File.read("output/#{saved_file}"))
 
     game.current = game.turn_player
     game.game_loop
+    File.delete("output/#{saved_file}") if File.exist?("output/#{saved_file}")
   end
 end

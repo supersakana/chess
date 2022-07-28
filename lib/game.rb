@@ -25,9 +25,13 @@ class Game
     if Dir.exist?('output')
       load_game
     else
-      two_players
-      game_loop
+      new_game
     end
+  end
+
+  def new_game
+    two_players
+    game_loop
   end
 
   # sets up Human vs Human

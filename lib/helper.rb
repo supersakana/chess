@@ -35,7 +35,11 @@ module Helper
   def load_game
     system 'clear'
     show_files
-    choice = display_load
-    open_file(choice.to_i)
+    choice = display_load.to_i
+    if choice.positive? && choice < Dir.entries('output').length - 1
+      open_file(choice)
+    else
+      new_game
+    end
   end
 end

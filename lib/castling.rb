@@ -4,6 +4,7 @@ require 'pry-byebug'
 
 # contains methods that detect if a valid castling move is open
 module Castling
+  include Detector
   # returns true if there is a king side castling open
   def kingside?(king, board)
     castling_true?(king, board) && vaccant?(king, board, [5, 6]) && moveless_rook?(7, king, board)
@@ -53,9 +54,8 @@ module Castling
 
   # returns true if a king is not in check
   def not_check?(king, board)
-    detect = Detector.new
     foe(king.color, board).all? do |start, _v|
-      detect.possible_moves(start, board).none? { |land| board.cells[land].king? }
+      possible_moves(start, board).none? { |land| board.cells[land].king? }
     end
   end
 

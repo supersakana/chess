@@ -57,49 +57,49 @@ describe Game do
       it 'returns false (White Rook a3a8)' do
         board.cells[[0, 2]].piece = w_rook
         key = [[0, 2], [0, 7]]
-        result = game.legal?(key, white_player, board)
+        result = game.legal?(key, player_one, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black Bishop c5g1)' do
         board.cells[[2, 4]].piece = b_bishop
         key = [[2, 4], [6, 0]]
-        result = game.legal?(key, black_player, board)
+        result = game.legal?(key, player_two, board)
         expect(result).to be_falsey
       end
       it 'returns false (White Queen g6e8)' do
         board.cells[[6, 5]].piece = w_queen
         key = [[6, 5], [5, 7]]
-        result = game.legal?(key, white_player, board)
+        result = game.legal?(key, player_one, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black King f3e1)' do
         board.cells[[5, 2]].piece = b_king
         key = [[5, 2], [4, 0]]
-        result = game.legal?(key, black_player, board)
+        result = game.legal?(key, player_two, board)
         expect(result).to be_falsey
       end
       it 'returns false (White Knight g3e2)' do
         board.cells[[6, 2]].piece = w_knight
         key = [[6, 2], [4, 1]]
-        result = game.legal?(key, white_player, board)
+        result = game.legal?(key, player_one, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black Pawn d3d2)' do
         board.cells[[3, 2]].piece = b_pawn
         key = [[3, 2], [3, 1]]
-        result = game.legal?(key, black_player, board)
+        result = game.legal?(key, player_two, board)
         expect(result).to be_falsey
       end
     end
     context 'when a user attempts to play opponent pieces' do
       it 'returns false (white picks black piece)' do
         key = [[3, 6], [3, 5]]
-        result = game.legal?(key, white_player, board)
+        result = game.legal?(key, player_one, board)
         expect(result).to be_falsey
       end
       it 'returns false (black picks white piece)' do
         key = [[4, 1], [4, 2]]
-        result = detect.legal?(key, black_player, board)
+        result = game.legal?(key, player_two, board)
         expect(result).to be_falsey
       end
     end
@@ -107,37 +107,37 @@ describe Game do
       it 'returns true (Black Rook h6h2)' do
         board.cells[[7, 5]].piece = b_rook
         key = [[7, 5], [7, 1]]
-        result = game.legal?(key, black_player, board)
+        result = game.legal?(key, player_two, board)
         expect(result).to be_truthy
       end
       it 'returns true (White Bishop f4c7)' do
         board.cells[[5, 3]].piece = w_bishop
         key = [[5, 3], [2, 6]]
-        result = game.legal?(key, white_player, board)
+        result = game.legal?(key, player_one, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Queen d5d2)' do
         board.cells[[3, 4]].piece = b_queen
         key = [[3, 4], [3, 1]]
-        result = game.legal?(key, black_player, board)
+        result = game.legal?(key, player_two, board)
         expect(result).to be_truthy
       end
       it 'returns true (White King e3f3)' do
         board.cells[[4, 2]].piece = w_king
         key = [[4, 2], [5, 2]]
-        result = game.legal?(key, white_player, board)
+        result = game.legal?(key, player_one, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Knight e3d1)' do
         board.cells[[4, 2]].piece = b_knight
         key = [[4, 2], [3, 0]]
-        result = game.legal?(key, black_player, board)
+        result = game.legal?(key, player_two, board)
         expect(result).to be_truthy
       end
       it 'returns true (White Pawn h6g7)' do
         board.cells[[7, 5]].piece = w_pawn
         key = [[7, 5], [6, 6]]
-        result = game.legal?(key, white_player, board)
+        result = game.legal?(key, player_one, board)
         expect(result).to be_truthy
       end
     end
@@ -148,27 +148,27 @@ describe Game do
       end
       it 'returns true' do
         key = [[5, 7], [4, 6]]
-        result = game.legal?(key, black_player, board)
+        result = game.legal?(key, player_two, board)
         expect(result).to be_truthy
       end
     end
     context 'when user is in check and the move is still in check' do
       before do
-        allow(detect).to receive(:check?).and_return(true)
+        allow(game).to receive(:check?).and_return(true)
       end
       it 'returns false' do
         key = [[7, 7], [7, 6]]
-        result = game.legal?(key, black_player, board)
+        result = game.legal?(key, player_two, board)
         expect(result).to be_falsey
       end
     end
     context 'when user is in check the move is invalid' do
       before do
-        allow(detect).to receive(:check?).and_return(true)
+        allow(game).to receive(:check?).and_return(true)
       end
       it 'returns false' do
         key = [[7, -1], [7, -1]]
-        result = game.legal?(key, black_player, board)
+        result = game.legal?(key, player_two, board)
         expect(result).to be_falsey
       end
     end
@@ -178,7 +178,7 @@ describe Game do
       end
       it 'returns false when user tries to pawn jump over piece' do
         key = [[4, 1], [4, 3]]
-        result = game.legal?(key, white_player, board)
+        result = game.legal?(key, player_one, board)
         expect(result).to be_falsey
       end
     end
@@ -193,7 +193,7 @@ describe Game do
         board.cells[[3, 4]].piece.instance_variable_set(:@jumped, true)
         board.cells[[4, 4]].piece.instance_variable_set(:@ep_enabled, true)
         key = [[4, 4], [3, 5]]
-        result = game.legal?(key, white_player, board)
+        result = game.legal?(key, player_one, board)
         expect(result).to be_truthy
       end
     end
@@ -213,61 +213,61 @@ describe Game do
       end
       it 'returns true (White King Side)' do
         key = [[4, 0], [6, 0]]
-        result = game.legal?(key, white_player, castling)
+        result = game.legal?(key, player_one, castling)
         expect(result).to be_truthy
       end
       it 'returns true (White Queen Side)' do
         key = [[4, 0], [2, 0]]
-        result = game.legal?(key, white_player, castling)
+        result = game.legal?(key, player_one, castling)
         expect(result).to be_truthy
       end
       it 'returns true (Black King Side)' do
         key = [[4, 7], [6, 7]]
-        result = game.legal?(key, black_player, castling)
+        result = game.legal?(key, player_two, castling)
         expect(result).to be_truthy
       end
       it 'returns true (Black Queen Side)' do
         key = [[4, 7], [2, 7]]
-        result = game.legal?(key, black_player, castling)
+        result = game.legal?(key, player_two, castling)
         expect(result).to be_truthy
       end
       it 'returns false if Rook has moved' do
         rook = castling.cells[[0, 0]].piece
         rook.moved = true
         key = [[4, 0], [2, 0]]
-        result = game.legal?(key, white_player, castling)
+        result = game.legal?(key, player_two, castling)
         expect(result).to be_falsey
       end
       it 'returns false if King has moved' do
         king = castling.cells[[4, 0]].piece
         king.moved = true
         key = [[4, 0], [2, 0]]
-        result = game.legal?(key, white_player, castling)
+        result = game.legal?(key, player_one, castling)
         expect(result).to be_falsey
       end
       it 'returns false if King is in check' do
         castling.cells[[3, 2]].piece = b_knight
         key = [[4, 0], [2, 0]]
-        result = game.legal?(key, white_player, castling)
+        result = game.legal?(key, player_one, castling)
         expect(result).to be_falsey
       end
       it 'returns false if landing position puts king in check' do
         castling.cells[[2, 2]].piece = b_knight
         key = [[4, 0], [2, 0]]
-        result = game.legal?(key, white_player, castling)
+        result = game.legal?(key, player_one, castling)
         expect(result).to be_falsey
       end
       it 'returns false if passes through check' do
         castling.cells[[2, 1]].piece = nil
         castling.cells[[1, 2]].piece = b_bishop
         key = [[4, 0], [2, 0]]
-        result = game.legal?(key, white_player, castling)
+        result = game.legal?(key, player_one, castling)
         expect(result).to be_falsey
       end
       it 'returns false if other piece is between king and rook' do
         castling.cells[[2, 0]].piece = w_bishop
         key = [[4, 0], [2, 0]]
-        result = game.legal?(key, white_player, castling)
+        result = game.legal?(key, player_one, castling)
         expect(result).to be_falsey
       end
     end
@@ -474,28 +474,28 @@ describe Game do
         board.cells[[4, 3]].piece = w_rook
         board.cells[[4, 6]].piece = nil
         translated = [[5, 7], [4, 6]]
-        result = game.checks_self?(translated, black_player, board)
+        result = game.checks_self?(translated, player_two, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black Bishop vs White King => Knight unchecks)' do
         board.cells[[1, 3]].piece = b_bishop
         board.cells[[3, 1]].piece = nil
         translated = [[1, 0], [3, 1]]
-        result = game.checks_self?(translated, white_player, board)
+        result = game.checks_self?(translated, player_one, board)
         expect(result).to be_falsey
       end
       it 'returns false (White Queen vs Black King => King unchecks' do
         board.cells[[4, 4]].piece = w_queen
         board.cells[[4, 6]].piece = nil
         translated = [[3, 7], [4, 6]]
-        result = game.checks_self?(translated, black_player, board)
+        result = game.checks_self?(translated, player_two, board)
         expect(result).to be_falsey
       end
       it 'returns false (Black Knight vs White King => King unchecks)' do
         board.cells[[3, 2]].piece = b_knight
         board.cells[[4, 1]].piece = nil
         translated = [[4, 0], [4, 1]]
-        result = game.checks_self?(translated, white_player, board)
+        result = game.checks_self?(translated, player_one, board)
         expect(result).to be_falsey
       end
     end
@@ -504,14 +504,14 @@ describe Game do
         board.cells[[4, 3]].piece = w_rook
         board.cells[[4, 6]].piece = nil
         translated = [[4, 7], [4, 6]]
-        result = game.checks_self?(translated, black_player, board)
+        result = game.checks_self?(translated, player_two, board)
         expect(result).to be_truthy
       end
       it 'returns true (Black Bishop vs White King => Still in Check)' do
         board.cells[[1, 3]].piece = b_bishop
         board.cells[[3, 1]].piece = nil
         translated = [[4, 0], [3, 1]]
-        result = game.checks_self?(translated, white_player, board)
+        result = game.checks_self?(translated, player_one, board)
         expect(result).to be_truthy
       end
     end
@@ -531,13 +531,13 @@ describe Game do
         blank_board.cells[[7, 6]].piece = b_king
       end
       it 'returns false (one move before checkmate)' do
-        result = game.checkmate?(white_player, blank_board)
+        result = game.checkmate?(player_one, blank_board)
         expect(result).to be_falsey
       end
       it 'returns true on checkmate' do
         blank_board.move_piece([[4, 2], [7, 2]])
 
-        result = game.checkmate?(black_player, blank_board)
+        result = game.checkmate?(player_two, blank_board)
         expect(result).to be_truthy
       end
     end
@@ -558,12 +558,12 @@ describe Game do
         board.cells[[6, 7]].piece = nil
       end
       it 'returns false (one move before checkmate)' do
-        result = game.checkmate?(white_player, board)
+        result = game.checkmate?(player_one, board)
         expect(result).to be_falsey
       end
       it 'returns true on checkmate' do
         board.move_piece([[7, 4], [5, 6]])
-        result = game.checkmate?(black_player, board)
+        result = game.checkmate?(player_two, board)
         expect(result).to be_truthy
       end
     end
@@ -577,12 +577,12 @@ describe Game do
         board.cells[[4, 6]].piece = nil
       end
       it 'returns false (one move before checkmate)' do
-        result = game.checkmate?(black_player, board)
+        result = game.checkmate?(player_two, board)
         expect(result).to be_falsey
       end
       it 'returns true on checkmate' do
         board.move_piece([[3, 7], [7, 3]])
-        result = game.checkmate?(white_player, board)
+        result = game.checkmate?(player_one, board)
         expect(result).to be_truthy
       end
     end
@@ -595,13 +595,13 @@ describe Game do
         blank_board.cells[[7, 7]].piece = b_king
       end
       it 'returns false (one move before checkmate)' do
-        result = game.checkmate?(white_player, blank_board)
+        result = game.checkmate?(player_one, blank_board)
         expect(result).to be_falsey
       end
       it 'returns true on checkmate' do
         blank_board.move_piece([[3, 0], [7, 0]])
 
-        result = game.checkmate?(black_player, blank_board)
+        result = game.checkmate?(player_two, blank_board)
         expect(result).to be_truthy
       end
     end
@@ -613,13 +613,13 @@ describe Game do
         blank_board.cells[[7, 7]].piece = b_king
       end
       it 'returns false (one move before checkmate)' do
-        result = game.checkmate?(white_player, blank_board)
+        result = game.checkmate?(player_one, blank_board)
         expect(result).to be_falsey
       end
       it 'returns true on checkmate' do
         blank_board.move_piece([[1, 6], [7, 6]])
 
-        result = game.checkmate?(black_player, blank_board)
+        result = game.checkmate?(player_two, blank_board)
         expect(result).to be_truthy
       end
     end
@@ -633,13 +633,13 @@ describe Game do
         blank_board.cells[[2, 7]].piece = w_rook
       end
       it 'returns false (one move before checkmate)' do
-        result = detect.checkmate?(white_player, blank_board)
+        result = game.checkmate?(player_one, blank_board)
         expect(result).to be_falsey
       end
       it 'returns true on checkmate' do
         blank_board.move_piece([[2, 7], [7, 7]])
 
-        result = game.checkmate?(black_player, blank_board)
+        result = game.checkmate?(player_two, blank_board)
         expect(result).to be_truthy
       end
     end
@@ -659,7 +659,7 @@ describe Game do
         blank_board.cells[[7, 0]].piece = b_king
       end
       it 'returns true' do
-        result = game.stalemate?(black_player, blank_board)
+        result = game.stalemate?(player_two, blank_board)
         expect(result).to be_truthy
       end
     end
@@ -688,7 +688,7 @@ describe Game do
         board.cells[[4, 7]].piece = nil
       end
       it 'returns true' do
-        result = game.stalemate?(black_player, board)
+        result = game.stalemate?(player_two, board)
         expect(result).to be_truthy
       end
     end
@@ -725,7 +725,7 @@ describe Game do
         board.cells[[5, 7]].piece = nil
       end
       it 'returns true' do
-        result = game.stalemate?(white_player, board)
+        result = game.stalemate?(player_one, board)
         expect(result).to be_truthy
       end
     end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # contains method for detecting board status and validating inputs
-class Detector
+module Detector
   include InsufficientMaterial
   # returns true if a given input is a legal move
   def legal?(key, player, board)

@@ -2,21 +2,21 @@
 
 # modules
 require_relative 'display'
+require_relative 'insufficient_material'
+require_relative 'detector'
 require_relative 'data'
 require_relative 'helper'
 require_relative 'promotion'
 require_relative 'en_passant'
 require_relative 'castling'
-require_relative 'insufficient_material'
 
-# general files
+# classes files
 require_relative 'game'
 require_relative 'player'
 require_relative 'board'
 require_relative 'cell'
-require_relative 'detector'
 
-# piece files
+# piece files (classes)
 require_relative 'pieces/piece'
 require_relative 'pieces/rook'
 require_relative 'pieces/bishop'

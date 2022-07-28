@@ -9,12 +9,12 @@ class Game
   include Display
   include Promotion
   include Helper
+  include Detector
 
   attr_accessor :current
 
   def initialize
     @board = Board.new
-    @detect = Detector.new
     @player_one = nil
     @player_two = nil
     @current = nil
@@ -47,7 +47,7 @@ class Game
       @board.print
       break if game_over?(@board)
 
-      display_check(@current) if @detect.check?(@current, @board)
+      display_check(@current) if check?(@current, @board)
       make_move
     end
     end_game
@@ -71,9 +71,9 @@ class Game
 
   # returns true if the game ends in a checkmate or stalemate
   def game_over?(board)
-    @detect.checkmate?(@current, board) ||
-    @detect.stalemate?(@current, board) ||
-    @detect.insufficient_material?(board)
+    checkmate?(@current, board) ||
+    stalemate?(@current, board) ||
+    insufficient_material?(board)
   end
 
   private
@@ -96,7 +96,7 @@ class Game
   def validate(input, key)
     if %w[e s d r].include?(input)
       helper(input, self)
-    elsif @detect.legal?(key, @current, @board) && input.length == 4
+    elsif legal?(key, @current, @board) && input.length == 4
       @board.move_piece(key)
       promote(@board, key[1])
     else
@@ -106,9 +106,9 @@ class Game
 
   # declares the winner/draw of game
   def end_game(winner = turn_player)
-    if @detect.checkmate?(@current, @board)
+    if checkmate?(@current, @board)
       display_checkmate(winner)
-    elsif @detect.insufficient_material?(@board)
+    elsif insufficient_material?(@board)
       display_insufficient
     else
       display_stalemate

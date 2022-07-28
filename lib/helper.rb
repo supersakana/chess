@@ -26,13 +26,16 @@ module Helper
 
   def save_prompt(game)
     choice = display_save
-    save_game if choice == 'y'
+    save_game(game) if choice == 'y'
 
     game.make_move
   end
 
-# prompts user if they want to load an existing file
+  # prompts user if they want to load an existing file
   def load_game
-    display_load
+    system 'clear'
+    show_files
+    choice = display_load
+    open_file(choice.to_i)
   end
 end

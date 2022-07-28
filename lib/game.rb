@@ -10,6 +10,8 @@ class Game
   include Promotion
   include Helper
 
+  attr_accessor :current
+
   def initialize
     @board = Board.new
     @detect = Detector.new
@@ -20,10 +22,12 @@ class Game
 
   # general functionality between start to end of game
   def start
-    load_game if Dir.exist?('output')
-    two_players
-    game_loop
-    end_game
+    if Dir.exist?('output')
+      load_game
+    else
+      two_players
+      game_loop
+    end
   end
 
   # sets up Human vs Human
@@ -42,6 +46,7 @@ class Game
       display_check(@current) if @detect.check?(@current, @board)
       make_move
     end
+    end_game
   end
 
   # switches current player

@@ -87,11 +87,19 @@ module Display
     puts 'Game successfully saved'
   end
 
+  # shows list of files
+  def display_files
+    puts 'Saved Files'
+    puts ''
+  end
+
   # shows existing game files
   def display_load
-    puts 'We see there is an exsisting game'
-    puts "Select the file you want to load or press 'ENTER' to play a new game"
     puts ''
+    puts 'We see there is an exsisting game'
+    puts "Type the file number you want to load or press 'ENTER' to play a new game"
+    puts ''
+    gets.chomp
   end
 
   # prompts user if they want to exit and gets choice to exit or not

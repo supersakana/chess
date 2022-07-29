@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
-# rubocop:disable Layout/MultilineOperationIndentation
-
-require 'pry-byebug'
-
 # contains main game functionality
 class Game
   include Display
   include Promotion
   include Helper
   include Detector
+  include InsufficientMaterial
 
   attr_accessor :current
 
@@ -20,7 +17,7 @@ class Game
     @current = nil
   end
 
-  # general functionality between start to end of game
+  # prompts user to open saved file or start new game
   def start
     if Dir.exist?('output')
       load_game
@@ -29,18 +26,20 @@ class Game
     end
   end
 
+  # creates two new players and a starts game loop
   def new_game
+    system 'clear'
     two_players
     game_loop
   end
 
-  # sets up Human vs Human
+  # sets up human vs human
   def two_players
     @player_one = create_player(1, :light_white)
     @player_two = create_player(2, :black)
   end
 
-  # general gameplay until checkmate is declared
+  # general gameplay until gameover
   def game_loop
     loop do
       @current = turn_player
@@ -69,11 +68,9 @@ class Game
     validate(input, key)
   end
 
-  # returns true if the game ends in a checkmate or stalemate
+  # returns true if game over
   def game_over?(board)
-    checkmate?(@current, board) ||
-    stalemate?(@current, board) ||
-    insufficient_material?(board)
+    checkmate?(@current, board) || stalemate?(@current, board) || insufficient_material?(board)
   end
 
   private
@@ -85,16 +82,15 @@ class Game
   end
 
   # returns [start, landing] positions (a2a3 => [[0, 1], [0, 2]])
-  def key(input)
-    alpha = ('a'..'h').to_a
+  def key(input, alpha = ('a'..'h').to_a)
     start = [alpha.index(input[0]), input[1].to_i - 1]
     land = [alpha.index(input[2]), input[3].to_i - 1]
     [start, land]
   end
 
-  # checks if move is valid then moves piece and promotes if neccissary
+  # checks if move is valid then moves piece and promotes if applicable
   def validate(input, key)
-    if %w[e s d r].include?(input)
+    if %w[e s].include?(input)
       helper(input, self)
     elsif legal?(key, @current, @board) && input.length == 4
       @board.move_piece(key)
@@ -115,4 +111,3 @@ class Game
     end
   end
 end
-# rubocop:enable Layout/MultilineOperationIndentation

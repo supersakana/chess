@@ -24,6 +24,7 @@ class Piece
     end
   end
 
+  # contains intitial positions for each piece
   def self.starts
     { rook: [[0, 0], [7, 0], [0, 7], [7, 7]],
       bishop: [[2, 0], [5, 0], [2, 7], [5, 7]],

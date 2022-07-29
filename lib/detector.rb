@@ -2,7 +2,6 @@
 
 # contains method for detecting board status and validating inputs
 module Detector
-  include InsufficientMaterial
   # returns true if a given input is a legal move
   def legal?(key, player, board)
     board.player_pieces(player.color).any? do |start, _v|

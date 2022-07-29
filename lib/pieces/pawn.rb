@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Style/EmptyCaseCondition, Layout/MultilineOperationIndentation
+# rubocop:disable Style/EmptyCaseCondition
 
 # contains pawn functionality
 class Pawn < Piece
@@ -49,7 +49,7 @@ class Pawn < Piece
     end
   end
 
-  # changes pawn status to @jump = true if pawn jump occured
+  # changes pawn status to @jumped = true if pawn jump occured
   def pawn_jumped(start, land)
     jump = land.piece_color == :black ? -2 : 2
     @jumped = true if (start.value[1] + jump) == land.value[1]
@@ -69,9 +69,7 @@ class Pawn < Piece
 
   # returns true if all pawn conditions are met
   def conditions_met?(shift, move, start, board)
-    verti?(shift, move, board) ||
-    diag?(shift, move, start, board) ||
-    ep_open?(start, move, board, @ep_enabled)
+    verti?(shift, move, board) || diag?(shift, move, start, board) || ep_open?(start, move, board, @ep_enabled)
   end
 
   # returns true if valid verticle move
@@ -92,4 +90,4 @@ class Pawn < Piece
     board.on(prev).empty?
   end
 end
-# rubocop:enable Style/EmptyCaseCondition, Layout/MultilineOperationIndentation
+# rubocop:enable Style/EmptyCaseCondition

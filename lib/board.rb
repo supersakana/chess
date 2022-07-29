@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry-byebug'
-
 # contains game board functionality
 class Board
   include Display
@@ -19,7 +17,7 @@ class Board
     }
   end
 
-  # returns a board cell given a cell
+  # returns a board cell given a position
   def on(cell)
     @cells[cell]
   end
@@ -29,7 +27,7 @@ class Board
     @cells.select { |_k, cell| cell.piece_color == color }
   end
 
-  # returns a list of all cells that contains pieces
+  # returns a list of all cells that contains a piece
   def all_pieces
     @cells.reject { |_k, cell| cell.empty? }
   end
@@ -87,7 +85,7 @@ class Board
     hash[cell.value] = cell
   end
 
-  # checks updates status of moved pieces (pawns included)
+  # updates status of moved pieces
   def inspect(start, land)
     player_pawns(land).each { |_k, v| v.disable_ep }
     land.inspect_pawn(start, land, self) unless land.empty?

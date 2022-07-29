@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry-byebug'
-
 # contains methods that support the user given special inputs
 module Helper
   include Data

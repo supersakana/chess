@@ -4,8 +4,6 @@
 
 require_relative '../lib/library'
 
-require 'pry-byebug'
-
 # rubocop:disable Metrics/BlockLength
 describe EnPassant do
   let(:board) { Board.new }

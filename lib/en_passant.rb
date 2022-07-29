@@ -2,8 +2,6 @@
 
 # rubocop:disable Layout/MultilineOperationIndentation
 
-require 'pry-byebug'
-
 # contains methods that detect a valid en passant
 module EnPassant
   # returns true if the user is enabled to make an en passant move

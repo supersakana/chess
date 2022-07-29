@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry-byebug'
-
 # contains methods that detect if a valid castling move is open
 module InsufficientMaterial
   # returns true if there are no more effective pieces to declare checkmate

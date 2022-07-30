@@ -31,6 +31,7 @@ class Cell
     !empty?
   end
 
+  # retutns true if a piece has moved
   def moved?
     piece.moved == true
   end

@@ -27,7 +27,7 @@ Board.cells
    }
 ```
 
-You can see that a hash is a `key => value` data structure. The key here is the location (`[0, 0]`) and the value is the `Cell` object with it's attributes (and a `Piece` object if included). This hash is composed of **64 cells** representing each cell in an 8 x 8 chess board. I made the decission to organize these cells in a ruby hash because it would be easy traverse in finding legal moves, check, checkmate, stalemate, displaying the board UI, etc... there are many different ways to approach this project. This is just the implementation that worked best for me and my initial thought process.
+You can see that this hash is a `key => value` data structure. The key here is the location (`[0, 0]`) and the value is the `Cell` object with it's attributes (and a `Piece` object if included). This hash is composed of **64 cells** representing each cell in an 8 x 8 chess board. I made the decission to organize these cells in a ruby hash because it would be easy traverse in finding legal moves, check, checkmate, stalemate, displaying the board UI, etc... there are many different ways to approach this project. This is just the implementation that worked best for me and my initial thought process.
 
 ## Features
 

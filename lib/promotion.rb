@@ -6,12 +6,15 @@
 module Promotion
   include Display
   # converts a pawn to promo piece if pawn can promote
-  def promote(board, land)
+  def promote(board, land, promo = nil)
     pawn = board.on(land)
     return unless promote?(pawn)
-
-    promo = display_promotion
-    validate_promo(board, land, pawn, promo)
+    
+    loop do
+      promo = display_promotion
+      break if %w[r b k q].include?(promo)
+    end
+    convert(pawn, promo)
   end
 
   # returns true if a pawn piece need promotion
@@ -20,15 +23,6 @@ module Promotion
 
     pawn.piece_color == :light_white && pawn.value[1] == 7 ||
     pawn.piece_color == :black && pawn.value[1].zero?
-  end
-
-  # converts pawn into inputted promo, else repromts user
-  def validate_promo(board, land, pawn, promo)
-    if %w[r b k q].include?(promo)
-      convert(pawn, promo)
-    else
-      promote(board, land)
-    end
   end
 
   # converts a piece from piece to promotion piece

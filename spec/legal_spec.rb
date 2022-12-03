@@ -10,7 +10,6 @@ describe Game do
   subject(:game) { described_class.new }
 
   let(:board) { Board.new }
-  let(:detector) { Detector.new }
 
   let(:player_one) { double('first_player', name: 'Alpha', color: :light_white, foe_color: :black) }
   let(:player_two) { double('second_player', name: 'Omega', color: :black, foe_color: :light_white) }

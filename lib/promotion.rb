@@ -9,7 +9,7 @@ module Promotion
   def promote(board, land, promo = nil)
     pawn = board.on(land)
     return unless promote?(pawn)
-    
+
     loop do
       promo = display_promotion
       break if %w[r b k q].include?(promo)

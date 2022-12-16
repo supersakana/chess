@@ -1,6 +1,9 @@
+![chess](media/chess.png)
+
 # Chess
 
 A command line game built with Ruby, tested with RSpec
+Live: https://replit.com/@supersakana/chess-1
 
 ## About
 
@@ -13,7 +16,7 @@ https://www.theodinproject.com/lessons/ruby-ruby-final-project
 
 Before jumping into the code, I think it would be useful to go over _how this program is structured_. When a `Game` is initialized, a new `Board` is created. This `Board` is a class that contains a hash of `Cell` objects. Depending on the position (`@value`) of the cell, a `Piece` would be created too. The entire `Board` object looks similar to this...
 
-```
+```ruby
 Board.cells
  {[0, 0] =>  (Cell Object)
              @bg_color=:light_black,
@@ -58,7 +61,7 @@ You can see that this hash is a `key => value` data structure. The key here is t
 
 ## How to play
 
-Repl: (Work in Progess)
+Repl: https://replit.com/@supersakana/chess-1
 
 Copy/Paste in Terminal (must have ruby installed)
 

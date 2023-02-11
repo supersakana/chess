@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# contains methods that detect if a valid castling move is open
+# contains methods that detect if gameover by insufficient material
 module InsufficientMaterial
   # returns true if there are no more effective pieces to declare checkmate
   def insufficient_material?(board)

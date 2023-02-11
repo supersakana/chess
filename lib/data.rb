@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry-byebug'
 require 'yaml'
 
 # contains methods that support the user given special inputs
@@ -9,7 +8,7 @@ module Data
   # initializes a new game file to be saved
   def save_game(game)
     Dir.mkdir 'output' unless Dir.exist? 'output'
-    saved_game = YAML.dump(game)
+    saved_game = game.to_yaml
     filename = "#{@player_one.name}_vs_#{@player_two.name}.yaml"
 
     File.write(File.open("output/#{filename}", 'w+'), saved_game)
